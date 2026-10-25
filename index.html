@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Révisions de cours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#eceae5;--surface:#f7f6f3;--ink:#1f2328;--muted:#5d6168;--line:#c9c6bf;--accent:#2f5d8a;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root{--bg:#17191c;--surface:#202327;--ink:#e6e4df;--muted:#a1a5ab;--line:#3a3e44;--accent:#7fb0de}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "IBM Plex Sans",system-ui,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:32px 16px 48px}
+h1{font:700 2.4rem/1.1 "Barlow Condensed",sans-serif;margin:0 0 8px;letter-spacing:.01em}
+.intro{color:var(--muted);margin:0 0 28px;max-width:60ch}
+.cours{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+a.carte{display:block;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);
+  border-radius:8px;padding:16px 18px;color:inherit;text-decoration:none;transition:transform .15s}
+a.carte:hover,a.carte:focus-visible{transform:translateY(-2px);outline:2px solid var(--accent);outline-offset:2px}
+.code{font:700 1.5rem/1 "Barlow Condensed",sans-serif;color:var(--accent)}
+.nom{font-weight:600;margin:4px 0 8px}
+.meta{color:var(--muted);font-size:.9rem;margin:0}
+ul.parties{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:.88rem}
+footer{margin-top:36px;color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Révisions de cours</h1>
+<p class="intro">Pages de révision interactives : animations, outils où l'on fait varier les variables, quiz diagnostique avec indice de confiance, liste d'examen du prof et fiche de synthèse. Ta progression reste dans ton navigateur.</p>
+<div class="cours">
+<a class="carte" href="gci-1000/">
+  <div class="code">GCI-1000</div>
+  <div class="nom">Matériaux de construction</div>
+  <p class="meta">13 sujets · 5 parties</p>
+  <ul class="parties"><li>Notions de base</li><li>Le béton : constituants</li><li>Le béton durci</li><li>Du chantier au contrôle</li><li>Les enrobés bitumineux</li></ul>
+</a>
+<a class="carte" href="glg-1000/">
+  <div class="code">GLG-1000</div>
+  <div class="nom">Géologie</div>
+  <p class="meta">16 sujets · 4 parties</p>
+  <ul class="parties"><li>Module 4 · Les minéraux</li><li>Module 5 · Les roches</li><li>Module 6 · Les ressources</li><li>Module 7 · Les continents</li></ul>
+</a>
+</div>
+<footer>Mis à jour le 2026-10-25.</footer>
+</div>
+</body>
+</html>
