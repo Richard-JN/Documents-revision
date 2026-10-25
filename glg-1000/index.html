@@ -1019,7 +1019,7 @@ const QUIZ_PLUS = {
       ["Halite", "3e (saline)"],
       ["Sylvite (potasse)", "4e (hypersaline)"]],
       e: "Calcite → gypse → halite → sylvite. On atteint rarement la halite, encore moins la potasse." },
-    3: { liste: { q: "Nomme les grandes façons dont se forment les minéraux.", items: [["Cristallisation d'un magma", "magma", "cristallis"], ["Solution sursaturée (évaporites, veines, cavernes)", "sursatur", "evapor", "precipit"], ["Métamorphisme", "metamorph"], ["Altération chimique", "alter"]] },
+    3: [{ liste: { q: "Nomme les grandes façons dont se forment les minéraux.", items: [["Cristallisation d'un magma", "magma", "cristallis"], ["Solution sursaturée (évaporites, veines, cavernes)", "sursatur", "evapor", "precipit"], ["Métamorphisme", "metamorph"], ["Altération chimique", "alter"]] },
       q: "Associe chaque minéral ou objet à son mode de formation.", a: [
       ["Olivine d'un basalte", "Cristallisation d'un magma (Bowen)"],
       ["Halite d'une lagune", "Évaporation : solution sursaturée"],
@@ -1027,7 +1027,8 @@ const QUIZ_PLUS = {
       ["Stalactite", "Dégazage du CO₂ dans une caverne"],
       ["Grenat d'un schiste", "Métamorphisme, à l'état solide"],
       ["Argile", "Altération chimique d'un feldspath"]],
-      e: "Trois grandes voies : cristallisation d'un magma · précipitation d'une solution sursaturée (évaporites, veines et géodes, cavernes) · transformation de minéraux préexistants (métamorphisme, altération chimique)." }
+      e: "Trois grandes voies : cristallisation d'un magma · précipitation d'une solution sursaturée (évaporites, veines et géodes, cavernes) · transformation de minéraux préexistants (métamorphisme, altération chimique)." },
+      { q: "Sous pression, le point d'ébullition de l'eau monte, mais le point de fusion de la glace baisse. Pourquoi ?", o: ["La pression réchauffe la glace", "La pression favorise la phase la plus dense : le liquide est plus dense que la vapeur, mais aussi plus dense que la glace", "La glace est plus dense que l'eau liquide", "Ce n'est vrai qu'en altitude"], r: 1, e: "La glace flotte : elle est moins dense que l'eau liquide, une exception. Sous pression, elle tend donc à redevenir liquide (pente négative de la courbe solide-liquide), ce qui aide la base des glaciers à fondre." }]
   },
   "cycle-roches": {
     1: { liste: { q: "Nomme les 5 processus du cycle des roches.", items: [["Cristallisation", "cristallis"], ["Altération, érosion, transport", "alter", "erosion", "transport"], ["Diagenèse", "diagen"], ["Métamorphisme", "metamorph"], ["Fusion", "fusion", "fond"]] },
@@ -2281,9 +2282,10 @@ MODULES.push({
     }},
     texte: [
       "Les minéraux se forment aussi par transformation de minéraux existants. Le métamorphisme réorganise les minéraux d'une roche à l'état solide, sans fusion, sous l'effet de la température, de la pression ou de fluides : grenat, staurolite, sillimanite, disthène. À la surface, l'altération chimique par l'eau, l'oxygène, le CO₂ et les acides détruit les minéraux primaires et en forme de plus stables : les feldspaths deviennent des argiles.",
-      "La température et la pression déterminent l'état de la matière. Le diagramme de phases de l'eau le montre : à 1 atm, l'eau bout à 100 °C. Sous pression, son point d'ébullition monte : dans une cocotte-minute, il passe de 100 °C à environ 120 °C. À l'inverse, quand la pression baisse, il descend : au sommet de l'Everest, il n'est plus que d'environ 70 °C. La courbe solide-liquide a une pente négative : la pression favorise la fusion de la glace, ce qui aide les glaciers à glisser. Au point triple, les trois phases coexistent ; au-delà du point critique, on a un fluide supercritique.",
+      "La température et la pression déterminent l'état de la matière. Le diagramme de phases de l'eau le montre : à 1 atm, l'eau bout à 100 °C. Sous pression, son point d'ébullition monte : dans une cocotte-minute, il passe de 100 °C à environ 120 °C. À l'inverse, quand la pression baisse, il descend : au sommet de l'Everest, il n'est plus que d'environ 70 °C. Pour la glace, c'est l'inverse : la pression abaisse son point de fusion. Pourquoi ? La pression favorise toujours la phase la plus dense, celle qui prend le moins de place. L'eau liquide est plus dense que la vapeur : sous pression, l'eau reste liquide et son point d'ébullition monte. Mais la glace est moins dense que l'eau liquide (c'est pour ça qu'elle flotte), une exception parmi les substances : sous pression, elle tend à redevenir liquide, et son point de fusion baisse un peu (≈ −0,0074 °C par atm). C'est la pente négative de la courbe solide-liquide. Sous des centaines de mètres de glace, cela aide la base des glaciers à fondre et à glisser. Au point triple, les trois phases coexistent ; au-delà du point critique, on a un fluide supercritique.",
       "Des diagrammes semblables existent pour les minéraux. Leur stabilité dépend aussi de la composition chimique, du potentiel redox (Eh) et du pH."
     ],
+    cle: { label: "La pression favorise la phase la plus dense", html: "<ul><li>Liquide plus dense que la vapeur → sous pression, le point d'<b>ébullition monte</b> (cocotte-minute ≈ 120 °C).</li><li>Glace <b>moins dense</b> que l'eau liquide (elle flotte) → sous pression, le point de <b>fusion baisse</b> : pente négative de la courbe solide-liquide, fusion à la base des glaciers.</li></ul>" },
     graphique: {
       titre: "Diagramme de phases de l'eau", source: "calcul",
       x: { label: "Température (°C)", min: -40, max: 400 },
