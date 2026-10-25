@@ -23,6 +23,10 @@ a.carte:hover,a.carte:focus-visible{transform:translateY(-2px);outline:2px solid
 .meta{color:var(--muted);font-size:.9rem;margin:0}
 ul.parties{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:.88rem}
 footer{margin-top:36px;color:var(--muted);font-size:.85rem}
+a.carte.off{border-left-color:var(--line);opacity:.7}
+a.carte.off .code{color:var(--muted)}
+.etiquette{display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--line);border-radius:999px;padding:1px 9px;margin-left:8px;vertical-align:3px}
 </style>
 </head>
 <body>
@@ -30,11 +34,10 @@ footer{margin-top:36px;color:var(--muted);font-size:.85rem}
 <h1>Révisions de cours</h1>
 <p class="intro">Pages de révision interactives : animations, outils où l'on fait varier les variables, quiz diagnostique avec indice de confiance, liste d'examen du prof et fiche de synthèse. Ta progression reste dans ton navigateur.</p>
 <div class="cours">
-<a class="carte" href="gci-1000/">
-  <div class="code">GCI-1000</div>
+<a class="carte off" href="gci-1000/">
+  <div class="code">GCI-1000<span class="etiquette">Indisponible</span></div>
   <div class="nom">Matériaux de construction</div>
-  <p class="meta">13 sujets · 5 parties</p>
-  <ul class="parties"><li>Notions de base</li><li>Le béton : constituants</li><li>Le béton durci</li><li>Du chantier au contrôle</li><li>Les enrobés bitumineux</li></ul>
+  <p class="meta">Ce document n'est pas disponible pour le moment.</p>
 </a>
 <a class="carte" href="glg-1000/">
   <div class="code">GLG-1000</div>

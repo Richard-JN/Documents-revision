@@ -6,7 +6,7 @@ Pages web de révision interactives pour mes cours (GCI, GLG…), publiées avec
 
 | Cours | Page |
 |---|---|
-| GCI-1000 · Matériaux de construction | https://richard-jn.github.io/Documents-revision/gci-1000/ |
+| GCI-1000 · Matériaux de construction | indisponible pour le moment (`"indisponible": true` dans course.json ; contenu gardé dans la trousse) |
 | GLG-1000 · Planète Terre | https://richard-jn.github.io/Documents-revision/glg-1000/ |
 
 La progression (sujets révisés, quiz, indice de confiance) reste dans le navigateur de chaque personne.
