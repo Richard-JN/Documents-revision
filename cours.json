@@ -1,0 +1,25 @@
+{
+  "gci-1000": {
+    "code": "GCI-1000",
+    "nom": "Matériaux de construction",
+    "parties": [
+      "Notions de base",
+      "Le béton : constituants",
+      "Le béton durci",
+      "Du chantier au contrôle",
+      "Les enrobés bitumineux"
+    ],
+    "sujets": 13
+  },
+  "glg-1000": {
+    "code": "GLG-1000",
+    "nom": "Géologie",
+    "parties": [
+      "Module 4 · Les minéraux",
+      "Module 5 · Les roches",
+      "Module 6 · Les ressources",
+      "Module 7 · Les continents"
+    ],
+    "sujets": 16
+  }
+}
