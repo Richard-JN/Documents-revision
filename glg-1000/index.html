@@ -224,6 +224,13 @@ details.plus p{margin-top:8px;font-size:.92rem;color:var(--ink);max-width:62ch}
 .q-paire.good{border-color:var(--sage);background:color-mix(in srgb,var(--sage) 10%,var(--bg))}
 .q-paire.bad{border-color:var(--alert);background:color-mix(in srgb,var(--alert) 8%,var(--bg))}
 .q-corr{grid-column:2;font-size:.8rem;color:var(--sage);font-weight:500}
+.q-liste{display:grid;gap:8px}
+.q-liste-ok{justify-self:start}
+.q-liste-res{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.q-item{border:1px solid var(--line);border-radius:3px;padding:4px 9px;font:inherit;font-size:.84rem;background:var(--bg);color:var(--ink);cursor:pointer}
+.q-item.good{border-color:var(--sage);background:color-mix(in srgb,var(--sage) 12%,var(--bg))}
+.q-item.bad{border-color:var(--alert);background:color-mix(in srgb,var(--alert) 8%,var(--bg))}
+.q-liste-bilan b.ok{color:var(--sage)}.q-liste-bilan b.no{color:var(--alert)}
 @media (max-width:520px){.q-paire{grid-template-columns:1fr}.q-corr{grid-column:1}}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;border:1.5px solid var(--line);vertical-align:-1px;flex:none}
 .dot.s-rouge{background:var(--alert);border-color:var(--alert)} .dot.s-orange{background:var(--rebar);border-color:var(--rebar)}
@@ -963,7 +970,8 @@ const QUIZ_PLUS = {
       ["Calcite", "3 plans, angles ≠ 90°"],
       ["Quartz", "Aucun : cassure conchoïdale"]],
       e: "Le clivage suit les liens les plus faibles de la structure, d'où des angles constants. Feldspath : 2 à 90° ; galène : 3 à 90° comme la halite." },
-    3: { q: "Associe chaque propriété à ce qu'on observe.", a: [
+    3: { liste: { q: "Nomme les propriétés qui servent à identifier un minéral.", items: [["Éclat", "eclat"], ["Trait", "trait"], ["Dureté", "durete"], ["Clivage", "clivage"], ["Densité", "densite"], ["Effervescence", "efferv"], ["Fluorescence", "fluor"]] },
+      q: "Associe chaque propriété à ce qu'on observe.", a: [
       ["Éclat", "Façon dont la surface réfléchit la lumière"],
       ["Trait", "Couleur de la poudre sur une plaque de porcelaine"],
       ["Dureté", "Résistance à la rayure (Mohs)"],
@@ -974,7 +982,8 @@ const QUIZ_PLUS = {
       e: "On identifie un minéral en combinant ces propriétés, jamais avec un seul critère." }
   },
   "classification-silicates": {
-    0: { q: "Classification de Strunz : associe chaque classe à son anion ou groupe anionique.", a: [
+    0: { liste: { q: "Nomme de mémoire les 8 classes de Strunz.", items: [["Éléments natifs", "natif"], ["Sulfures", "sulfure"], ["Oxydes et hydroxydes", "oxyde", "hydroxyde"], ["Halogénures", "halog"], ["Carbonates", "carbonate"], ["Phosphates", "phosphate"], ["Sulfates", "sulfate"], ["Silicates", "silicate"]] },
+      q: "Classification de Strunz : associe chaque classe à son anion ou groupe anionique.", a: [
       ["Éléments natifs", "Un seul élément, sans anion"],
       ["Sulfures", "S²⁻"],
       ["Oxydes et hydroxydes", "O²⁻, OH⁻"],
@@ -984,7 +993,8 @@ const QUIZ_PLUS = {
       ["Sulfates", "SO₄²⁻"],
       ["Silicates", "SiO₄⁴⁻"]],
       e: "Le prof demande les catégories, pas les noms de minéraux. Piège : sulfure (S²⁻) ≠ sulfate (SO₄²⁻)." },
-    1: { q: "Associe chaque famille de silicates à sa structure.", a: [
+    1: { liste: { q: "Nomme les 4 familles de silicates, de la moins à la plus polymérisée.", items: [["Nésosilicates", "neso", "isole"], ["Inosilicates", "ino", "chaine"], ["Phyllosilicates", "phyllo", "feuillet"], ["Tectosilicates", "tecto", "charpente"]] },
+      q: "Associe chaque famille de silicates à sa structure.", a: [
       ["Nésosilicates", "Tétraèdres isolés"],
       ["Inosilicates", "Chaînes simples ou doubles"],
       ["Phyllosilicates", "Feuillets"],
@@ -992,7 +1002,8 @@ const QUIZ_PLUS = {
       e: "Plus les tétraèdres partagent d'oxygènes, plus la structure est polymérisée : isolés → chaînes → feuillets → charpente." }
   },
   "formation-mineraux": {
-    0: { q: "Série de Bowen : associe chaque minéral à sa place.", a: [
+    0: { liste: { q: "Nomme dans l'ordre les minéraux de la série discontinue de Bowen.", items: [["Olivine", "olivine"], ["Pyroxènes", "pyroxen"], ["Amphiboles", "amphibole"], ["Biotite", "biotite"], ["Quartz (fin de série)", "quartz"]] },
+      q: "Série de Bowen : associe chaque minéral à sa place.", a: [
       ["Olivine", "Discontinue : 1re (la plus chaude)"],
       ["Pyroxènes", "Discontinue : 2e"],
       ["Amphiboles", "Discontinue : 3e"],
@@ -1001,13 +1012,15 @@ const QUIZ_PLUS = {
       ["Plagioclase calcique", "Continue : haute température"],
       ["Plagioclase sodique", "Continue : basse température"]],
       e: "Du haut vers le bas : sombre, riche en Fe-Mg, chaud (mafique) → pâle, riche en Si-Al, froid (felsique)." },
-    1: { q: "Suite évaporitique : associe chaque minéral à son ordre de précipitation.", a: [
+    1: { liste: { q: "Nomme les 4 minéraux de la suite évaporitique.", items: [["Calcite", "calcite"], ["Gypse", "gypse"], ["Halite", "halite"], ["Sylvite (potasse)", "sylvite", "potasse"]] },
+      q: "Suite évaporitique : associe chaque minéral à son ordre de précipitation.", a: [
       ["Calcite", "1er (eau de mer à 35 ‰)"],
       ["Gypse", "2e (pénésaline)"],
       ["Halite", "3e (saline)"],
       ["Sylvite (potasse)", "4e (hypersaline)"]],
       e: "Calcite → gypse → halite → sylvite. On atteint rarement la halite, encore moins la potasse." },
-    3: { q: "Associe chaque minéral ou objet à son mode de formation.", a: [
+    3: { liste: { q: "Nomme les grandes façons dont se forment les minéraux.", items: [["Cristallisation d'un magma", "magma", "cristallis"], ["Solution sursaturée (évaporites, veines, cavernes)", "sursatur", "evapor", "precipit"], ["Métamorphisme", "metamorph"], ["Altération chimique", "alter"]] },
+      q: "Associe chaque minéral ou objet à son mode de formation.", a: [
       ["Olivine d'un basalte", "Cristallisation d'un magma (Bowen)"],
       ["Halite d'une lagune", "Évaporation : solution sursaturée"],
       ["Quartz d'une géode", "Précipitation de fluides dans une cavité"],
@@ -1017,7 +1030,8 @@ const QUIZ_PLUS = {
       e: "Trois grandes voies : cristallisation d'un magma · précipitation d'une solution sursaturée (évaporites, veines et géodes, cavernes) · transformation de minéraux préexistants (métamorphisme, altération chimique)." }
   },
   "cycle-roches": {
-    1: { q: "Associe chaque processus à la flèche qu'il occupe sur le cycle.", a: [
+    1: { liste: { q: "Nomme les 5 processus du cycle des roches.", items: [["Cristallisation", "cristallis"], ["Altération, érosion, transport", "alter", "erosion", "transport"], ["Diagenèse", "diagen"], ["Métamorphisme", "metamorph"], ["Fusion", "fusion", "fond"]] },
+      q: "Associe chaque processus à la flèche qu'il occupe sur le cycle.", a: [
       ["Cristallisation", "Magma → roche ignée"],
       ["Altération, érosion et transport", "Toute roche → sédiments"],
       ["Diagenèse", "Sédiments → roche sédimentaire"],
@@ -1026,7 +1040,8 @@ const QUIZ_PLUS = {
       e: "Chaque flèche répond à « qu'est-ce qui transforme ceci en cela ? ». N'oublie pas les raccourcis : une ignée peut être métamorphisée directement." }
   },
   "roches-ignees": {
-    0: { q: "Associe chaque assemblage à sa paire de roches (intrusive / extrusive).", a: [
+    0: { liste: { q: "Nomme les 4 grands assemblages de roches ignées, de l'olivine au quartz.", items: [["Ultramafique", "ultra"], ["Mafique", "mafique"], ["Intermédiaire", "interm"], ["Felsique", "felsi"]] },
+      q: "Associe chaque assemblage à sa paire de roches (intrusive / extrusive).", a: [
       ["Ultramafique", "Péridotite / komatiite"],
       ["Mafique", "Gabbro / basalte"],
       ["Intermédiaire", "Diorite / andésite"],
@@ -1034,7 +1049,8 @@ const QUIZ_PLUS = {
       e: "Seuls ces noms de grandes catégories sont demandés. Extrêmes : olivine (ultramafique) et quartz (felsique)." }
   },
   "magmatisme-volcans": {
-    0: { q: "Associe chaque lieu de volcanisme à ce qui le caractérise.", a: [
+    0: { liste: { q: "Nomme les 3 lieux de volcanisme.", items: [["Dorsale", "dorsale"], ["Point chaud", "point chaud", "panache"], ["Zone de subduction", "subduction"]] },
+      q: "Associe chaque lieu de volcanisme à ce qui le caractérise.", a: [
       ["Dorsale", "Décompression du manteau qui remonte ; basaltes du fond océanique"],
       ["Point chaud", "Panache du manteau profond ; volcans boucliers intraplaques"],
       ["Zone de subduction", "Volatiles qui abaissent le point de fusion ; stratovolcans explosifs"]],
@@ -1048,7 +1064,8 @@ const QUIZ_PLUS = {
       ["Volcan bouclier", "Mafique"],
       ["Stratovolcan, nuées ardentes", "Felsique"]],
       e: "La silice contrôle la viscosité : mafique = fluide, chaude (≈ 1200 °C), effusive ; felsique = visqueuse, plus froide, explosive." },
-    2: { q: "Associe chaque corps intrusif à sa description.", a: [
+    2: { liste: { q: "Nomme les 5 corps intrusifs vus en cours.", items: [["Dyke", "dyke", "dike"], ["Sill", "sill"], ["Laccolite", "laccolit"], ["Neck", "neck"], ["Batholite", "batholit"]] },
+      q: "Associe chaque corps intrusif à sa description.", a: [
       ["Dyke", "Recoupe les couches"],
       ["Sill", "S'insère entre les couches (concordant)"],
       ["Laccolite", "Bombe les couches du dessus"],
@@ -1057,13 +1074,15 @@ const QUIZ_PLUS = {
       e: "À l'examen, il faut les nommer sur l'image : la relation avec les couches est la clé (recoupe, entre, bombe)." }
   },
   "roches-sedimentaires": {
-    0: { q: "Associe chacun des 4 processus à son rôle.", a: [
+    0: { liste: { q: "Nomme les 4 processus qui produisent une roche sédimentaire.", items: [["Altération", "alter", "meteoris"], ["Transport", "transport"], ["Sédimentation", "sedimentation", "depot"], ["Diagenèse", "diagen", "ciment"]] },
+      q: "Associe chacun des 4 processus à son rôle.", a: [
       ["Altération (météorisation)", "Produit des particules"],
       ["Transport", "Amène les particules au bassin"],
       ["Sédimentation", "Dépose les particules en couches"],
       ["Diagenèse", "Transforme le sédiment en roche (cimentation)"]],
       e: "Altération → transport → sédimentation → diagenèse. L'altération peut être mécanique, chimique ou biologique." },
-    1: { q: "Classe chaque sédiment ou roche dans sa fraction.", a: [
+    1: { liste: { q: "Nomme les 3 fractions sédimentaires.", items: [["Terrigène", "terrig"], ["Allochimique", "allo"], ["Orthochimique", "ortho"]] },
+      q: "Classe chaque sédiment ou roche dans sa fraction.", a: [
       ["Grès", "Terrigène"],
       ["Shale", "Terrigène"],
       ["Conglomérat", "Terrigène"],
@@ -1073,7 +1092,8 @@ const QUIZ_PLUS = {
       e: "Terrigène : vient du continent · allochimique : particules du bassin (coquilles) · orthochimique : précipité chimique, sans granulométrie." }
   },
   "roches-metamorphiques": {
-    3: { q: "Contact, régional ou impact ? Classe chaque indice.", a: [
+    3: { liste: { q: "Nomme les 3 types de métamorphisme.", items: [["Contact", "contact"], ["Régional", "region"], ["Impact (choc)", "impact", "choc"]] },
+      q: "Contact, régional ou impact ? Classe chaque indice.", a: [
       ["Cornéenne autour du Mont-Royal", "Contact"],
       ["Auréole autour d'une intrusion, sans foliation", "Contact"],
       ["Foliation, minéraux alignés", "Régional"],
@@ -1118,13 +1138,15 @@ const QUIZ_PLUS = {
       ["≈ 2500 à 4000 m", "Fenêtre à gaz"],
       ["> 4000 m", "Tout est détruit (« cuit »)"]],
       e: "Profondeurs approximatives : elles dépendent du gradient géothermique." },
-    1: { q: "Associe chaque élément du système pétrolier à son rôle.", a: [
+    1: { liste: { q: "Nomme les éléments d'un système pétrolier, de la source au piège.", items: [["Roche-mère", "mere"], ["Migration", "migr"], ["Roche-réservoir", "reservoir"], ["Roche couverture", "couverture", "piege"]] },
+      q: "Associe chaque élément du système pétrolier à son rôle.", a: [
       ["Roche-mère", "Riche en matière organique : génère les hydrocarbures"],
       ["Migration", "Déplacement des gouttelettes avec l'eau souterraine"],
       ["Roche-réservoir", "Poreuse et perméable : accumule comme une éponge"],
       ["Roche couverture", "Imperméable : forme le piège"]],
       e: "Roche-mère ≠ roche-réservoir : la première fabrique, la seconde stocke." },
-    2: { q: "Classe les charbons du moins au plus riche en carbone.", a: [
+    2: { liste: { q: "Nomme les 4 rangs de charbon, du moins au plus riche en carbone.", items: [["Tourbe", "tourbe"], ["Lignite", "lignite"], ["Charbon bitumineux", "bitum"], ["Anthracite", "anthrac"]] },
+      q: "Classe les charbons du moins au plus riche en carbone.", a: [
       ["Tourbe", "1 : le moins de carbone"],
       ["Lignite", "2"],
       ["Charbon bitumineux", "3"],
@@ -1147,7 +1169,8 @@ const QUIZ_PLUS = {
       e: "Même gaz (surtout du méthane) ; la différence est l'absence de migration dans le non conventionnel." }
   },
   "gites-metalliferes": {
-    2: { q: "Magmatique (igné), sédimentaire ou hydrothermal ? Classe chaque gîte.", a: [
+    2: { liste: { q: "Nomme les 3 grands types de gîtes métallifères.", items: [["Magmatique (igné)", "magmat", "igne"], ["Sédimentaire", "sediment"], ["Hydrothermal", "hydrotherm"]] },
+      q: "Magmatique (igné), sédimentaire ou hydrothermal ? Classe chaque gîte.", a: [
       ["Sulfures Ni-Cu de Raglan (komatiites)", "Magmatique"],
       ["Diamants des kimberlites", "Magmatique"],
       ["Placers aurifères (Chaudière, Klondike)", "Sédimentaire"],
@@ -1155,34 +1178,39 @@ const QUIZ_PLUS = {
       ["Sulfures massifs de l'Abitibi (fumeurs noirs)", "Hydrothermal"],
       ["Or filonien de Val-d'Or", "Hydrothermal"]],
       e: "Magmatique : cristallise avec le magma · sédimentaire : transport et dépôt, gravitaire ou chimique · hydrothermal : fluides chauds qui précipitent les métaux." },
-    4: { q: "Associe chaque géomatériau à sa famille.", a: [
+    4: { liste: { q: "Nomme les 3 familles de géomatériaux.", items: [["Granulats", "granulat"], ["Pierres de construction et ornementales", "pierre", "ornement"], ["Roches et minéraux industriels", "industri"]] },
+      q: "Associe chaque géomatériau à sa famille.", a: [
       ["Sable, gravier, pierre concassée", "Granulats"],
       ["Pierre de taille", "Pierres de construction et ornementales"],
       ["Gypse, argiles, silice", "Roches et minéraux industriels"]],
       e: "Géomatériau : matériau d'origine géologique, extrait de la croûte et utilisé par l'être humain." }
   },
   "cours-eau": {
-    0: { q: "Associe chaque stade d'une vallée fluviale à ses traits.", a: [
+    0: { liste: { q: "Nomme les 3 stades d'une vallée fluviale.", items: [["Jeunesse", "jeune"], ["Maturité", "matur"], ["Vieillesse", "vieil"]] },
+      q: "Associe chaque stade d'une vallée fluviale à ses traits.", a: [
       ["Jeunesse", "Vallée étroite en V, chutes et rapides"],
       ["Maturité", "Érosion latérale, plaine d'inondation qui se construit"],
       ["Vieillesse", "Plaine bien plus large que les plus larges méandres"]],
       e: "La pente diminue et l'érosion devient latérale à mesure que la vallée vieillit." }
   },
   "glaciers": {
-    0: { q: "Calotte, glacier alpin ou ni l'un ni l'autre ? Classe chaque énoncé.", a: [
+    0: { liste: { q: "Nomme les 2 types de glaciers.", items: [["Calotte (inlandsis)", "calotte", "inlandsis"], ["Glacier alpin (de montagne)", "alpin", "montagne"]] },
+      q: "Calotte, glacier alpin ou ni l'un ni l'autre ? Classe chaque énoncé.", a: [
       ["Antarctique, Groenland", "Calotte (inlandsis)"],
       ["Couvre un continent entier", "Calotte (inlandsis)"],
       ["Glacier du Trient", "Glacier alpin"],
       ["Creuse des cirques et des vallées en U", "Glacier alpin"],
       ["Banquise arctique", "Ni l'un ni l'autre : glace de mer"]],
       e: "Seule la fonte des glaces continentales fait monter la mer ; la banquise flotte déjà." },
-    2: { q: "Associe chaque marque d'érosion glaciaire à sa description.", a: [
+    2: { liste: { q: "Nomme les marques d'érosion glaciaire vues en cours.", items: [["Vallée en U", "en u", "auge"], ["Cirque", "cirque"], ["Fjord", "fjord"], ["Stries et cannelures", "stri", "cannel"]] },
+      q: "Associe chaque marque d'érosion glaciaire à sa description.", a: [
       ["Vallée en U", "Ancienne vallée en V creusée par le glacier"],
       ["Cirque", "Ancienne zone d'accumulation"],
       ["Fjord", "Vallée glaciaire submergée par la mer"],
       ["Stries et cannelures", "Rayures qui donnent le sens d'écoulement"]],
       e: "Ce sont les sédiments contenus dans la glace, pas la glace elle-même, qui érodent la roche." },
-    3: { q: "Associe chaque dépôt glaciaire à sa description.", a: [
+    3: { liste: { q: "Nomme les 6 dépôts glaciaires vus en cours.", items: [["Till", "till"], ["Moraine", "moraine"], ["Drumlin", "drumlin"], ["Esker", "esker"], ["Kame", "kame"], ["Kettle", "kettle"]] },
+      q: "Associe chaque dépôt glaciaire à sa description.", a: [
       ["Till", "Débris de toutes tailles, non triés"],
       ["Moraine frontale", "Bourrelet au front, à l'avancée maximale"],
       ["Drumlin", "Colline allongée, flanc abrupt vers l'amont"],
@@ -1207,7 +1235,8 @@ const QUIZ_PLUS = {
       ["≈ 60°", "Air ascendant (cellule tempérée)"],
       ["Pôles", "Air sec : déserts froids"]],
       e: "Un désert se définit par l'aridité (< 20 cm/an), pas par la chaleur." },
-    1: { q: "Associe chaque terme éolien à sa description.", a: [
+    1: { liste: { q: "Nomme les 3 modes de transport des particules par le vent.", items: [["Reptation", "reptation", "roul"], ["Saltation", "saltation", "bond"], ["Suspension", "suspension"]] },
+      q: "Associe chaque terme éolien à sa description.", a: [
       ["Reptation", "Grosses particules qui roulent ou glissent"],
       ["Saltation", "Sables moyens qui avancent par bonds"],
       ["Suspension", "Poussières fines sur de grandes distances"],
@@ -1256,8 +1285,8 @@ const QUIZ_PLUS = {
 const MODULES = [];
 const PARTIES = COURSE.parties;
 const QUIZ = typeof QUIZ_DATA === "undefined" ? {} : QUIZ_DATA;
-/* QUIZ_PLUS (facultatif, même forme que QUIZ_DATA) : questions ajoutées après coup, placées APRÈS celles de la notion pour garder la progression */
-if (typeof QUIZ_PLUS !== "undefined") Object.entries(QUIZ_PLUS).forEach(([m, secs]) => Object.entries(secs).forEach(([i, qs]) => { QUIZ[m] = QUIZ[m] || {}; QUIZ[m][i] = (QUIZ[m][i] || []).concat(qs); }));
+/* QUIZ_PLUS (facultatif, même forme que QUIZ_DATA) : questions ajoutées après coup, placées APRÈS celles de la notion (y compris section.quiz) pour garder la progression */
+const QUIZ_EN_PLUS = typeof QUIZ_PLUS === "undefined" ? {} : QUIZ_PLUS;
 const DIAG = typeof DIAG_DATA === "undefined" ? {} : DIAG_DATA;
 
 /* ---------- utilitaires ---------- */
@@ -4252,7 +4281,12 @@ const TXT = Object.assign({
   rappelPlace: "Ta réponse, même incomplète (quelques mots suffisent)",
   rappelInsiste: "Écris au moins un mot-clé ou une supposition, même fausse. Rien ne te vient ? Clique encore sur « Voir la réponse ».",
   assocType: "🔗 Association · toutes les possibilités",
-  assocConsigne: "Avant de choisir, essaie de nommer de mémoire chaque réponse ; puis associe chaque élément de gauche à sa réponse."
+  assocConsigne: "Avant de choisir, essaie de nommer de mémoire chaque réponse ; puis associe chaque élément de gauche à sa réponse.",
+  listeType: "✍️ Liste de mémoire, puis 🔗 association",
+  listeConsigne: "De mémoire d'abord, sans aide : écris-les tous (un par ligne ou séparés par des virgules). Même si tu n'en trouves qu'un, écris-le.",
+  listePlace: "Un élément par ligne…",
+  listeNote: "Détection automatique : clique sur un élément si tu l'avais écrit autrement.",
+  assocApres: "Maintenant, associe chaque élément à sa réponse."
 }, COURSE.textes || {});
 /* COURSE.ponderation = { "id-module": { index: { niveau, prof, examen } } } : la pondération selon la liste du prof, réunie en un seul endroit */
 Object.entries(COURSE.ponderation || {}).forEach(([id, secs]) => { const m = MODULES.find(x => x.id === id); if (m) Object.entries(secs).forEach(([i, v]) => { if (m.sections[i]) Object.assign(m.sections[i], v); }); });
@@ -4277,7 +4311,7 @@ function ton(partie) {
   if (partie) r.dataset.partie = partie; else delete r.dataset.partie;
   readColors(); invalidateStages();                     // les canvas relisent les couleurs
 }
-const quizOf = (mod, i) => (mod.sections[i].quiz || ((QUIZ[mod.id] || {})[i]) || []);
+const quizOf = (mod, i) => (mod.sections[i].quiz || ((QUIZ[mod.id] || {})[i]) || []).concat(((QUIZ_EN_PLUS[mod.id] || {})[i]) || []);
 const allQuestions = () => MODULES.flatMap(m => m.sections.flatMap((s, i) => quizOf(m, i).map((q, k) => ({ q, id: `${m.id}:${i}:${k}`, mod: m, sec: i }))));
 function modStats(mod) {
   let n = 0, ok = 0, seen = 0;
@@ -4312,8 +4346,8 @@ function diagOf(mod, i) {
 /* ---------- une question : réponse, puis confiance, puis correction ---------- */
 function questionEl(item, onDone) {
   const { q, id } = item, box = el("div", { class: "q" + (q.o ? "" : q.a ? " q-a" : " q-rappel") });
-  if (!q.o) box.append(el("div", { class: "q-type" }, q.a ? TXT.assocType : TXT.rappelType));   // types à identifier d'un coup d'œil
-  box.append(el("div", { class: "q-text" }, q.q));
+  if (!q.o) box.append(el("div", { class: "q-type" }, q.a ? (q.liste ? TXT.listeType : TXT.assocType) : TXT.rappelType));   // types à identifier d'un coup d'œil
+  box.append(el("div", { class: "q-text" }, q.a && q.liste ? q.liste.q : q.q));
   const fb = el("div", { class: "q-fb", hidden: "" });
   const record = (ok, p) => {
     const c = niveauDe(p);
@@ -4385,12 +4419,47 @@ function questionEl(item, onDone) {
         s.disabled = true; li.classList.add(bon ? "good" : "bad");
         if (!bon) { const c = el("span", { class: "q-corr" }); c.textContent = "→ " + L.d; li.append(c); }
       });
-      const ok = n === lignes.length;
+      const memoire = rappel ? rappel() : null, ok = n === lignes.length && (!memoire || memoire.n === memoire.N);
       fb.hidden = false;
-      fb.innerHTML = `${verdict(ok, p)}<b class="${ok ? "ok" : "no"}">${n} / ${lignes.length} bonnes associations.</b> ${q.e || ""}<span class="note"> · Confiance : ${p} % (${confMot(p)})</span>`;
+      fb.innerHTML = `${verdict(ok, p)}${memoire ? `<b class="${memoire.n === memoire.N ? "ok" : "no"}">De mémoire : ${memoire.n} / ${memoire.N}.</b> ` : ""}<b class="${n === lignes.length ? "ok" : "no"}">${n} / ${lignes.length} bonnes associations.</b> ${q.e || ""}<span class="note"> · Confiance : ${p} % (${confMot(p)})</span>`;
       record(ok, p);
     }
-    box.append(el("p", { class: "q-consigne" }, TXT.assocConsigne), tab, fb);
+    const partieAssoc = [el("p", { class: "q-consigne" }, TXT.assocConsigne), tab];
+    let rappel = null;
+    if (q.liste) {
+      /* liste de mémoire d'abord : { liste: { q, items: ["Nom" | ["Nom", "mot-clé", …]] } } ; l'association n'apparaît qu'après */
+      const norm = t => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const items = q.liste.items.map(it => { const [nom, ...cles] = [].concat(it); return { nom, cles: (cles.length ? cles : [nom]).map(norm) }; });
+      const ecrit = el("textarea", { class: "q-ecrit", rows: Math.min(items.length, 5), placeholder: TXT.listePlace, "aria-label": "Ta liste" });
+      const insiste = el("p", { class: "q-insiste", hidden: "" }, TXT.rappelInsiste.replace("« Voir la réponse »", "« Vérifier ma liste »"));
+      const go = el("button", { type: "button", class: "conf-ok q-liste-ok" }, "Vérifier ma liste");
+      const etape1 = el("div", { class: "q-liste" });
+      etape1.append(el("p", { class: "q-consigne" }, TXT.listeConsigne), ecrit, insiste, go);
+      let averti = false;
+      go.addEventListener("click", () => {
+        if (!ecrit.value.trim() && !averti && COURSE.rappelInsiste !== false) { averti = true; insiste.hidden = false; ecrit.focus(); return; }
+        const txt = norm(ecrit.value);
+        insiste.remove(); go.remove(); ecrit.readOnly = true;
+        const ul = el("ul", { class: "q-liste-res" });
+        const etats = items.map(it => it.cles.some(c => new RegExp("(^|[^a-z0-9])" + c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).test(txt)));   // mot-clé en début de mot
+        const compte = el("b");
+        const maj = () => { const n = etats.filter(Boolean).length; compte.className = n === items.length ? "ok" : "no"; compte.textContent = `De mémoire : ${n} / ${items.length}`; };
+        items.forEach((it, k) => {
+          const b = el("button", { type: "button", class: "q-item" });
+          const peint = () => { b.className = "q-item " + (etats[k] ? "good" : "bad"); b.textContent = (etats[k] ? "✓ " : "✗ ") + it.nom; };
+          b.addEventListener("click", () => { if (!rappel || !fb.hidden) return; etats[k] = !etats[k]; peint(); maj(); });
+          peint(); const li = el("li"); li.append(b); ul.append(li);
+        });
+        maj();
+        rappel = () => ({ n: etats.filter(Boolean).length, N: items.length });
+        etape1.append(el("div", { class: "q-liste-bilan" }), ul, el("p", { class: "note" }, TXT.listeNote));
+        etape1.querySelector(".q-liste-bilan").append(compte);
+        partieAssoc[0].textContent = TXT.assocApres;
+        box.insertBefore(el("div", { class: "q-text" }, q.q), fb);
+        partieAssoc.forEach(x => box.insertBefore(x, fb));
+      });
+      box.append(etape1, fb);
+    } else box.append(...partieAssoc, fb);
   } else {
     /* rappel libre : formuler une réponse (même une supposition), confiance, réponse, puis auto-évaluation */
     const ecrit = el("textarea", { class: "q-ecrit", rows: 2, placeholder: TXT.rappelPlace, "aria-label": "Ta réponse" });
