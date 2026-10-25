@@ -1123,13 +1123,14 @@ const QUIZ_PLUS = {
       ["3e étape", "Sous-sol en gruyère : effondrements et dolines"],
       ["Cavernes vidées d'eau", "Spéléothèmes : stalactites, stalagmites"]],
       e: "La nappe suit à peu près le niveau des cours d'eau : quand ils creusent, le réseau de dissolution migre plus bas." },
-    6: { q: "Geyser ou source chaude ? Classe chaque caractéristique.", a: [
+    6: [{ q: "Geyser ou source chaude ? Classe chaque caractéristique.", a: [
       ["Réseau de cavités confiné", "Geyser"],
       ["La pression monte jusqu'à l'éruption", "Geyser"],
       ["Old Faithful, Strokkur", "Geyser"],
       ["Eau non confinée", "Source chaude"],
       ["Bouillonnement continu", "Source chaude"]],
-      e: "Les deux viennent d'eau chauffée près d'une chambre magmatique ; seul le confinement change tout." }
+      e: "Les deux viennent d'eau chauffée près d'une chambre magmatique ; seul le confinement change tout." },
+      { q: "Pourquoi l'eau au fond d'un geyser peut-elle dépasser 100 °C sans bouillir, puis jaillir d'un coup ?", o: ["Elle est trop salée pour bouillir", "Le poids de la colonne d'eau la met sous pression, ce qui élève son point d'ébullition ; quand la pression baisse, elle se vaporise d'un coup", "Sous pression, l'eau bout plus vite", "Le magma la refroidit par en dessous"], r: 1, e: "Même principe que la cocotte-minute (sujet 4) : la pression ne fait pas bouillir l'eau plus vite, elle élève son point d'ébullition. La détente fait vaporiser d'un coup l'eau surchauffée." }]
   },
   "hydrocarbures": {
     0: { q: "Associe chaque profondeur à ce qui s'y forme.", a: [
@@ -3053,7 +3054,7 @@ MODULES.push({
   },
   {
     titre: "L'hydrothermalisme : sources et geysers",
-    anim: { ratio: 0.62, alt: "Un geyser : l'eau d'un conduit étroit chauffe sous pression, se change d'un coup en vapeur et jaillit, puis le conduit se remplit", draw(ctx, t, w, h) {
+    anim: { ratio: 0.62, alt: "Un geyser : au fond d'un conduit étroit, l'eau sous pression chauffe au-delà de 100 °C sans bouillir, se change d'un coup en vapeur quand la pression baisse et jaillit, puis le conduit se remplit", draw(ctx, t, w, h) {
       const T = 10, u = cyc(t, T), sol = h * 0.3, cx = w * 0.5;
       D.rect(ctx, 0, sol, w, h - sol, C.stone);
       const mg = h * 0.88; D.alpha(ctx, 0.85, () => D.rect(ctx, 0, mg, w, h - mg, C.magma));
@@ -3068,16 +3069,16 @@ MODULES.push({
       D.line(ctx, pts, C.ink, 1.2); D.line(ctx, pts2, C.ink, 1.2);
       const jet = seg(u, 0.55, 0.62) * (1 - seg(u, 0.72, 0.8));
       if (jet > 0) for (let k = 0; k < 26; k++) { const a = -Math.PI / 2 + (k / 25 - 0.5) * 0.5, r = jet * (h * 0.27) * (0.4 + 0.6 * ((k * 7) % 10) / 10); D.circle(ctx, cx + 1 + Math.cos(a) * r * 0.5, sol + Math.sin(a) * r, 3, k % 3 ? C.water : C.surface, C.line, 0.5); }
-      D.text(ctx, u < 0.55 ? "1. L'eau chauffe, la vapeur s'accumule" : u < 0.8 ? "2. Pression trop forte : éruption" : "3. Les cavités se remplissent", 8, 16, { size: 11, color: C.ink, weight: 500 });
-      D.text(ctx, u < 0.55 ? "réseau confiné : la pression monte" : u < 0.8 ? "le réseau se vide d'un coup" : "le cycle recommence", 8, 31, { size: 10, color: C.muted });
+      D.text(ctx, u < 0.55 ? "1. L'eau chauffe au-delà de 100 °C" : u < 0.8 ? "2. La pression baisse : vapeur d'un coup" : "3. Les cavités se remplissent", 8, 16, { size: 11, color: C.ink, weight: 500 });
+      D.text(ctx, u < 0.55 ? "sous pression, elle reste liquide" : u < 0.8 ? "l'eau et la vapeur jaillissent" : "le cycle recommence", 8, 31, { size: 10, color: C.muted });
     }},
     texte: [
-      "L'hydrothermalisme est la circulation souterraine d'une eau chaude (350 °C et plus) chargée de minéraux dissous. Il se produit près d'une chambre magmatique, en zone volcanique. À Yellowstone (point chaud), l'eau de pluie s'infiltre dans les fractures, est chauffée par le magma, se charge de minéraux et remonte : une cellule de convection s'établit.",
-      "Les eaux hydrothermales, très acides, dissolvent les roches et creusent des réseaux de cavités. Dans un geyser, l'eau de ces cavités est réchauffée et se change peu à peu en vapeur ; la pression monte, comme dans une marmite fermée, jusqu'à expulser brutalement la vapeur et l'eau, ce qui vide le réseau. Puis les cavités se remplissent, l'eau se réchauffe et le cycle recommence. Une source chaude, elle, n'est pas confinée : pas de hausse de pression, la vapeur s'échappe en bouillonnant continuellement.",
+      "L'hydrothermalisme est la circulation souterraine d'une eau chaude (350 °C et plus) chargée de minéraux dissous ; en profondeur, la pression la garde liquide. Il se produit près d'une chambre magmatique, en zone volcanique. À Yellowstone (point chaud), l'eau de pluie s'infiltre dans les fractures, est chauffée par le magma, se charge de minéraux et remonte : une cellule de convection s'établit.",
+      "Les eaux hydrothermales, très acides, dissolvent les roches et creusent des réseaux de cavités. Dans un geyser, ces cavités sont reliées à la surface par un conduit étroit. Au fond, le poids de la colonne d'eau met l'eau sous pression : son point d'ébullition monte, et elle reste liquide bien au-delà de 100 °C (eau surchauffée). Quand des bulles de vapeur poussent un peu d'eau hors du conduit, la pression baisse au fond ; l'eau surchauffée se change alors d'un coup en vapeur, qui expulse brutalement l'eau et la vapeur et vide le réseau. Puis les cavités se remplissent, l'eau se réchauffe et le cycle recommence. Une source chaude, elle, n'est pas confinée : la pression ne s'accumule pas, et la vapeur s'échappe en bouillonnant continuellement.",
       "Exemples : Old Faithful (Yellowstone) entre en éruption environ toutes les heures ; Strokkur (Islande) toutes les 5 à 10 min, jusqu'à 20 m. Les eaux hydrothermales déposent de la silice ou du calcaire en surface.",
       "Géothermie : la température augmente avec la profondeur (gradient géothermique ≈ 25 °C/km au Québec, ≈ 150 °C/km en Islande, où l'on chauffe des serres). Certaines sources chaudes viennent simplement d'eau réchauffée par ce gradient, sans magma (Appalaches de Virginie, Ouest canadien)."
     ],
-    cle: { label: "Geyser vs source chaude", html: "<ul><li>Geyser : réseau de cavités <b>confiné</b>, la vapeur fait monter la pression, éruption, puis remplissage et nouveau cycle.</li><li>Source chaude : eau <b>non confinée</b>, pas de hausse de pression, bouillonnement continu.</li><li>Même famille : les fluides hydrothermaux forment aussi des gîtes métallifères (sujet 12).</li></ul>" },
+    cle: { label: "Geyser vs source chaude", html: "<ul><li>Geyser : réseau de cavités <b>confiné</b>. Sous le poids de la colonne d'eau, l'eau reste liquide au-delà de 100 °C ; quand la pression baisse, elle se change <b>d'un coup</b> en vapeur : éruption, puis remplissage et nouveau cycle.</li><li>Source chaude : eau <b>non confinée</b>, pas de hausse de pression, bouillonnement continu.</li><li>Même famille : les fluides hydrothermaux forment aussi des gîtes métallifères (sujet 12).</li></ul>" },
     quiz: [
       { q: "Qu'est-ce que l'hydrothermalisme ?", o: ["L'écoulement des rivières chaudes", "La circulation souterraine d'eau chaude (350 °C et plus) chargée de minéraux, près d'une source de chaleur magmatique", "La fonte des glaciers par la géothermie", "L'évaporation de l'eau de mer"], r: 1, e: "Zone volcanique, non loin d'une chambre magmatique (ex. Yellowstone)." },
       { q: "Qu'est-ce qui distingue un geyser d'une source chaude ?", o: ["L'eau d'un geyser est froide", "Le geyser a des cavités confinées où la pression de vapeur monte jusqu'à l'éruption ; la source chaude n'est pas confinée et bouillonne en continu", "La source chaude est toujours plus chaude", "Rien"], r: 1, e: "Geyser = marmite fermée qui explose puis se remplit ; source chaude = bouillonnement continu." }
