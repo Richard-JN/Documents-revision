@@ -231,6 +231,27 @@ details.plus p{margin-top:8px;font-size:.92rem;color:var(--ink);max-width:62ch}
 .q-item.good{border-color:var(--sage);background:color-mix(in srgb,var(--sage) 12%,var(--bg))}
 .q-item.bad{border-color:var(--alert);background:color-mix(in srgb,var(--alert) 8%,var(--bg))}
 .q-liste-bilan b.ok{color:var(--sage)}.q-liste-bilan b.no{color:var(--alert)}
+.q-multi,.q-vf{padding:10px 12px;border:1px dashed var(--steel);border-radius:4px}
+.q-opts.multi button{display:grid;grid-template-columns:auto 1fr;column-gap:8px}
+.q-opts.multi button::before{content:"";width:13px;height:13px;margin-top:2px;border:1.5px solid var(--muted);border-radius:2px;grid-row:span 2}
+.q-opts.multi button.pick::before{background:var(--steel);border-color:var(--steel);box-shadow:inset 0 0 0 2px var(--bg)}
+.q-opts.multi button.good::before{background:var(--sage);border-color:var(--sage);box-shadow:inset 0 0 0 2px var(--bg)}
+.q-opts.multi button.bad::before{background:var(--alert);border-color:var(--alert);box-shadow:inset 0 0 0 2px var(--bg)}
+.q-opts button.manque{border-color:var(--sage);border-style:dashed}
+.q-opts button.neutre{opacity:.85}
+.q-oe{display:block;grid-column:2;margin-top:3px;font-size:.8rem;color:var(--muted)}
+.q-oe b{color:var(--ink);font-weight:600}
+.q-vf-liste{display:grid;gap:6px;max-width:680px}
+.q-vfl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;padding:6px 8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);font-size:.88rem}
+.q-vfl.good{border-color:var(--sage);background:color-mix(in srgb,var(--sage) 10%,var(--bg))}
+.q-vfl.bad{border-color:var(--alert);background:color-mix(in srgb,var(--alert) 8%,var(--bg))}
+.q-vfl .q-corr{grid-column:1 / -1;color:var(--muted);font-weight:400}
+.q-vfl.bad .q-corr{color:var(--ink)}
+.q-vf-b{display:flex;gap:4px}
+.q-vf-b button{min-width:38px;min-height:32px;border:1px solid var(--line);border-radius:3px;background:var(--surface);color:var(--ink);font:600 .85rem var(--mono);cursor:pointer}
+.q-vf-b button.pick{background:var(--steel);border-color:var(--steel);color:var(--bg)}
+.q-vf-b button:disabled{cursor:default}
+.q-vf-b button.juste{outline:2px solid var(--sage);outline-offset:1px}
 @media (max-width:520px){.q-paire{grid-template-columns:1fr}.q-corr{grid-column:1}}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;border:1.5px solid var(--line);vertical-align:-1px;flex:none}
 .dot.s-rouge{background:var(--alert);border-color:var(--alert)} .dot.s-orange{background:var(--rebar);border-color:var(--rebar)}
@@ -936,7 +957,7 @@ const QUIZ_DATA = {
 /* Associations (2026-10-25) : là où la liste du prof demande de connaître toutes les possibilités (types, classes, étapes),
    une question qui les reprend toutes, ajoutée APRÈS les Teste-toi existants (la progression reste intacte).
    { q, a: [[gauche, droite], …], x: [leurres facultatifs], e } ; une même réponse peut revenir (classement). */
-const QUIZ_PLUS = {
+const QUIZ_PLUS = [{
   "atome-mineral": {
     1: { q: "Associe chaque notion à ce qu'elle désigne.", a: [
       ["Maille élémentaire", "Plus petit motif qui, répété, génère tout le cristal"],
@@ -1262,7 +1283,530 @@ const QUIZ_PLUS = {
       ["Pénéplaine (en théorie)", "90 Ma"]],
       e: "L'isostasie compense l'érosion (rapport 4 : 5), d'où la lenteur de l'aplanissement." }
   }
-};
+}, 
+  /* Vague 2 (2026-10-26) : les formats du quiz pratique du prof. Les questions marquées « tiré du quiz du prof » reprennent son quiz
+     du module 4 (réponses vérifiées dans les notes) ; les autres sont écrites dans son style : « cochez la ou les réponses exactes »
+     (r = tableau) et séries d'énoncés (vf) posées « lequel est vrai ? » ou « le(s)quel(s) est (sont) faux ? » (forme), à la demande de Jean-Nicolas. */
+  {
+  "atome-mineral": {
+    0: { q: "Atomes et liens chimiques, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Presque toute la masse d'un atome est dans son noyau.",
+      "Le numéro atomique correspond au nombre de neutrons.",
+      "Dans NaCl, le sodium donne un électron au chlore : c'est un lien ionique.",
+      "Le lien ionique est plus fort que le lien covalent.",
+      "Les 118 éléments du tableau périodique sont tous présents naturellement sur Terre."], r: [0, 2], oe: [
+      "Masse atomique = protons + neutrons, tous deux dans le noyau.",
+      "C'est le nombre de protons.",
+      "Transfert d'électron : Na⁺ et Cl⁻.",
+      "C'est l'inverse : le covalent (électrons partagés) est le plus fort.",
+      "90 seulement sont présents naturellement."],
+      e: "Hiérarchie : atomes → molécules → cristal → minéral → roche." },
+    1: { q: "Pourquoi affirme-t-on que la calcite est le polymorphe de l'aragonite ?", source: "tiré du quiz du prof",
+      e: "Elles ont la <b>même composition chimique</b> (CaCO₃), mais une <b>structure cristalline différente</b>. Même chose pour le diamant et le graphite (C)." },
+    2: [
+      { q: "Les minéraux et leurs propriétés, <b>cochez la ou les réponses exactes</b> :", source: "tiré du quiz du prof", fixe: true, o: [
+        "Les minéraux se définissent seulement par leur composition chimique.",
+        "Pour un minéral donné, les substitutions de certains ions pour d'autres sont contrôlées par la taille et la charge des ions.",
+        "Dans les minéraux, les charges électriques sont toujours neutres.",
+        "Les propriétés optiques ne permettent pas d'identifier les minéraux.",
+        "Le clivage, une propriété importante des minéraux, dépend aussi de leur densité."], r: [1, 2], oe: [
+        "« Seulement » est le piège : un minéral se définit aussi par sa structure cristalline (et il est solide, naturel, inorganique).",
+        "Ex. Fe²⁺ remplace Mg²⁺ dans l'olivine : taille et charge semblables.",
+        "Notes : « Dans les minéraux, il faut que les charges soient neutres. » Les charges du tétraèdre SiO₄⁴⁻ sont neutralisées par partage d'oxygènes et ajout de cations.",
+        "Elles permettent d'identifier les minéraux, au microscope polarisant sur lame mince (30 µm) ; c'est un outil de spécialiste.",
+        "Le clivage dépend de la structure cristalline : il suit les plans où les liens sont les plus faibles. La densité n'y est pour rien."],
+        e: "Lis chaque énoncé jusqu'au bout : un seul mot (« seulement », « ne… pas », « aussi ») suffit à le rendre faux." },
+      { q: "<b>Donnez</b> la définition des minéraux.", source: "tiré du quiz du prof",
+        e: "Un minéral est une substance <b>solide naturelle et inorganique</b>, à l'<b>état cristallin</b> (atomes ordonnés selon une structure répétée) et de <b>composition chimique définie</b>, mais pas fixe (substitutions ; polymorphes). Exceptions : mercure liquide, opale amorphe, minéraux métamictes." },
+      { q: "Définition d'un minéral", forme: "vrai", vf: [
+        ["La glace est un minéral, mais pas l'eau liquide.", true, "la glace est solide, naturelle, cristalline et inorganique."],
+        ["Un diamant de laboratoire est un minéral, puisqu'il a la même composition et la même structure qu'un diamant naturel.", false, "un minéral doit être naturel ; les produits synthétiques sont exclus."],
+        ["L'opale, faite de silice amorphe hydratée, est une exception à la règle cristalline.", true],
+        ["La composition chimique d'un minéral est définie, mais pas fixe.", true, "ex. la sphalérite ZnS est en réalité (Zn, Fe, Cd)S."],
+        ["Le potassium remplace facilement l'aluminium dans une structure cristalline.", false, "tailles et charges trop différentes ; le fer remplace facilement le magnésium."],
+        ["L'émail des dents est un minéral.", false, "les substances d'origine biologique sont exclues."]],
+        e: "Les 3 critères : solide naturel et inorganique · état cristallin · composition définie." }
+    ]
+  },
+  "proprietes-mineraux": {
+    0: [
+      { q: "Comment se nomment les colorations de minéraux qui ne sont pas dépendantes de la composition chimique ?", source: "tiré du quiz du prof", fixe: true, o: [
+        "Colorations simulées", "Colorations pseudochromatiques", "Colorations artificielles", "Colorations optiques", "Colorations cristallo-dépendantes"], r: [1],
+        e: "Notes : « Phénomènes pseudochromatiques = colorations qui ne sont pas dépendantes de la composition chimique » : feu du diamant (dispersion), œil de tigre, opalescence (diffraction), labradorescence. Elles s'opposent aux couleurs dues aux chromophores (Cr, Ti, Fe…)." },
+      { q: "Couleur, éclat et trait", forme: "faux", vf: [
+        ["Le trait est plus constant que la couleur.", true],
+        ["Un même chromophore donne toujours la même couleur, quel que soit le minéral.", false, "la couleur dépend aussi de la structure : le chrome rend l'émeraude verte et le rubis rouge."],
+        ["Le « feu » du diamant est une pseudo-couleur due à la dispersion de la lumière.", true],
+        ["Pour juger de la couleur, on observe la surface altérée du minéral.", false, "on observe une cassure fraîche : l'altération (oxydation, hydratation) change la couleur."],
+        ["L'éclat est lié à l'indice de réfraction du minéral.", true, "indice élevé → éclat métallique."]],
+        e: "La couleur est « loin d'être absolue » : le quartz peut être incolore, rose, laiteux ou fumé." }
+    ],
+    1: [
+      { q: "Associez les minéraux et leurs propriétés.", source: "tiré du quiz du prof", a: [
+        ["C'est la résistance d'un minéral à se laisser rayer.", "Dureté"],
+        ["C'est l'aspect qu'offre leur surface lorsqu'elle réfléchit la lumière.", "Éclat"],
+        ["C'est une constante physique qui peut être mesurée.", "Densité"],
+        ["Cela correspond aux plans de faiblesse de la structure cristalline.", "Clivage"]],
+        x: ["Trait", "Couleur", "Forme cristalline"],
+        e: "Densité = ρ minéral / ρ eau, sans unité (≈ 2,7 pour la plupart des minéraux)." },
+      { q: "Vrai ou faux : le diamant est indestructible.", source: "tiré du quiz du prof", o: ["Vrai", "Faux"], r: 1,
+        e: "Faux. Le diamant est le plus <b>dur</b> (10 sur l'échelle de Mohs) : rien ne le raye. Mais dureté ne veut pas dire résistance aux chocs : un coup de marteau le brise selon ses plans de clivage." }
+    ],
+    2: [
+      { q: "Les minéraux et leurs propriétés : <b>cochez la seule réponse exacte.</b>", source: "tiré du quiz du prof", fixe: true, o: [
+        "O et H comptent pour près des ¾ des éléments chimiques de la croûte terrestre.",
+        "Les micas se débitent en feuilles grâce à leur clivage.",
+        "Pour une espèce minérale donnée, l'orientation des plans de clivage est fonction des températures et pressions qu'a subies ce minéral au moment de sa formation.",
+        "La couleur est un critère d'identification absolu des minéraux."], r: 1, oe: [
+        "C'est O et <b>Si</b> : 74,3 % de la croûte.",
+        "Un seul plan de clivage : le mica se débite en feuillets.",
+        "Le clivage dépend de la structure cristalline de l'espèce : mêmes angles pour tous ses cristaux, peu importe les conditions de formation.",
+        "La couleur est « loin d'être absolue »."],
+        e: "Clivages typiques : mica 1 plan · pyroxène 2 à ≈ 90° · amphibole 2 à 120°/60° · halite 3 à 90° · calcite 3 ≠ 90° · quartz aucun." },
+      { q: "Concernant le clivage des minéraux, quelle affirmation est vraie ?", source: "tiré du quiz du prof", fixe: true, o: [
+        "L'orientation des plans de clivage d'un minéral dépend des conditions de température et de pression lors de sa formation.",
+        "Tous les minéraux possèdent au moins un plan de clivage.",
+        "Le clivage se produit le long de zones où les liaisons chimiques sont plus faibles dans la structure cristalline.",
+        "La cassure conchoïdale, comme celle du quartz, est un type de clivage."], r: 2, oe: [
+        "Elle dépend de la structure cristalline de l'espèce.",
+        "Le quartz n'a aucun clivage.",
+        "Plans de faiblesse : les liens ioniques entre les unités de tétraèdres.",
+        "Cassure ≠ clivage : sans clivage, le minéral se casse de façon irrégulière ou conchoïdale."],
+        e: "Le clivage donne toujours les mêmes angles, quelle que soit la taille du fragment." }
+    ],
+    3: { q: "Autres propriétés, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Les carbonates font effervescence à l'acide en libérant du CO₂.",
+      "La phosphorescence cesse dès qu'on éteint la lampe UV.",
+      "La fluorescence vient d'ions activateurs (Mn, U, terres rares) qui réémettent l'énergie UV en lumière visible.",
+      "Un minéral peut être faiblement radioactif par substitution d'uranium ou de thorium dans sa structure.",
+      "Un seul critère bien choisi suffit pour identifier un minéral."], r: [0, 2, 3], oe: [
+      "CaCO₃ + 2 HCl → CaCl₂ + H₂O + CO₂.",
+      "C'est la fluorescence qui cesse ; la phosphorescence persiste un moment.",
+      "",
+      "Ex. zircon, monazite (fortement : uraninite, thorianite).",
+      "On combine toujours plusieurs critères : éclat, trait, dureté, clivage, densité, tests chimiques."],
+      e: "Méthode : ne jamais se fier à un seul critère." }
+  },
+  "classification-silicates": {
+    0: [
+      { q: "Laquelle de ces catégories <b>n'est pas</b> présente dans la classification de Strunz ?", source: "tiré du quiz du prof", fixe: true, o: [
+        "Carbonates", "Alcalins", "Phosphates", "Oxydes", "Halogénures", "Éléments natifs"], r: 1,
+        e: "Les classes reposent sur l'anion dominant : éléments natifs, sulfures, oxydes et hydroxydes, halogénures, carbonates, phosphates, sulfates, silicates. « Alcalins » désigne une famille d'éléments (Na, K…), pas une classe de minéraux." },
+      { q: "Classification des minéraux", forme: "vrai", vf: [
+        ["La classification repose sur l'anion ou le groupe anionique dominant.", true],
+        ["Les silicates forment environ 95 % du volume de la croûte.", true],
+        ["Le noyau de la Terre est surtout fait de silicates.", false, "il est presque entièrement fait de fer et de nickel."],
+        ["La halite et la fluorite sont des halogénures.", true],
+        ["La pyrite (FeS₂) est un sulfate.", false, "c'est un sulfure (S²⁻) ; les sulfates contiennent SO₄²⁻ (gypse, barite)."]],
+        e: "Pas besoin de noms de minéraux à l'examen : retiens les catégories." }
+    ],
+    1: { q: "Le tétraèdre et les silicates, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Le tétraèdre SiO₄ porte une charge de −4.",
+      "Sa charge est neutralisée par le partage d'oxygènes et l'ajout d'ions positifs (Fe, Mg, K, Na, Ca).",
+      "Les liens Si–O entre tétraèdres sont plus faibles que les liens avec les cations.",
+      "Le clivage passe par les liens ioniques, les plus faibles, entre les unités de tétraèdres.",
+      "Les phyllosilicates sont formés de tétraèdres isolés."], r: [0, 1, 3], oe: [
+      "Si⁴⁺ + 4 O²⁻ = −4.",
+      "",
+      "C'est l'inverse : partage d'oxygènes = liens covalents, forts ; cations = liens ioniques, plus faibles.",
+      "D'où la structure qui prédit les angles de clivage.",
+      "Phyllo = feuillets. Isolés = nésosilicates."],
+      e: "Isolés (néso) · chaînes (ino) · feuillets (phyllo) · charpente 3D (tecto)." },
+    2: { q: "Carbonates et sulfures en génie, <b>cochez la ou les réponses exactes</b> :", o: [
+      "La calcite se dissout en milieu acide (pH < 7) aux conditions ambiantes.",
+      "Avec l'humidité et l'oxygène, les sulfures se transforment en sulfates, plus volumineux.",
+      "La pyrite est exploitée surtout pour son fer.",
+      "La pyrrhotite est en cause dans la dégradation du béton dans la région de Trois-Rivières."], r: [0, 1, 3], oe: [
+      "", "Gonflement des remblais pyriteux (Rive-Sud de Montréal).", "Pyrite et pyrrhotite sont abondantes, mais sans valeur économique.", ""],
+      e: "Un minéral instable dans son nouvel environnement prend du volume : même famille de problèmes que la RAG." }
+  },
+  "formation-mineraux": {
+    0: { q: "La série de Bowen, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Dans la série discontinue, l'olivine cristallise en premier.",
+      "Le quartz cristallise à haute température, au début de la série.",
+      "La série continue concerne les plagioclases : calciques à haute température, sodiques à basse.",
+      "Les cristaux, plus denses que le magma, s'accumulent au fond de la chambre magmatique.",
+      "La série de Bowen s'applique à tous les minéraux, carbonates compris."], r: [0, 2, 3], oe: [
+      "Olivine → pyroxènes → amphiboles → biotite → feldspath K, muscovite, quartz.",
+      "Le quartz est à la fin, à basse température.",
+      "Anorthite (Ca) → albite (Na).",
+      "D'où les assemblages ultramafique → felsique.",
+      "Elle ne vaut que pour les magmas et une partie des silicates."],
+      e: "Haut de Bowen : sombre, Fe-Mg, chaud · bas : pâle, Si-Al, froid." },
+    1: { q: "La séquence évaporitique", forme: "faux", vf: [
+      ["L'ordre de précipitation est calcite → gypse → halite → sylvite.", true],
+      ["Les minéraux les plus solubles précipitent en premier.", false, "les moins solubles d'abord (calcite), les plus solubles à la fin (sylvite)."],
+      ["L'eau de mer a une salinité d'environ 35 ‰.", true],
+      ["Il faut une région où les précipitations dépassent l'évaporation.", false, "c'est l'évaporation qui doit dépasser les précipitations."],
+      ["On atteint rarement le stade de la potasse (sylvite).", true]],
+      e: "Une solution sursaturée précipite des cristaux : c'est le principe commun aux évaporites, aux veines, aux géodes et aux dépôts de cavernes." },
+    2: { q: "Quelle affirmation est vraie concernant <b>la formation des cavernes</b> ?", source: "tiré du quiz du prof", fixe: true, o: [
+      "L'acidité de l'eau de pluie provoque la dissolution des calcaires, une roche sédimentaire formée essentiellement de carbonates.",
+      "L'érosion mécanique causée par les rivières souterraines creuse les grottes en arrachant des particules à la roche en place.",
+      "L'eau de pluie, légèrement basique, attaque le calcaire en précipitant de la calcite.",
+      "Les grottes sont fréquentes dans les granites et les roches magmatiques sensibles au phénomène de dissolution."], r: 0, oe: [
+      "Pluie acide (pH ≈ 4,5 à 5) + carbonates → dissolution le long des fractures.",
+      "C'est la dissolution chimique, pas l'arrachement mécanique, qui crée le réseau.",
+      "La pluie est acide ; la calcite précipite plus tard, dans la caverne, quand l'eau dégaze son CO₂ (spéléothèmes).",
+      "Les grottes se forment dans les calcaires ; granites et roches magmatiques sont peu solubles."],
+      e: "Dans le quiz du prof, les choix B et C étaient identiques ; le choix C a été remplacé par un autre piège du même genre." },
+    3: { q: "Transformation et diagramme de phases", forme: "vrai", vf: [
+      ["Le métamorphisme transforme les minéraux par fusion partielle.", false, "il les transforme à l'état solide, sans fusion."],
+      ["L'altération chimique transforme les feldspaths en argiles.", true],
+      ["Sous pression, le point d'ébullition de l'eau monte.", true, "≈ 120 °C dans une cocotte-minute."],
+      ["Sous pression, le point de fusion de la glace monte aussi.", false, "il baisse un peu (pente négative) : la glace est moins dense que l'eau liquide."],
+      ["La stabilité d'un minéral dépend aussi du pH et du potentiel redox (Eh).", true]],
+      e: "La pression favorise la phase la plus dense." }
+  },
+  "cycle-roches": {
+    0: { q: "Le magma", forme: "faux", vf: [
+      ["Le magma contient des silicates fondus, des cristaux et des gaz dissous.", true, "H₂O, CO₂, SO₂, entre 650 et 1300 °C."],
+      ["Le magma se forme seulement dans les zones de subduction.", false, "aussi aux dorsales, aux points chauds et parfois au cœur des chaînes de montagnes."],
+      ["En surface, le magma s'appelle lave.", true],
+      ["Le granite est une roche extrusive.", false, "il est intrusif ; son équivalent extrusif est la rhyolite."]],
+      e: "Le magma est à la fois le départ et l'arrivée du cycle." },
+    1: { q: "Le cycle des roches, <b>cochez la ou les réponses exactes</b> :", o: [
+      "La diagenèse transforme les sédiments en roche sédimentaire.",
+      "Une roche ignée doit d'abord devenir sédimentaire avant d'être métamorphisée.",
+      "Le métamorphisme se fait à l'état solide.",
+      "La fusion d'une roche produit un nouveau magma.",
+      "Une roche métamorphique ne peut plus être altérée ni érodée."], r: [0, 2, 3], oe: [
+      "Surtout par cimentation.",
+      "Toute roche peut être métamorphisée directement : c'est un « raccourci » du cycle.",
+      "", "",
+      "Soulevée, toute roche peut être altérée et érodée."],
+      e: "Les chemins du cycle ne sont pas linéaires." }
+  },
+  "roches-ignees": {
+    0: { q: "Classer une roche ignée, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Le basalte et le gabbro ont la même composition chimique.",
+      "Une texture aphanitique indique un refroidissement lent en profondeur.",
+      "Mafique veut dire riche en fer et en magnésium.",
+      "La rhyolite est l'équivalent extrusif du granite.",
+      "Les minéraux felsiques sont typiquement sombres."], r: [0, 2, 3], oe: [
+      "Seule la taille des cristaux change (intrusif / extrusif).",
+      "Aphanitique (< 1 mm) = refroidissement rapide en surface ; phanéritique = lent en profondeur.",
+      "", "",
+      "Mafiques sombres, felsiques pâles."],
+      e: "Paires : péridotite/komatiite · gabbro/basalte · diorite/andésite · granite/rhyolite." },
+    1: { q: "Fusion partielle", forme: "vrai", vf: [
+      ["Les premiers minéraux à fondre sont les felsiques, au bas de la suite de Bowen.", true],
+      ["Le magma d'une fusion partielle est plus pauvre en silice que la roche de départ.", false, "il est plus riche en silice."],
+      ["Dans la nature, la fusion d'une roche est souvent totale.", false, "elle n'est jamais totale."],
+      ["Plus le taux de fusion est élevé, plus le magma ressemble à la roche initiale.", true],
+      ["La fusion partielle est l'inverse de la cristallisation fractionnée.", true]],
+      e: "Pas besoin de connaître les minéraux : retiens le sens des deux processus." }
+  },
+  "magmatisme-volcans": {
+    0: { q: "Les lieux du volcanisme, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Aux dorsales, le manteau fond par décompression.",
+      "En zone de subduction, l'ajout d'eau et de volatiles abaisse le point de fusion.",
+      "Les points chauds se trouvent toujours à la limite entre deux plaques.",
+      "Les magmas de subduction sont surtout ultramafiques et très fluides.",
+      "Les collines montérégiennes viennent d'un ancien point chaud."], r: [0, 1, 4], oe: [
+      "Fusion adiabatique de la péridotite (15 à 25 %).",
+      "",
+      "Ils produisent des volcans intraplaques (Hawaii).",
+      "Ils sont intermédiaires à felsiques, visqueux et explosifs.",
+      "Actif il y a un peu plus de 100 Ma."],
+      e: "Deux mécanismes : décompression (dorsales, points chauds) · ajout de volatiles (subduction)." },
+    1: { q: "Laves mafiques et felsiques", forme: "faux", vf: [
+      ["Plus un magma est riche en silice, plus il est visqueux.", true],
+      ["Les volcans boucliers ont des pentes abruptes et sont très explosifs.", false, "pentes douces, laves fluides ; ce sont les stratovolcans qui sont abrupts et explosifs."],
+      ["Une lave mafique (≈ 1200 °C) est plus chaude qu'une lave felsique (800–900 °C).", true],
+      ["Les lapillis sont plus gros que les bombes.", false, "cendres < 2 mm < lapillis < 6,4 cm < bombes."],
+      ["Une nuée ardente peut dévaler les flancs à plus de 150 km/h.", true]],
+      e: "Mafique : fluide, coulées, bouclier · felsique : visqueux, gaz piégés, explosion, stratovolcan." },
+    2: { q: "Les produits du volcanisme", forme: "vrai", vf: [
+      ["Le dyke recoupe les couches ; le sill s'insère entre elles.", true],
+      ["Un batholite est une ancienne chambre magmatique.", true],
+      ["Le neck est l'ancienne cheminée d'un volcan.", true],
+      ["Le laccolite est une coulée de lave étalée en surface.", false, "c'est un corps intrusif qui bombe les couches du dessus."],
+      ["L'essentiel du magma cristallise en surface.", false, "l'essentiel cristallise en profondeur, en corps intrusifs."]],
+      e: "À l'examen, il faut nommer ces produits sur une image." }
+  },
+  "roches-sedimentaires": {
+    0: { q: "Les processus sédimentaires, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Les roches sédimentaires couvrent la majeure partie de la surface de la croûte.",
+      "Les roches sédimentaires forment l'essentiel du volume de la croûte.",
+      "Le gel-dégel est une altération chimique.",
+      "La transformation des feldspaths en argiles est une altération chimique.",
+      "Le granoclassement est un tri des particules selon leur taille."], r: [0, 3, 4], oe: [
+      "",
+      "Ce sont les roches ignées qui en forment l'essentiel du volume.",
+      "C'est une altération mécanique (comme les racines).",
+      "Feldspath K + acide carbonique → argile + silice + carbonate de K.",
+      ""],
+      e: "4 processus : altération et érosion · transport · sédimentation · diagenèse." },
+    1: { q: "Les trois fractions", forme: "faux", vf: [
+      ["Les grains de quartz d'une plage du Québec sont terrigènes.", true],
+      ["Les coquilles d'organismes forment la fraction allochimique.", true],
+      ["Les évaporites sont des sédiments terrigènes.", false, "ce sont des précipités chimiques : orthochimiques."],
+      ["On classe les roches orthochimiques selon la taille des particules.", false, "la granulométrie ne s'applique pas aux précipités."],
+      ["Les sables blancs des plages tropicales sont allochimiques.", true, "fragments de coquilles."]],
+      e: "Terrigène (du continent) · allochimique (du bassin, coquilles) · orthochimique (précipités)." },
+    2: { q: "La diagenèse, <b>cochez la ou les réponses exactes</b> :", o: [
+      "La cimentation est le processus principal de la diagenèse.",
+      "La diagenèse commence seulement après des milliers de mètres d'enfouissement.",
+      "Un ciment de calcite précipité dans les pores d'un sable donne un grès.",
+      "La compaction peut aussi cimenter, par dissolution aux contacts entre les grains de quartz.",
+      "Une cimentation faible donne une roche très résistante."], r: [0, 2, 3], oe: [
+      "", "Elle commence déjà sur le fond marin.", "", "La silice dissoute reprécipite autour des grains.", "Faible = friable ; poussée = résistante."],
+      e: "Un grès, c'est un « béton naturel »." }
+  },
+  "roches-metamorphiques": {
+    0: { q: "Le métamorphisme, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Le métamorphisme de contact est surtout contrôlé par la température.",
+      "Le métamorphisme des zones de subduction est surtout contrôlé par la pression.",
+      "Les faciès schiste bleu et éclogite indiquent une haute température et une basse pression.",
+      "L'eau d'une roche hydratée abaisse sa température de fusion.",
+      "Le métamorphisme fait fondre la roche."], r: [0, 1, 3], oe: [
+      "", "", "C'est l'inverse : haute pression, basse température (subduction).", "", "Réactions à l'état solide ; au-delà, c'est la fusion partielle."],
+      e: "3 types à l'examen : contact (T) · régional (P et T) · impact (choc)." },
+    2: { q: "Foliation et types de métamorphisme", forme: "vrai", vf: [
+      ["Le métamorphisme de contact produit une foliation marquée.", false, "sans contrainte de pression, il n'y a pas de foliation."],
+      ["La foliation vient de minéraux aplatis ou étirés qui s'alignent.", true],
+      ["La cornéenne autour du Mont-Royal vient du métamorphisme de contact.", true],
+      ["La séquence mudstone → ardoise → schiste → gneiss marque une intensité croissante.", true],
+      ["Le métamorphisme régional ne touche que quelques mètres autour d'une intrusion.", false, "il touche des milliers de km², dans les racines des chaînes de montagnes."],
+      ["Les cônes de percussion indiquent un impact de météorite.", true]],
+      e: "Foliation : régional et subduction · pas de foliation : contact." }
+  },
+  "eaux-souterraines": {
+    0: { q: "Porosité et perméabilité, <b>cochez la ou les réponses exactes</b> :", o: [
+      "L'argile est très poreuse, mais imperméable.",
+      "Un aquiclude transporte bien l'eau.",
+      "La perméabilité exige des pores connectés.",
+      "Des grains de tailles mélangées augmentent la porosité.",
+      "L'eau souterraine circule en moyenne d'environ 3 cm par jour."], r: [0, 2, 4], oe: [
+      "40 à 70 % de porosité, mais des feuillets qui bloquent l'eau.",
+      "Il « ferme la porte » à la circulation (argiles, shales) ; c'est l'aquifère qui transporte bien l'eau.",
+      "Porosité effective.",
+      "Les petits grains bouchent les vides entre les gros : la porosité baisse.",
+      "≈ 10 m/an ; jusqu'à 15 cm/jour dans les meilleurs aquifères."],
+      e: "Porosité ≠ perméabilité." },
+    2: { q: "Le vocabulaire des eaux souterraines", forme: "faux", vf: [
+      ["Dans la zone vadose, tous les vides sont saturés d'eau.", false, "la zone vadose contient surtout de l'air ; c'est sous le niveau phréatique que tout est saturé."],
+      ["Le niveau phréatique est la surface supérieure de la zone saturée.", true],
+      ["Une nappe confinée (captive) est prise entre deux aquicludes.", true],
+      ["Un puits artésien jaillit si sa bouche est sous la surface piézométrique.", true],
+      ["Le pompage crée un cône de dépression autour du puits.", true],
+      ["Une nappe perchée est retenue par une couche de sable.", false, "elle est retenue par une couche d'argile (imperméable)."]],
+      e: "À définir pour l'examen : aquifère, aquiclude, vadose, nappe phréatique, nappe confinée." },
+    4: { q: "Contamination des nappes, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Les sables et graviers dispersent les contaminants loin.",
+      "Le roc est toujours un gage de sécurité pour enfouir des polluants.",
+      "Les argiles épaisses offrent le moins de risque.",
+      "En bord de mer, l'eau salée flotte sur l'eau douce.",
+      "En bord de mer, le pompage peut faire monter un cône d'eau salée sous le puits."], r: [0, 2, 4], oe: [
+      "Ville de Mercier : nappe contaminée sur 5 km en moins de 10 ans.",
+      "Pas s'il est fracturé.",
+      "",
+      "C'est l'inverse : l'eau douce, moins dense, flotte en lentille sur l'eau salée.",
+      "Intrusion saline (Îles-de-la-Madeleine, Floride)."],
+      e: "Le choix du site dépend du terrain." },
+    5: { q: "La formation d'une grotte, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Les grottes se forment par dissolution du calcaire par une eau de pluie naturellement acide.",
+      "Le réseau de cavités se développe au niveau de la nappe phréatique, à peu près le niveau des cours d'eau.",
+      "Quand le cours d'eau creuse son lit, la nappe monte et noie les cavernes.",
+      "L'effondrement de cavités forme des dolines.",
+      "Les grottes sont fréquentes dans les granites."], r: [0, 1, 3], oe: [
+      "pH ≈ 4,5 dans le sud du Québec.",
+      "",
+      "C'est l'inverse : la nappe baisse et le réseau migre plus en profondeur.",
+      "Danger pour la construction (Boischâtel, Charlesbourg).",
+      "Elles se forment dans les terrains calcaires (karstiques)."],
+      e: "La grotte en 3 étapes : dissolution au niveau de la nappe · la nappe baisse, le réseau descend · effondrements, dolines." },
+    6: { q: "Hydrothermalisme", forme: "vrai", vf: [
+      ["Dans un geyser, l'eau reste liquide au-delà de 100 °C sous le poids de la colonne d'eau.", true],
+      ["Une source chaude est un réseau confiné où la pression s'accumule.", false, "elle n'est pas confinée : la vapeur s'échappe en bouillonnant continuellement."],
+      ["Les eaux hydrothermales sont très acides et dissolvent les roches.", true],
+      ["Toutes les sources chaudes exigent une chambre magmatique.", false, "certaines viennent d'eau réchauffée par le gradient géothermique (Appalaches, Ouest canadien)."],
+      ["Le gradient géothermique au Québec est d'environ 25 °C/km.", true]],
+      e: "Geyser : confiné, pression, éruption · source chaude : non confinée." }
+  },
+  "hydrocarbures": {
+    0: { q: "Formation des hydrocarbures, <b>cochez la ou les réponses exactes</b> :", o: [
+      "La matière organique doit être enfouie dans un milieu anoxique.",
+      "La production d'huile est maximale entre 2000 et 3000 m.",
+      "Le kérogène se forme sous 4000 m.",
+      "Au-delà d'environ 4000 m, les hydrocarbures sont détruits.",
+      "Le méthane biochimique se forme près de la surface, par l'action de bactéries."], r: [0, 1, 3, 4], oe: [
+      "Sinon, elle s'oxyde.", "Fenêtre à l'huile.", "Il se forme dans les premiers 1000 m ; sous 4000 m, tout est « cuit ».", "", ""],
+      e: "Biochimique (< 1000 m) → huile (2000–3000 m) → gaz (≈ 2500–4000 m) → détruit." },
+    1: { q: "Roche mère, roche réservoir et piège", forme: "faux", vf: [
+      ["La roche mère est la roche où se forment les hydrocarbures.", true],
+      ["La roche réservoir doit être poreuse et perméable.", true],
+      ["La roche de couverture doit être perméable pour laisser passer le gaz.", false, "elle doit être imperméable : c'est elle qui arrête la migration et forme le piège."],
+      ["Dans un piège anticlinal, l'huile s'accumule au-dessus du gaz.", false, "séparation par densité : gaz en haut, puis huile, puis eau."],
+      ["Un dôme de sel peut former un piège, car le sel est imperméable.", true]],
+      e: "5 étapes : matière organique anaérobie · enfouissement · migration · réservoir · couverture." },
+    2: { q: "Le charbon, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Le charbon vient surtout de la matière ligneuse des végétaux terrestres.",
+      "On peut trouver du charbon dans des roches de 500 Ma.",
+      "Ordre de transformation : tourbe → lignite → charbon bitumineux → anthracite.",
+      "Plus il y a de carbone, plus le pouvoir calorifique est élevé.",
+      "Le charbon se forme dans des milieux bien oxygénés."], r: [0, 2, 3], oe: [
+      "", "Les végétaux terrestres ne sont abondants que depuis ≈ 360 Ma.", "", "", "Il faut des milieux anoxiques, comme les grands marécages."],
+      e: "Abondant au Carbonifère (360 à 285 Ma)." },
+    3: { q: "L'uranium", forme: "vrai", vf: [
+      ["Seul l'uranium 235 est fissile.", true],
+      ["L'uranium 235 forme la majeure partie de l'uranium naturel.", false, "0,72 % seulement ; le reste est surtout de l'uranium 238."],
+      ["Il faut au moins 3 % d'uranium 235 pour une réaction en chaîne : on enrichit le combustible.", true],
+      ["La fission d'un noyau d'uranium 235 libère de l'énergie et trois neutrons.", true],
+      ["L'uranium 235 a une demi-vie plus longue que l'uranium 238.", false, "0,704 Ga contre 4,47 Ga."]],
+      e: "Isotopes : ²³⁸U (92 + 146) et ²³⁵U (92 + 143)." },
+    4: { q: "Gaz conventionnel et non conventionnel", forme: "faux", vf: [
+      ["Dans le gaz de shale, la même roche est roche mère, roche réservoir et roche couverture.", true],
+      ["Le gaz non conventionnel est un gaz différent du gaz conventionnel.", false, "c'est le même gaz (surtout du méthane), seulement peu concentré dans une roche peu perméable."],
+      ["On l'extrait par des puits horizontaux et la fracturation hydraulique.", true],
+      ["« Gaz de schiste » est le terme juste pour le Shale d'Utica.", false, "un schiste est métamorphique : ses hydrocarbures auraient été détruits."],
+      ["Le gaz conventionnel a migré de la roche mère vers une roche réservoir.", true]],
+      e: "Conventionnel : migration, piège, puits vertical · non conventionnel : pas de migration, puits horizontal + fracturation." }
+  },
+  "gites-metalliferes": {
+    0: { q: "Types de gîtes, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Les placers aurifères sont des gîtes sédimentaires.",
+      "Les sulfures Ni-Cu-Pt-Pd de la mine Raglan sont des gîtes magmatiques.",
+      "Les sulfures massifs volcanogènes (SMV) de l'Abitibi sont des gîtes sédimentaires.",
+      "Les granites, tardifs dans Bowen, concentrent U, Li, Be et terres rares.",
+      "L'or filonien de l'Abitibi est un gîte magmatique."], r: [0, 1, 3], oe: [
+      "Concentrés par les cours d'eau (Chaudière, Klondike).",
+      "Dans des komatiites.",
+      "Ils sont hydrothermaux : fumeurs noirs des dorsales.",
+      "",
+      "Il est hydrothermal : veines de quartz dans les failles."],
+      e: "Trois types : magmatiques · sédimentaires · hydrothermaux." },
+    1: { q: "Gîtes sédimentaires", forme: "vrai", vf: [
+      ["La bauxite se forme par altération chimique en climat tropical.", true],
+      ["Le fer de la Fosse du Labrador a moins de 1 Ga.", false, "il date du Protérozoïque, il y a plus de 2 Ga."],
+      ["Les évaporites (NaCl, KCl) sont des gîtes sédimentaires.", true],
+      ["Les cours d'eau concentrent les minéraux lourds là où le courant accélère.", false, "là où il ralentit : c'est le placer."]],
+      e: "Transport et dépôt, gravitaire ou chimique." },
+    2: { q: "Gîtes hydrothermaux", forme: "faux", vf: [
+      ["Les fluides hydrothermaux peuvent être météoriques, magmatiques ou métamorphiques.", true],
+      ["Les fumeurs noirs éjectent un fluide à 350 °C, acide et chargé de métaux.", true],
+      ["L'or filonien a de faibles teneurs, mais un fort tonnage.", false, "c'est l'inverse : fortes teneurs (3 à 15 g/t), faible tonnage."],
+      ["Les SMV de l'Abitibi se sont formés dans un océan archéen, il y a 2,7 Ga.", true]],
+      e: "Les failles se forment surtout pendant la fermeture du cycle de Wilson." },
+    4: { q: "Les géomatériaux", forme: "vrai", vf: [
+      ["Un géomatériau est un matériau d'origine géologique, extrait de la croûte et utilisé par l'être humain.", true],
+      ["Les trois familles sont les granulats, les pierres de construction et ornementales, et les roches et minéraux industriels.", true],
+      ["Le gypse et les argiles font partie des pierres ornementales.", false, "ce sont des roches et minéraux industriels."],
+      ["Chaque Canadien utilise indirectement moins d'une tonne de granulats par année.", false, "plus de 10 tonnes."]],
+      e: "Définition à savoir par cœur." }
+  },
+  "cours-eau": {
+    0: { q: "Évolution d'une vallée fluviale, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Une jeune vallée est étroite, en V, avec chutes et rapides.",
+      "À maturité, le cours d'eau érode latéralement et élargit sa vallée.",
+      "En vieillesse, la plaine est plus étroite que les méandres.",
+      "Le ruissellement est le type d'érosion le plus commun sur les continents.",
+      "Les couches les plus compétentes s'érodent en premier."], r: [0, 1, 3], oe: [
+      "", "Il construit aussi une plaine d'inondation.", "Elle est beaucoup plus large que les plus larges méandres.", "", "Ce sont les moins compétentes (Grand Canyon, îles Mingan)."],
+      e: "Jeunesse · maturité · vieillesse." },
+    1: { q: "Les méandres", forme: "faux", vf: [
+      ["Le courant est le plus rapide sur la rive concave, qui s'érode.", true],
+      ["La barre de méandre se dépose sur la rive concave.", false, "sur la rive convexe (intérieure), où le courant est lent."],
+      ["Un méandre abandonné devient un bras mort.", true]],
+      e: "Érosion à l'extérieur, dépôt à l'intérieur : le méandre migre." },
+    2: { q: "Profil d'équilibre et niveau de base", forme: "vrai", vf: [
+      ["Le niveau de base est le niveau du plan d'eau dans lequel le cours d'eau se jette.", true],
+      ["À l'équilibre, la pente est forte et le cours d'eau creuse activement.", false, "la pente est très faible : il ne peut plus éroder plus bas."],
+      ["Le niveau de base ultime est le niveau marin.", true],
+      ["Une baisse du niveau de base relance l'érosion.", true],
+      ["Un barrage provoque de l'érosion dans le réservoir, en amont.", false, "les sédiments s'y accumulent (envasement)."]],
+      e: "Niveau de base ↓ → l'érosion reprend." }
+  },
+  "glaciers": {
+    0: { q: "Les deux types de glaciers, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Les deux types sont les calottes glaciaires (inlandsis) et les glaciers de montagne (alpins).",
+      "La banquise de l'Arctique est une calotte glaciaire.",
+      "La fonte de la banquise fait beaucoup monter le niveau marin.",
+      "La calotte antarctique contient environ 70 % de l'eau douce de la Terre.",
+      "La neige se transforme en névé, puis en glace."], r: [0, 3, 4], oe: [
+      "", "Elle flotte sur l'océan : ce n'est pas une calotte.", "Elle déplace déjà son poids en eau : sa fonte ne change presque pas le niveau marin.", "", ""],
+      e: "Calotte (sur un continent) ≠ banquise (sur l'océan)." },
+    2: { q: "L'érosion glaciaire", forme: "faux", vf: [
+      ["Ce sont surtout les sédiments contenus dans la glace qui érodent la roche.", true],
+      ["Un glacier transforme une vallée en U en vallée en V.", false, "c'est l'inverse : V (fluviale) → U (glaciaire)."],
+      ["Un fjord est une vallée glaciaire submergée.", true],
+      ["Les stries et cannelures indiquent le sens d'écoulement du glacier.", true],
+      ["Un cirque est une ancienne zone d'accumulation.", true]],
+      e: "Marques d'érosion : vallées en U, cirques, arêtes, vallées suspendues, fjords, roches moutonnées, striées." },
+    3: { q: "Les dépôts glaciaires, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Le till est fait de débris de toutes tailles, non triés.",
+      "Un esker est formé par la glace seule, sans eau de fonte.",
+      "Une moraine frontale marque l'ancienne position du front.",
+      "Un kettle est une dépression laissée par la fonte d'un bloc de glace.",
+      "Le drumlin a son flanc abrupt vers l'aval."], r: [0, 2, 3], oe: [
+      "", "C'est un lacet de sable et de gravier laissé par un ancien cours d'eau dans ou sous la glace.", "", "", "Flanc abrupt vers l'amont, allongé vers l'aval."],
+      e: "Trié par l'eau : esker, kame, plaine d'épandage · non trié : till, moraines." }
+  },
+  "champlain": {
+    1: { q: "La mer de Champlain", forme: "faux", vf: [
+      ["La mer de Champlain a atteint son maximum il y a environ 13 000 ans.", true],
+      ["Elle a envahi la vallée parce que la croûte, enfoncée par la glace, était sous le niveau de la mer.", true],
+      ["Au maximum glaciaire, le niveau marin était environ 130 m plus haut qu'aujourd'hui.", false, "il était ≈ 130 m plus bas : l'eau était stockée dans la glace."],
+      ["Le golfe de Laflamme occupait le Saguenay et le Lac-Saint-Jean.", true],
+      ["On trouve des dépôts marins jusqu'à ≈ 125 m au-dessus du niveau actuel de la mer.", true]],
+      e: "Mer de Champlain : date · niveau marin · argile sensible." },
+    2: { q: "Isostasie et rebond", forme: "faux", vf: [
+      ["La lithosphère « flotte » sur l'asthénosphère, comme un iceberg.", true],
+      ["2 700 m de glace pèsent à peu près comme 1 000 m de roche.", true],
+      ["Après la fonte, le continent remonte instantanément.", false, "il remonte lentement : il monte encore aujourd'hui."],
+      ["Le centre du Bouclier (baie d'Hudson) monte aujourd'hui d'environ 10 mm/an.", true],
+      ["Le pourtour du Bouclier (Nouvelle-Angleterre) monte lui aussi.", false, "il s'enfonce (≈ −2 mm/an)."]],
+      e: "Une surcharge rapide enfonce le continent ; après la fonte, il remonte lentement." },
+    3: { q: "Les argiles sensibles, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Les argiles sensibles sont faites à plus de 80 % de minéraux argileux.",
+      "Déposées en eau salée, leurs particules étaient liées par des forces ioniques.",
+      "Le lessivage par l'eau douce a enlevé les sels et réduit la cohésion.",
+      "Remaniée, une argile sensible peut s'écouler comme un liquide.",
+      "Une charge ajoutée au sommet d'un talus le stabilise."], r: [1, 2, 3], oe: [
+      "C'est une farine de roche : 80 à 90 % de quartz et de feldspaths, 10 à 20 % d'argiles.",
+      "Les cations faisaient floculer les particules.",
+      "",
+      "",
+      "Elle hausse les pressions d'eau dans le sol : c'est une cause de glissement."],
+      e: "Eau salée (cohésion) → lessivage (perte de cohésion) → déclencheur." }
+  },
+  "deserts-sols": {
+    0: { q: "Les déserts, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Un désert reçoit moins de 20 cm de précipitations par an.",
+      "Les grands déserts sont à l'équateur, là où il fait le plus chaud.",
+      "Vers 30° de latitude, l'air sec redescend : zone de haute pression.",
+      "Les régions polaires sont des déserts.",
+      "À l'équateur, l'air chaud redescend et assèche le sol."], r: [0, 2, 3], oe: [
+      "La définition dépend de l'aridité, pas de la température.",
+      "Ils sont vers 30° (Sahara, Kalahari, Arizona).",
+      "",
+      "Déserts froids.",
+      "À l'équateur, l'air chaud monte : basse pression et pluies."],
+      e: "Cellules de vent : tropicale (0–30°), tempérée (30–60°), polaire." },
+    1: { q: "L'érosion éolienne", forme: "vrai", vf: [
+      ["La saltation déplace les sables moyens par bonds.", true],
+      ["Le loess est un dépôt de poussières fines apportées par le vent.", true],
+      ["Le reg est une mer de dunes.", false, "le reg est un pavage de cailloux ; la mer de dunes, c'est l'erg."],
+      ["Le vent est un agent plus efficace que l'eau sur l'ensemble des continents.", false, "il est moins efficace ; il domine seulement dans les déserts."]],
+      e: "Reptation · saltation · suspension." },
+    2: { q: "Les sols", forme: "faux", vf: [
+      ["De haut en bas, les horizons sont O, A, E, B, C, R.", true],
+      ["L'horizon E est une zone d'accumulation des argiles.", false, "E = lessivage intense ; l'accumulation se fait en B."],
+      ["La formation d'un sol prend quelques années.", false, "la pédogenèse prend des milliers d'années."],
+      ["Un sol est fait de matière minérale, de matière organique, d'eau et d'air.", true]],
+      e: "O · A · E · B · C · R." },
+    3: { q: "Érection et érosion d'une chaîne de montagnes, <b>cochez la ou les réponses exactes</b> :", o: [
+      "Une chaîne de montagnes s'érige en 2 à 5 Ma.",
+      "Pour 5 m érodés, la surface remonte d'environ 4 m.",
+      "Érosion et isostasie travaillent dans le même sens.",
+      "La pénéplaine est atteinte, en théorie, après environ 90 Ma.",
+      "L'érosion accélère à mesure que les reliefs s'aplanissent."], r: [0, 1, 3], oe: [
+      "", "Rapport 4 : 5.", "Elles sont antagonistes : enlever une tranche fait remonter la lithosphère.", "", "Elle ralentit : moitié de l'altitude à 15 Ma, quart à 30 Ma."],
+      e: "Abaissement net = érosion / 5." }
+  }
+  }
+];
 
 /* ==========================================================================
    TROUSSE DE RÉVISION — moteur commun (voir la compétence « revision-interactive »)
@@ -1287,8 +1831,12 @@ const QUIZ_PLUS = {
 const MODULES = [];
 const PARTIES = COURSE.parties;
 const QUIZ = typeof QUIZ_DATA === "undefined" ? {} : QUIZ_DATA;
-/* QUIZ_PLUS (facultatif, même forme que QUIZ_DATA) : questions ajoutées après coup, placées APRÈS celles de la notion (y compris section.quiz) pour garder la progression */
-const QUIZ_EN_PLUS = typeof QUIZ_PLUS === "undefined" ? {} : QUIZ_PLUS;
+/* QUIZ_PLUS (facultatif, même forme que QUIZ_DATA) : questions ajoutées après coup, placées APRÈS celles de la notion (y compris section.quiz) pour garder la progression.
+   Plusieurs vagues d'ajouts : QUIZ_PLUS = [vague1, vague2, …] ; chaque vague se place après la précédente (n'insérer une vague qu'à la fin). */
+const QUIZ_EN_PLUS = (typeof QUIZ_PLUS === "undefined" ? [] : [].concat(QUIZ_PLUS)).reduce((tout, vague) => {
+  for (const [id, secs] of Object.entries(vague)) for (const [i, qs] of Object.entries(secs)) ((tout[id] = tout[id] || {})[i] = (tout[id][i] || []).concat(qs));
+  return tout;
+}, {});
 const DIAG = typeof DIAG_DATA === "undefined" ? {} : DIAG_DATA;
 
 /* ---------- utilitaires ---------- */
@@ -4290,7 +4838,14 @@ const TXT = Object.assign({
   listeConsigne: "De mémoire d'abord, sans aide : écris-les tous (un par ligne ou séparés par des virgules). Même si tu n'en trouves qu'un, écris-le.",
   listePlace: "Un élément par ligne…",
   listeNote: "Détection automatique : clique sur un élément si tu l'avais écrit autrement.",
-  assocApres: "Maintenant, associe chaque élément à sa réponse."
+  assocApres: "Maintenant, associe chaque élément à sa réponse.",
+  uniqueType: "◉ Choix de réponse · une seule réponse exacte",
+  multiType: "☑ Choix multiple · cochez la ou les réponses exactes",
+  multiConsigne: "Il peut y avoir une, plusieurs ou toutes les réponses exactes : juge chaque énoncé séparément. Juste seulement si tu coches toutes les bonnes et aucune mauvaise.",
+  multiFauxType: "☑ Choix multiple · cochez le ou les énoncés faux",
+  multiFauxConsigne: "Coche tous les énoncés FAUX : il peut y en avoir un, plusieurs ou tous. Un seul mot qui cloche (« toujours », « seulement », une cause inversée) suffit à rendre un énoncé faux.",
+  vfType: "⚖️ Vrai ou faux · énoncé par énoncé",
+  vfConsigne: "Juge chaque énoncé. Un seul mot qui cloche (« toujours », « seulement », une cause inversée) suffit à le rendre faux : lis-le jusqu'au bout."
 }, COURSE.textes || {});
 /* COURSE.ponderation = { "id-module": { index: { niveau, prof, examen } } } : la pondération selon la liste du prof, réunie en un seul endroit */
 Object.entries(COURSE.ponderation || {}).forEach(([id, secs]) => { const m = MODULES.find(x => x.id === id); if (m) Object.entries(secs).forEach(([i, v]) => { if (m.sections[i]) Object.assign(m.sections[i], v); }); });
@@ -4348,9 +4903,32 @@ function diagOf(mod, i) {
 }
 
 /* ---------- une question : réponse, puis confiance, puis correction ---------- */
+/* Types de questions : à choix { o, r } (r = tableau → « cochez la ou les réponses exactes »), vrai/faux par énoncé { vf },
+   association { a }, rappel { e seul }. L'étiquette « une seule réponse » n'apparaît que si le cours a aussi des choix multiples. */
+let avecMulti = null;
+const aDesMulti = () => avecMulti != null ? avecMulti : (avecMulti = allQuestions().some(x => Array.isArray(x.q.r) || (x.q.vf && x.q.forme && x.q.forme !== "vrai")) || Object.values(DIAG).some(m => Object.values(m).some(d => Array.isArray(d.r))));
+/* Série d'énoncés { vf, forme } posée comme le prof : forme "faux" → « le(s)quel(s) est (sont) faux ? » (choix multiple) ;
+   forme "vrai" → « lequel est vrai ? » (un vrai tiré au hasard parmi les vrais + tous les faux, réponse unique) ;
+   forme "vrais" → « le(s)quel(s) est (sont) vrai(s) ? » (choix multiple). Sans forme : boutons V/F énoncé par énoncé. */
+function vfEnChoix(q) {
+  const L = q.vf.map(([t, v, pq]) => ({ t, v: !!v, pq: pq ? pq.charAt(0).toUpperCase() + pq.slice(1) : "" }));
+  const sujet = q.q ? q.q + " : d" : "D";
+  if (q.forme === "vrai") {
+    const vrais = L.filter(x => x.v), un = vrais[Math.floor(Math.random() * vrais.length)];
+    const o = [un, ...L.filter(x => !x.v)];
+    return Object.assign({}, q, { vf: null, q: `${sujet}ans les énoncés suivants, <b>lequel est vrai</b> ?`, o: o.map(x => x.t), r: 0, oe: o.map(x => x.pq) });
+  }
+  const cherche = q.forme === "faux" ? false : true;
+  return Object.assign({}, q, { vf: null, q: `${sujet}ans les énoncés suivants, <b>${cherche ? "le(s)quel(s) est (sont) vrai(s)" : "le(s)quel(s) est (sont) faux"}</b> ?`,
+    o: L.map(x => x.t), r: L.map((x, j) => x.v === cherche ? j : -1).filter(j => j >= 0), oe: L.map(x => x.pq), cible: cherche ? "vrai" : "faux" });
+}
 function questionEl(item, onDone) {
-  const { q, id } = item, box = el("div", { class: "q" + (q.o ? "" : q.a ? " q-a" : " q-rappel") });
-  if (!q.o) box.append(el("div", { class: "q-type" }, q.a ? (q.liste ? TXT.listeType : TXT.assocType) : TXT.rappelType));   // types à identifier d'un coup d'œil
+  if (item.q.vf && item.q.forme) item = Object.assign({}, item, { q: vfEnChoix(item.q) });
+  const { q, id } = item, multi = !!q.o && Array.isArray(q.r);
+  const box = el("div", { class: "q" + (q.o ? (multi ? " q-multi" : "") : q.vf ? " q-vf" : q.a ? " q-a" : " q-rappel") });
+  const type = q.o ? (multi ? (q.cible === "faux" ? TXT.multiFauxType : TXT.multiType) : aDesMulti() ? TXT.uniqueType : null) : q.vf ? TXT.vfType : q.a ? (q.liste ? TXT.listeType : TXT.assocType) : TXT.rappelType;
+  const etiquette = [type, q.source].filter(Boolean).join(" · ");   // source : ex. « tiré du quiz du prof »
+  if (etiquette) box.append(el("div", { class: "q-type" }, etiquette));   // types à identifier d'un coup d'œil
   box.append(el("div", { class: "q-text" }, q.a && q.liste ? q.liste.q : q.q));
   const fb = el("div", { class: "q-fb", hidden: "" });
   const record = (ok, p) => {
@@ -4376,10 +4954,43 @@ function questionEl(item, onDone) {
     return row;
   };
   const verdict = (ok, p) => { const e = etatDe(ok, niveauDe(p)); return `<span class="cas s-${e}">${ETATS[e].label}</span>`; };
-  if (q.o) {
+  if (q.o && multi) {
+    /* choix multiple : { o, r: [indices], oe: [pourquoi chaque énoncé est vrai ou faux] } ; juste si l'ensemble coché est exact */
+    const opts = el("div", { class: "q-opts multi", role: "group" });
+    const bons = new Set(q.r), pris = new Set();
+    let row = null;
+    const ordre = q.o.map((_, j) => j);
+    if (!q.fixe) ordre.sort(() => Math.random() - .5);
+    ordre.forEach(j => {
+      const b = el("button", { type: "button", "data-j": j, "aria-pressed": "false" }, `<span>${q.o[j]}</span>`);
+      b.addEventListener("click", () => {
+        if (pris.has(j)) pris.delete(j); else pris.add(j);
+        b.classList.toggle("pick", pris.has(j)); b.setAttribute("aria-pressed", pris.has(j));
+        if (!row) { row = confRow(valider, "Ta confiance ?", "Valider mes choix"); box.insertBefore(row, fb); }
+      });
+      opts.append(b);
+    });
+    function valider(p, r) {
+      let n = 0;
+      opts.querySelectorAll("button").forEach(x => {
+        const j = +x.dataset.j, bon = bons.has(j), coche = pris.has(j);
+        if (bon === coche) n++;
+        x.disabled = true; x.classList.remove("pick");
+        x.classList.add(bon ? (coche ? "good" : "manque") : (coche ? "bad" : "neutre"));
+        x.insertAdjacentHTML("beforeend", `<span class="q-oe"><b>${(q.cible === "faux" ? !bon : bon) ? "Vrai" : "Faux"}${bon && !coche ? " · à cocher" : !bon && coche ? " · à ne pas cocher" : ""}.</b>${q.oe && q.oe[j] ? " " + q.oe[j] : ""}</span>`);
+      });
+      const ok = n === q.o.length;
+      r.remove();
+      fb.hidden = false;
+      fb.innerHTML = `${verdict(ok, p)}<b class="${ok ? "ok" : "no"}">${ok ? "Exact." : "Non."} ${n} / ${q.o.length} énoncés bien jugés.</b> ${q.e || ""}<span class="note"> · Confiance : ${p} % (${confMot(p)})</span>`;
+      record(ok, p);
+    }
+    box.append(el("p", { class: "q-consigne" }, q.cible === "faux" ? TXT.multiFauxConsigne : TXT.multiConsigne), opts, fb);
+  } else if (q.o) {
     const opts = el("div", { class: "q-opts" });
     let choix = null, row = null;
-    const ordre = q.o.map((_, j) => j).sort(() => Math.random() - .5);   // options mélangées à chaque affichage
+    const ordre = q.o.map((_, j) => j);
+    if (!q.fixe && !/^vrai$/i.test(q.o[0])) ordre.sort(() => Math.random() - .5);   // options mélangées à chaque affichage (sauf vrai/faux et fixe: true)
     ordre.forEach(j => {
       const b = el("button", { type: "button", "data-j": j }, q.o[j]);
       b.addEventListener("click", () => {
@@ -4391,7 +5002,8 @@ function questionEl(item, onDone) {
     });
     function valider(p, r) {
       const ok = choix === q.r;
-      opts.querySelectorAll("button").forEach(x => { x.disabled = true; x.classList.remove("pick"); if (+x.dataset.j === q.r) x.classList.add("good"); if (+x.dataset.j === choix && !ok) x.classList.add("bad"); });
+      opts.querySelectorAll("button").forEach(x => { x.disabled = true; x.classList.remove("pick"); if (+x.dataset.j === q.r) x.classList.add("good"); if (+x.dataset.j === choix && !ok) x.classList.add("bad");
+        if (q.oe && q.oe[+x.dataset.j]) x.insertAdjacentHTML("beforeend", `<span class="q-oe">${q.oe[+x.dataset.j]}</span>`); });
       r.remove();
       const piege = !ok && q.p && q.p[choix] ? `<span class="piege">Pourquoi c'est tentant : ${q.p[choix]}</span>` : "";
       fb.hidden = false;
@@ -4399,6 +5011,42 @@ function questionEl(item, onDone) {
       record(ok, p);
     }
     box.append(opts, fb);
+  } else if (q.vf) {
+    /* vrai ou faux par énoncé : { vf: [[énoncé, true|false, "pourquoi (facultatif)"], …] } ; juste si chaque énoncé est bien jugé */
+    const lignes = q.vf.map(([t, v, pq]) => ({ t, v: !!v, pq }));
+    if (!q.fixe) lignes.sort(() => Math.random() - .5);
+    const liste = el("div", { class: "q-vf-liste" }), choix = lignes.map(() => null);
+    let row = null;
+    lignes.forEach((L, k) => {
+      const li = el("div", { class: "q-vfl" }, `<span class="q-vf-t">${L.t}</span>`);
+      const seg = el("div", { class: "q-vf-b", role: "group", "aria-label": "Vrai ou faux" });
+      [["V", true, "Vrai"], ["F", false, "Faux"]].forEach(([lab, v, titre]) => {
+        const b = el("button", { type: "button", title: titre, "aria-label": titre, "data-v": v ? "1" : "0" }, lab);
+        b.addEventListener("click", () => {
+          choix[k] = v;
+          seg.querySelectorAll("button").forEach(x => x.classList.toggle("pick", x === b));
+          if (!row && choix.every(x => x != null)) { row = confRow(valider); box.insertBefore(row, fb); }
+        });
+        seg.append(b);
+      });
+      li.append(seg); liste.append(li);
+    });
+    function valider(p, r) {
+      r.remove();
+      let n = 0;
+      [...liste.children].forEach((li, k) => {
+        const L = lignes[k], bon = choix[k] === L.v;
+        if (bon) n++;
+        li.classList.add(bon ? "good" : "bad");
+        li.querySelectorAll("button").forEach(x => { x.disabled = true; if ((x.dataset.v === "1") === L.v) x.classList.add("juste"); });
+        li.append(el("span", { class: "q-corr" }, `${bon ? "✓" : "✗"} ${L.v ? "Vrai" : "Faux"}${L.pq ? " : " + L.pq : "."}`));
+      });
+      const ok = n === lignes.length;
+      fb.hidden = false;
+      fb.innerHTML = `${verdict(ok, p)}<b class="${ok ? "ok" : "no"}">${n} / ${lignes.length} énoncés bien jugés.</b> ${q.e || ""}<span class="note"> · Confiance : ${p} % (${confMot(p)})</span>`;
+      record(ok, p);
+    }
+    box.append(el("p", { class: "q-consigne" }, TXT.vfConsigne), liste, fb);
   } else if (q.a) {
     /* association : { a: [[gauche, droite], …], x: [leurres] } ; la même réponse peut servir plusieurs fois (classement) */
     const lignes = q.a.map(([g, d]) => ({ g, d })).sort(() => Math.random() - .5);
