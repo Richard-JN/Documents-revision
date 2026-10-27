@@ -155,6 +155,27 @@ table.res td.bad{color:var(--alert)}
 table.res td.ok{color:var(--sage)}
 .btn{background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:5px 12px;font-size:.82rem;color:var(--ink);cursor:pointer}
 .btn:hover{border-color:var(--steel)}
+.btn:disabled{opacity:.5;cursor:default}
+/* Diagramme à compléter (diagrammeWidget) */
+.dg{display:grid;gap:12px;justify-items:center}
+.dg-plan{position:relative;width:100%;max-width:640px;container-type:inline-size;user-select:none;-webkit-user-select:none}
+.dg-plan svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.dg-zone{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding:1px 3px;border:1.5px dashed var(--muted);border-radius:6px;background:var(--bg);color:var(--ink);font:600 clamp(10px,2.3cqw,14px)/1.12 var(--body);text-align:center;cursor:pointer}
+.dg-zone.fleche{border-radius:999px;background:var(--surface);font-weight:500}
+.dg-zone.plein{border-style:solid;border-color:var(--steel);touch-action:none;cursor:grab}
+.dg-zone:focus-visible{outline:2px solid var(--steel);outline-offset:2px}
+.dg.choix .dg-zone:not(.plein),.dg-zone.cible{border-color:var(--steel);background:color-mix(in srgb,var(--steel) 14%,var(--bg))}
+.dg-zone.pris{box-shadow:0 0 0 3px color-mix(in srgb,var(--steel) 45%,transparent)}
+.dg-zone.ok{border-color:var(--sage);box-shadow:0 0 0 2px color-mix(in srgb,var(--sage) 40%,transparent)}
+.dg-zone.faux,.dg-zone.vide{border-color:var(--alert);box-shadow:0 0 0 2px color-mix(in srgb,var(--alert) 40%,transparent)}
+.dg-zone.faux span{text-decoration:line-through;text-decoration-color:var(--alert)}
+.dg-zone.sol{border-style:solid;border-color:var(--sage);cursor:default}
+.dg-banque{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;width:100%;max-width:640px;min-height:44px;box-sizing:border-box;padding:8px;border:1px dashed var(--line);border-radius:6px}
+.dg-eti{background:var(--surface);border:1px solid var(--steel);border-radius:999px;padding:6px 12px;font:500 .84rem var(--body);color:var(--ink);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.dg-eti[aria-pressed="true"]{background:var(--steel);color:var(--surface)}
+.dg-fantome{position:fixed;z-index:60;pointer-events:none;transform:translate(-50%,-50%);box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:grabbing}
+.dg-act{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.dg-msg{text-align:center;margin:0;min-height:1.2em}
 @media (max-width:640px){svg text{font-size:12px}}
 
 /* Badges de source des graphiques */
@@ -2252,6 +2273,142 @@ function etapesWidget(box, cfg) {
   box.append(card, ctrls); draw();
 }
 
+
+/* Diagramme à compléter : on glisse des étiquettes dans les cases d'un schéma (souris, doigt, ou clic sur l'étiquette puis sur la case ; clavier : Entrée)
+   cfg = { titre, consigne, source: "cours" | "calcul" | "modele", vb: [600, 600] (taille du schéma),
+     cases: { id: { x, y, w, h, rep } }        centre et taille en unités du schéma ; rep = texte attendu (ou tableau de textes acceptés)
+     fleches: [[de, vers, rep | null, { courbe, dec, t, dx, dy, w, h }]]   flèche entre deux cases ; avec rep, une case-étiquette sur la flèche
+                                               (courbe = flèche arquée vers sa droite si > 0, vers sa gauche si < 0, dans le sens de la flèche ; deux flèches opposées entre les mêmes cases :
+                                                même valeur des deux côtés, elles s'écartent ; dec = décalage parallèle ; t = position de l'étiquette 0–1 ; dx/dy = décalage de l'étiquette)
+     etiquette: [124, 46]                       taille par défaut des cases-étiquettes des flèches
+     leurres: ["…"]                             étiquettes de trop (facultatif)
+     reutilisable: true                         une étiquette par texte, réutilisable à volonté (sinon une étiquette par case, doublons compris)
+     dessin: (W, H) => "<svg…>"                 tracé libre sous les cases (facultatif)
+     note: "…"                                  note montrée avec la solution (facultatif) } */
+let DG_N = 0;
+function diagrammeWidget(box, cfg) {
+  const [W, H] = cfg.vb || [600, 600], [ew, eh] = cfg.etiquette || [124, 46], uid = "dg" + (++DG_N);
+  const pc = (v, t) => (v / t * 100).toFixed(3) + "%";
+  const txt = r => [].concat(r)[0], juste = (z, v) => v != null && [].concat(z.rep).includes(v);
+  const zones = Object.entries(cfg.cases).map(([id, c]) => ({ id, type: "case", x: c.x, y: c.y, w: c.w || 150, h: c.h || 50, rep: c.rep }));
+  let fl = "";
+  (cfg.fleches || []).forEach(([a, b, rep, o = {}], i) => {
+    const A = cfg.cases[a], B = cfg.cases[b], dx = B.x - A.x, dy = B.y - A.y, L = Math.hypot(dx, dy), nx = -dy / L, ny = dx / L;
+    const dec = o.dec || 0, k = o.courbe || 0;          // décalage parallèle ; courbe = flèche arquée (vers sa droite si > 0)
+    const qx = (A.x + B.x) / 2 + nx * (dec + k), qy = (A.y + B.y) / 2 + ny * (dec + k);
+    const bord = (c, ux, uy) => Math.min((c.w || 150) / 2 / Math.max(Math.abs(ux), 1e-3), (c.h || 50) / 2 / Math.max(Math.abs(uy), 1e-3)) + 7;
+    const sx = A.x + nx * dec, sy = A.y + ny * dec, tx = B.x + nx * dec, ty = B.y + ny * dec;
+    let u = [qx - sx, qy - sy], l = Math.hypot(...u); u = [u[0] / l, u[1] / l];
+    let v = [tx - qx, ty - qy]; l = Math.hypot(...v); v = [v[0] / l, v[1] / l];
+    const ax = sx + u[0] * bord(A, ...u), ay = sy + u[1] * bord(A, ...u), bx = tx - v[0] * bord(B, ...v), by = ty - v[1] * bord(B, ...v);
+    const cx = 2 * qx - (ax + bx) / 2, cy = 2 * qy - (ay + by) / 2;   // point de contrôle : la courbe passe par q à mi-chemin
+    fl += k ? `<path d="M${ax.toFixed(1)},${ay.toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${bx.toFixed(1)},${by.toFixed(1)}" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#${uid}-pt)"/>`
+      : `<line x1="${ax.toFixed(1)}" y1="${ay.toFixed(1)}" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}" stroke="currentColor" stroke-width="2" marker-end="url(#${uid}-pt)"/>`;
+    if (rep != null) { const t = o.t == null ? 0.5 : o.t, m = 1 - t;
+      zones.push({ id: "f" + i, type: "fleche", x: m * m * ax + 2 * m * t * cx + t * t * bx + (o.dx || 0), y: m * m * ay + 2 * m * t * cy + t * t * by + (o.dy || 0), w: o.w || ew, h: o.h || eh, rep }); }
+  });
+  const textes = zones.map(z => txt(z.rep)).concat(cfg.leurres || []);
+  const banqueTx = cfg.reutilisable ? [...new Set(textes)] : textes;
+  let pose = {}, sel = null, verif = false, solution = null, ordre = [];
+  const melange = () => { ordre = banqueTx.map((_, i) => i); for (let i = ordre.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [ordre[i], ordre[j]] = [ordre[j], ordre[i]]; } };
+  melange();
+
+  box.append(el("div", { class: "chart-top" }, `<div class="titre"><h3>${cfg.titre}</h3>${cfg.source ? badge(cfg.source).outerHTML : ""}</div>`));
+  const score = el("div", { class: "readout", "aria-live": "polite" });
+  box.append(score);
+  box.append(el("p", { class: "note" }, cfg.consigne || "Glisse chaque étiquette dans sa case (ou touche une étiquette, puis la case). Touche une case remplie pour la déplacer ou la remettre dans la banque. Vérifie quand tout est placé."));
+  const dg = el("div", { class: "dg" });
+  const plan = el("div", { class: "dg-plan", style: `aspect-ratio:${W}/${H}` });
+  plan.innerHTML = `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true" style="color:var(--muted)"><defs><marker id="${uid}-pt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="currentColor"/></marker></defs>${cfg.dessin ? cfg.dessin(W, H) : ""}${fl}</svg>`;
+  const zEl = {};
+  zones.forEach((z, k) => {
+    const d = el("div", { class: "dg-zone " + z.type, role: "button", tabindex: "0", "data-zone": z.id,
+      style: `left:${pc(z.x, W)};top:${pc(z.y, H)};width:${pc(z.w, W)};height:${pc(z.h, H)}` });
+    zEl[z.id] = d; plan.append(d);
+    d.addEventListener("click", () => { if (dg.dataset.glisse) return; clicZone(z.id); });
+    d.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); clicZone(z.id); } });
+    d.addEventListener("pointerdown", e => { if (pose[z.id] != null && !solution) glisser(e, { zone: z.id }, d); });
+  });
+  const banque = el("div", { class: "dg-banque", "aria-label": "Étiquettes à placer" });
+  banque.addEventListener("click", e => { if (dg.dataset.glisse || e.target.closest(".dg-eti")) return; if (sel && sel.zone) { retirer(sel.zone); sel = null; rendre(); } });
+  const msg = el("p", { class: "note dg-msg", "aria-live": "polite" });
+  const act = el("div", { class: "dg-act" });
+  const bV = el("button", { class: "btn", type: "button" }, "Vérifier"), bS = el("button", { class: "btn", type: "button" }, "Voir la solution"), bR = el("button", { class: "btn", type: "button" }, "Recommencer");
+  act.append(bV, bS, bR);
+  dg.append(plan, banque, act, msg); box.append(dg);
+
+  // une étiquette de la banque est-elle libre ? (sans reutilisable : chaque étiquette ne sert qu'une fois)
+  const prise = i => !cfg.reutilisable && Object.values(pose).includes(i);
+  function retirer(id) { delete pose[id]; }
+  function placer(src, id) {
+    if (src.zone) { if (src.zone === id) return; const v = pose[id]; pose[id] = pose[src.zone]; if (v != null) pose[src.zone] = v; else delete pose[src.zone]; }
+    else pose[id] = src.i;
+    verif = false;
+  }
+  function clicZone(id) {
+    if (solution) return;
+    if (sel) { if (!(sel.zone === id)) placer(sel, id); sel = null; }
+    else if (pose[id] != null) sel = { zone: id };
+    rendre();
+  }
+  function glisser(e, src, node) {
+    if (e.button > 0) return;
+    const x0 = e.clientX, y0 = e.clientY; let fant = null, cible = null;
+    node.setPointerCapture && node.setPointerCapture(e.pointerId);
+    const bouge = ev => {
+      if (!fant && Math.hypot(ev.clientX - x0, ev.clientY - y0) < 6) return;
+      if (!fant) { fant = el("div", { class: "dg-eti dg-fantome" }, banqueTx[src.zone ? pose[src.zone] : src.i]); document.body.append(fant); dg.dataset.glisse = "1"; dg.classList.add("choix"); }
+      fant.style.left = ev.clientX + "px"; fant.style.top = ev.clientY + "px";
+      const sous = document.elementFromPoint(ev.clientX, ev.clientY), z = sous && sous.closest(".dg-zone");
+      if (cible && cible !== z) cible.classList.remove("cible");
+      cible = z && plan.contains(z) ? z : null; if (cible) cible.classList.add("cible");
+    };
+    const fin = ev => {
+      node.removeEventListener("pointermove", bouge); node.removeEventListener("pointerup", fin); node.removeEventListener("pointercancel", fin);
+      if (!fant) return;
+      fant.remove(); if (cible) cible.classList.remove("cible");
+      if (ev.type === "pointerup") {
+        const sous = document.elementFromPoint(ev.clientX, ev.clientY);
+        if (cible) placer(src, cible.dataset.zone);
+        else if (src.zone && sous && banque.contains(sous)) { retirer(src.zone); verif = false; }
+      }
+      sel = null; rendre();
+      setTimeout(() => { delete dg.dataset.glisse; }, 0);
+    };
+    node.addEventListener("pointermove", bouge); node.addEventListener("pointerup", fin); node.addEventListener("pointercancel", fin);
+  }
+  function rendre() {
+    const vue = solution || pose;
+    zones.forEach(z => {
+      const d = zEl[z.id], i = vue[z.id], v = i == null ? null : (solution ? i : banqueTx[i]);
+      d.innerHTML = v == null ? "" : `<span>${v}</span>`;
+      d.className = "dg-zone " + z.type + (v != null ? " plein" : "") + (sel && sel.zone === z.id ? " pris" : "")
+        + (solution ? " sol" : verif ? (v == null ? " vide" : juste(z, v) ? " ok" : " faux") : "");
+      d.setAttribute("aria-label", (z.type === "case" ? "Case" : "Flèche") + (v == null ? " vide" : " : " + v) + (verif && v != null ? (juste(z, v) ? " (juste)" : " (à revoir)") : ""));
+    });
+    banque.innerHTML = "";
+    if (!solution) ordre.forEach(i => { if (prise(i)) return;
+      const b = el("button", { class: "dg-eti", type: "button", "aria-pressed": String(!!(sel && sel.i === i)) }, banqueTx[i]);
+      b.addEventListener("click", () => { if (dg.dataset.glisse || solution) return; sel = sel && sel.i === i ? null : { i }; rendre(); });
+      b.addEventListener("pointerdown", e => { if (!solution) glisser(e, { i }, b); });
+      banque.append(b);
+    });
+    if (!banque.children.length) banque.append(el("span", { class: "note" }, solution ? "Solution affichée." : "Toutes les étiquettes sont placées."));
+    dg.classList.toggle("choix", !!sel);
+    const n = zones.length, pl = zones.filter(z => pose[z.id] != null).length, bons = zones.filter(z => juste(z, banqueTx[pose[z.id]])).length;
+    score.innerHTML = `<span>placées <b>${pl} / ${n}</b></span>` + (verif ? `<span class="${bons === n ? "ok" : "bad"}">bonnes réponses <b>${bons} / ${n}</b></span>` : "");
+    msg.innerHTML = solution ? (cfg.note || "") : verif ? (bons === n ? "<b style=\"color:var(--sage)\">Bravo !</b> Le diagramme est complet et juste."
+      : `<b style="color:var(--alert)">${n - bons} case${n - bons > 1 ? "s" : ""} à revoir</b> (en rouge${pl < n ? " ou vides" : ""}). Déplace les étiquettes, puis vérifie de nouveau.`)
+      : sel ? "Touche maintenant une case" + (sel.zone ? ", ou la banque pour retirer l'étiquette." : ".") : "";
+    bS.textContent = solution ? "Revenir à mon diagramme" : "Voir la solution";
+    bV.disabled = !!solution;
+  }
+  bV.addEventListener("click", () => { verif = true; sel = null; rendre(); });
+  bS.addEventListener("click", () => { solution = solution ? null : Object.fromEntries(zones.map(z => [z.id, txt(z.rep)])); sel = null; rendre(); });
+  bR.addEventListener("click", () => { pose = {}; sel = null; verif = false; solution = null; melange(); rendre(); });
+  rendre();
+}
+
 /* ===================== Sujet 1 — De l'atome au minéral ===================== */
 MODULES.push({
   id: "atome-mineral",
@@ -2860,44 +3017,31 @@ MODULES.push({
   ]
 });
 
-/* Diagramme du cycle des roches à compléter : cases A–E (familles) et flèches 1–8 (processus) */
+/* Diagramme du cycle des roches à compléter : on glisse les familles dans les cases et les processus sur les flèches */
 function cycleWidget(box) {
-  const N = { A: [300, 30, "Sédiments"], B: [515, 160, "Roches sédimentaires"], C: [440, 350, "Roches métamorphiques"], D: [160, 350, "Magma"], E: [85, 160, "Roches ignées"] };
-  const F = [["D", "E", 1, "Cristallisation"], ["E", "A", 2, "Altération et érosion"], ["A", "B", 3, "Diagenèse"], ["B", "C", 4, "Métamorphisme"],
-    ["C", "D", 5, "Fusion"], ["E", "C", 6, "Métamorphisme"], ["C", "A", 7, "Altération et érosion"], ["B", "A", 8, "Altération et érosion"]];
-  let rep = false;
-  box.append(el("div", { class: "chart-top" }, `<div class="titre"><h3>Le cycle des roches à compléter</h3>${badge("cours").outerHTML}</div>`));
-  box.append(el("p", { class: "note" }, "Nomme les cases A à E, puis les processus 1 à 8. Vérifie ensuite avec « Afficher les réponses »."));
-  const ns = "http://www.w3.org/2000/svg", svg = document.createElementNS(ns, "svg");
-  svg.setAttribute("viewBox", "0 0 600 380"); svg.style.fontSize = "16px"; svg.setAttribute("role", "img"); svg.setAttribute("aria-label", "Diagramme du cycle des roches avec cases à compléter");
-  const wrap = el("div", { class: "plot" }); wrap.append(svg); box.append(wrap);
-  const cle = el("ol", { class: "note", style: "margin:0;padding-left:22px;columns:2 180px" }, F.map(([a, b, n, nom]) => `<li>${nom}</li>`).join(""));
-  box.append(cle);
-  function draw() {
-    let s = `<defs><marker id="pt-cyc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="currentColor"/></marker></defs>`;
-    F.forEach(([a, b, n, nom]) => {
-      const [x1, y1] = N[a], [x2, y2] = N[b], dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
-      const off = (n === 3 || n === 8) ? -14 : 0, px = -uy * off, py = ux * off, r0 = Math.min(80 / Math.max(Math.abs(ux), 1e-3), 24 / Math.max(Math.abs(uy), 1e-3)) + 6;
-      const ax = x1 + ux * r0 + px, ay = y1 + uy * r0 + py, bx = x2 - ux * r0 + px, by = y2 - uy * r0 + py;
-      const mx = (ax + bx) / 2 + px * 1.6, my = (ay + by) / 2 + py * 1.6;
-      s += `<line x1="${ax.toFixed(1)}" y1="${ay.toFixed(1)}" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}" style="color:var(--muted)" stroke="currentColor" stroke-width="1.6" marker-end="url(#pt-cyc)"/>`;
-      s += `<circle cx="${mx.toFixed(1)}" cy="${my.toFixed(1)}" r="14" fill="var(--surface)" stroke="var(--rebar)" stroke-width="1.5"/><text x="${mx.toFixed(1)}" y="${(my + 6).toFixed(1)}" text-anchor="middle" style="fill:var(--rebar);font-size:17px;font-weight:600">${n}</text>`;
-    });
-    Object.entries(N).forEach(([k, [x, y, nom]]) => {
-      s += `<rect x="${x - 78}" y="${y - 22}" width="156" height="44" rx="5" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.5"/>`;
-      s += `<text class="lbl" x="${x}" y="${y + 6}" text-anchor="middle" style="font-size:${rep ? (nom.length > 14 ? 13 : 16) : 22}px;font-weight:600">${rep ? nom : k}</text>`;
-    });
-    svg.innerHTML = s;
-    cle.hidden = !rep;
-  }
-  const tg = el("button", { class: "btn", type: "button" }, "Afficher les réponses");
-  tg.addEventListener("click", () => { rep = !rep; tg.textContent = rep ? "Masquer les réponses" : "Afficher les réponses"; draw(); });
-  box.append(tg);
-  const b1 = el("div", { style: "display:grid;gap:10px;margin-top:6px" }), b2 = el("div", { style: "display:grid;gap:10px;margin-top:6px" });
-  triWidget(b1, { titre: "Les cases", cats: ["Magma", "Roches ignées", "Sédiments", "Roches sédimentaires", "Roches métamorphiques"], items: Object.entries(N).map(([k, v]) => ({ nom: "Case " + k, rep: v[2] })) });
-  triWidget(b2, { titre: "Les flèches", cats: ["Cristallisation", "Altération et érosion", "Diagenèse", "Métamorphisme", "Fusion"], items: F.map(([a, b, n, nom]) => ({ nom: `Flèche ${n} : case ${a} → case ${b}`, rep: nom })) });
-  box.append(b1, b2);
-  draw();
+  const ae = "Altération et érosion";
+  diagrammeWidget(box, {
+    titre: "Le cycle des roches à compléter", source: "cours", vb: [600, 620], etiquette: [150, 46],
+    consigne: "Glisse chaque étiquette à sa place : les familles (et le magma, et les sédiments) dans les cases, les processus sur les flèches. Sur téléphone, touche une étiquette, puis la case. Vérifie quand tout est placé.",
+    cases: {
+      sed: { x: 300, y: 42, w: 170, h: 54, rep: "Sédiments" },
+      rsed: { x: 505, y: 235, w: 170, h: 54, rep: "Roches sédimentaires" },
+      meta: { x: 450, y: 570, w: 170, h: 54, rep: "Roches métamorphiques" },
+      magma: { x: 150, y: 570, w: 170, h: 54, rep: "Magma" },
+      ign: { x: 95, y: 235, w: 170, h: 54, rep: "Roches ignées" }
+    },
+    fleches: [
+      ["magma", "ign", "Cristallisation"],
+      ["ign", "sed", ae],
+      ["sed", "rsed", "Diagenèse", { courbe: -140 }],
+      ["rsed", "sed", ae],
+      ["rsed", "meta", "Métamorphisme"],
+      ["meta", "magma", "Fusion", { w: 112 }],
+      ["ign", "meta", "Métamorphisme", { t: 0.55 }],
+      ["meta", "sed", ae, { dec: -25 }]
+    ],
+    note: "Les trois flèches « raccourcis » : une roche ignée peut être métamorphisée directement, et toute roche soulevée (métamorphique ou sédimentaire) peut être altérée et érodée."
+  });
 }
 
 /* ===================== Sujet 5 — Le cycle des roches ===================== */
