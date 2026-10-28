@@ -160,8 +160,8 @@ table.res td.ok{color:var(--sage)}
 .dg{display:grid;gap:12px;justify-items:center}
 .dg-plan{position:relative;width:100%;max-width:640px;container-type:inline-size;user-select:none;-webkit-user-select:none}
 .dg-plan svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-.dg-zone{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding:1px 3px;border:1.5px dashed var(--muted);border-radius:6px;background:var(--bg);color:var(--ink);font:600 clamp(10px,2.3cqw,14px)/1.12 var(--body);text-align:center;cursor:pointer}
-.dg-zone.fleche{border-radius:999px;background:var(--surface);font-weight:500}
+.dg-zone{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding:1px;border:1.5px dashed var(--muted);border-radius:6px;background:var(--bg);color:var(--ink);font:600 clamp(9.5px,2.3cqw,14px)/1.12 var(--body);text-align:center;cursor:pointer;hyphens:auto;-webkit-hyphens:auto}
+.dg-zone.fleche{border-radius:999px;background:var(--surface);font-weight:500;letter-spacing:-.01em}
 .dg-zone.plein{border-style:solid;border-color:var(--steel);touch-action:none;cursor:grab}
 .dg-zone:focus-visible{outline:2px solid var(--steel);outline-offset:2px}
 .dg.choix .dg-zone:not(.plein),.dg-zone.cible{border-color:var(--steel);background:color-mix(in srgb,var(--steel) 14%,var(--bg))}
@@ -1079,8 +1079,8 @@ const QUIZ_PLUS = [{
       ["Altération, érosion et transport", "Toute roche → sédiments"],
       ["Diagenèse", "Sédiments → roche sédimentaire"],
       ["Métamorphisme", "Roche → roche métamorphique (P, T, état solide)"],
-      ["Fusion", "Roche → magma"]],
-      e: "Chaque flèche répond à « qu'est-ce qui transforme ceci en cela ? ». N'oublie pas les raccourcis : une ignée peut être métamorphisée directement." }
+      ["Fusion", "Toute roche, et même les sédiments → magma"]],
+      e: "Chaque flèche répond à « qu'est-ce qui transforme ceci en cela ? ». Sur le schéma du prof, le magma est au centre : la fusion y ramène tout. Une ignée (magmatique) peut être métamorphisée directement, et une métamorphique de nouveau (la boucle)." }
   },
   "roches-ignees": {
     0: { liste: { q: "Nomme les 4 grands assemblages de roches ignées, de l'olivine au quartz.", items: [["Ultramafique", "ultra"], ["Mafique", "mafique"], ["Intermédiaire", "interm"], ["Felsique", "felsi"]] },
@@ -2277,7 +2277,8 @@ function etapesWidget(box, cfg) {
 /* Diagramme à compléter : on glisse des étiquettes dans les cases d'un schéma (souris, doigt, ou clic sur l'étiquette puis sur la case ; clavier : Entrée)
    cfg = { titre, consigne, source: "cours" | "calcul" | "modele", vb: [600, 600] (taille du schéma),
      cases: { id: { x, y, w, h, rep } }        centre et taille en unités du schéma ; rep = texte attendu (ou tableau de textes acceptés)
-     fleches: [[de, vers, rep | null, { courbe, dec, t, dx, dy, w, h }]]   flèche entre deux cases ; avec rep, une case-étiquette sur la flèche
+     fleches: [[de, vers, rep | null, { courbe, via, dec, t, dx, dy, w, h, boucle, taille }]]   flèche entre deux cases ; avec rep, une case-étiquette sur la flèche
+                                               (de === vers : boucle sur la case, boucle = "haut" | "bas" | "gauche" | "droite", taille = 70 ; via = [x, y] point de passage de la courbe)
                                                (courbe = flèche arquée vers sa droite si > 0, vers sa gauche si < 0, dans le sens de la flèche ; deux flèches opposées entre les mêmes cases :
                                                 même valeur des deux côtés, elles s'écartent ; dec = décalage parallèle ; t = position de l'étiquette 0–1 ; dx/dy = décalage de l'étiquette)
      etiquette: [124, 46]                       taille par défaut des cases-étiquettes des flèches
@@ -2293,16 +2294,27 @@ function diagrammeWidget(box, cfg) {
   const zones = Object.entries(cfg.cases).map(([id, c]) => ({ id, type: "case", x: c.x, y: c.y, w: c.w || 150, h: c.h || 50, rep: c.rep }));
   let fl = "";
   (cfg.fleches || []).forEach(([a, b, rep, o = {}], i) => {
-    const A = cfg.cases[a], B = cfg.cases[b], dx = B.x - A.x, dy = B.y - A.y, L = Math.hypot(dx, dy), nx = -dy / L, ny = dx / L;
-    const dec = o.dec || 0, k = o.courbe || 0;          // décalage parallèle ; courbe = flèche arquée (vers sa droite si > 0)
-    const qx = (A.x + B.x) / 2 + nx * (dec + k), qy = (A.y + B.y) / 2 + ny * (dec + k);
+    const A = cfg.cases[a], B = cfg.cases[b];
+    if (a === b) {                                      // boucle : la case se transforme en elle-même (ex. métamorphisme d'une roche métamorphique)
+      const cote = o.boucle || "haut", T = o.taille || 70, aw = (A.w || 150) / 2, ah = (A.h || 50) / 2;
+      const [ux, uy] = { haut: [0, -1], bas: [0, 1], gauche: [-1, 0], droite: [1, 0] }[cote], px = -uy, py = ux;
+      const e = uy ? aw * 0.45 : ah * 0.45, bx0 = A.x + ux * (aw + 4), by0 = A.y + uy * (ah + 4);
+      const p0 = [bx0 + px * e, by0 + py * e], p3 = [bx0 - px * e, by0 - py * e];
+      const c1 = [p0[0] + ux * T * 1.33 + px * 18, p0[1] + uy * T * 1.33 + py * 18], c2 = [p3[0] + ux * T * 1.33 - px * 18, p3[1] + uy * T * 1.33 - py * 18];
+      fl += `<path d="M${p0.map(v => v.toFixed(1))} C${c1.map(v => v.toFixed(1))} ${c2.map(v => v.toFixed(1))} ${p3.map(v => v.toFixed(1))}" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#${uid}-pt)"/>`;
+      if (rep != null) zones.push({ id: "f" + i, type: "fleche", x: bx0 + ux * T + (o.dx || 0), y: by0 + uy * T + (o.dy || 0), w: o.w || ew, h: o.h || eh, rep });
+      return;
+    }
+    const dx = B.x - A.x, dy = B.y - A.y, L = Math.hypot(dx, dy), nx = -dy / L, ny = dx / L;
+    const dec = o.dec || 0, k = o.courbe || 0;          // décalage parallèle ; courbe = flèche arquée (vers sa droite si > 0) ; via = point de passage imposé
+    const qx = o.via ? o.via[0] : (A.x + B.x) / 2 + nx * (dec + k), qy = o.via ? o.via[1] : (A.y + B.y) / 2 + ny * (dec + k);
     const bord = (c, ux, uy) => Math.min((c.w || 150) / 2 / Math.max(Math.abs(ux), 1e-3), (c.h || 50) / 2 / Math.max(Math.abs(uy), 1e-3)) + 7;
     const sx = A.x + nx * dec, sy = A.y + ny * dec, tx = B.x + nx * dec, ty = B.y + ny * dec;
     let u = [qx - sx, qy - sy], l = Math.hypot(...u); u = [u[0] / l, u[1] / l];
     let v = [tx - qx, ty - qy]; l = Math.hypot(...v); v = [v[0] / l, v[1] / l];
     const ax = sx + u[0] * bord(A, ...u), ay = sy + u[1] * bord(A, ...u), bx = tx - v[0] * bord(B, ...v), by = ty - v[1] * bord(B, ...v);
     const cx = 2 * qx - (ax + bx) / 2, cy = 2 * qy - (ay + by) / 2;   // point de contrôle : la courbe passe par q à mi-chemin
-    fl += k ? `<path d="M${ax.toFixed(1)},${ay.toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${bx.toFixed(1)},${by.toFixed(1)}" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#${uid}-pt)"/>`
+    fl += k || o.via ? `<path d="M${ax.toFixed(1)},${ay.toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${bx.toFixed(1)},${by.toFixed(1)}" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#${uid}-pt)"/>`
       : `<line x1="${ax.toFixed(1)}" y1="${ay.toFixed(1)}" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}" stroke="currentColor" stroke-width="2" marker-end="url(#${uid}-pt)"/>`;
     if (rep != null) { const t = o.t == null ? 0.5 : o.t, m = 1 - t;
       zones.push({ id: "f" + i, type: "fleche", x: m * m * ax + 2 * m * t * cx + t * t * bx + (o.dx || 0), y: m * m * ay + 2 * m * t * cy + t * t * by + (o.dy || 0), w: o.w || ew, h: o.h || eh, rep }); }
@@ -3017,30 +3029,34 @@ MODULES.push({
   ]
 });
 
-/* Diagramme du cycle des roches à compléter : on glisse les familles dans les cases et les processus sur les flèches */
+/* Diagramme du cycle des roches à compléter, d'après le schéma du prof (module 5) : magma au centre, 12 flèches */
 function cycleWidget(box) {
-  const ae = "Altération et érosion";
+  const et = ["Érosion et transport", "Érosion"], fu = { w: 78 };
   diagrammeWidget(box, {
-    titre: "Le cycle des roches à compléter", source: "cours", vb: [600, 620], etiquette: [150, 46],
-    consigne: "Glisse chaque étiquette à sa place : les familles (et le magma, et les sédiments) dans les cases, les processus sur les flèches. Sur téléphone, touche une étiquette, puis la case. Vérifie quand tout est placé.",
+    titre: "Le cycle des roches à compléter", source: "cours", vb: [600, 760],
+    consigne: "Le schéma du prof, cases vides : glisse les familles de roches (et le magma, et les sédiments) dans les cases, les processus sur les flèches. Sur téléphone, touche une étiquette, puis la case. Vérifie quand tout est placé.",
     cases: {
-      sed: { x: 300, y: 42, w: 170, h: 54, rep: "Sédiments" },
-      rsed: { x: 505, y: 235, w: 170, h: 54, rep: "Roches sédimentaires" },
-      meta: { x: 450, y: 570, w: 170, h: 54, rep: "Roches métamorphiques" },
-      magma: { x: 150, y: 570, w: 170, h: 54, rep: "Magma" },
-      ign: { x: 95, y: 235, w: 170, h: 54, rep: "Roches ignées" }
+      rsed: { x: 300, y: 50, w: 160, h: 54, rep: "Roches sédimentaires" },
+      sed: { x: 520, y: 360, w: 140, h: 54, rep: "Sédiments" },
+      magma: { x: 300, y: 360, w: 130, h: 54, rep: "Magma" },
+      meta: { x: 86, y: 360, w: 170, h: 54, rep: "Roches métamorphiques" },
+      ign: { x: 300, y: 610, w: 170, h: 54, rep: ["Roches magmatiques (ignées)", "Roches ignées"] }
     },
     fleches: [
-      ["magma", "ign", "Cristallisation"],
-      ["ign", "sed", ae],
-      ["sed", "rsed", "Diagenèse", { courbe: -140 }],
-      ["rsed", "sed", ae],
-      ["rsed", "meta", "Métamorphisme"],
-      ["meta", "magma", "Fusion", { w: 112 }],
-      ["ign", "meta", "Métamorphisme", { t: 0.55 }],
-      ["meta", "sed", ae, { dec: -25 }]
+      ["rsed", "magma", "Fusion", { t: 0.62, w: 78 }],
+      ["sed", "magma", "Fusion", { w: 78, dy: 38 }],
+      ["meta", "magma", "Fusion", { w: 78, dy: 38 }],
+      ["magma", "ign", "Cristallisation", { dec: 40, t: 0.3, w: 132 }],
+      ["ign", "magma", "Fusion", { dec: 40, t: 0.3, w: 78 }],
+      ["ign", "meta", "Métamorphisme", { t: 0.25 }],
+      ["meta", "meta", "Métamorphisme", { boucle: "haut", taille: 72 }],
+      ["rsed", "meta", "Métamorphisme", { t: 0.4 }],
+      ["ign", "sed", et, { t: 0.55 }],
+      ["meta", "sed", et, { via: [300, 715], w: 170 }],
+      ["rsed", "sed", et.slice().reverse(), { dec: -14, t: 0.4, w: 110 }],
+      ["sed", "rsed", "Diagenèse", { dec: -14, t: 0.4, w: 120 }]
     ],
-    note: "Les trois flèches « raccourcis » : une roche ignée peut être métamorphisée directement, et toute roche soulevée (métamorphique ou sédimentaire) peut être altérée et érodée."
+    note: "Comme le schéma du prof : tout passe par le <b>magma</b> au centre (la fusion y ramène les roches et même les sédiments), la <b>cristallisation</b> en sort. Le prof écrit aussi « sédimentation » près de la diagenèse : les sédiments déposés sont ensuite lithifiés. Une roche métamorphique peut être métamorphisée de nouveau (la boucle)."
   });
 }
 
@@ -3054,19 +3070,22 @@ MODULES.push({
   sections: [
   {
     titre: "Un cycle sans fin",
-    anim: { ratio: 0.7, alt: "Une particule qui parcourt le cycle des roches", draw(ctx, t, w, h) {
-      const nodes = { magma: [w * 0.5, h * 0.84, "Magma", C.magma], ign: [w * 0.16, h * 0.5, "Roches ignées", C.rebar], sed: [w * 0.5, h * 0.14, "Roches sédimentaires", C.sand], meta: [w * 0.84, h * 0.5, "Roches métamorphiques", C.steel] };
-      const path = [["magma", "ign", "cristallisation"], ["ign", "sed", "érosion, diagenèse"], ["sed", "meta", "métamorphisme"], ["meta", "magma", "fusion"]];
-      const extra = [["ign", "meta", "métamorphisme"], ["meta", "sed", "altération, érosion"]];
-      extra.forEach(([a, b, l]) => { const A = nodes[a], B = nodes[b]; D.line(ctx, [[A[0], A[1]], [B[0], B[1]]], C.line, 1.2, [5, 4]); });
+    anim: { ratio: 0.8, alt: "Le cycle des roches du prof, magma au centre : une particule suit cristallisation, érosion et transport, diagenèse, métamorphisme, fusion", draw(ctx, t, w, h) {
+      // Même schéma que le diagramme à compléter (notion 2) : magma au centre, les 4 autres cases autour
+      const n = { magma: [w * 0.5, h * 0.5, "Magma", C.magma], ign: [w * 0.5, h * 0.88, "Roches magmatiques (ignées)", C.rebar], sed: [w * 0.85, h * 0.5, "Sédiments", C.sand],
+        rsed: [w * 0.5, h * 0.12, "Roches sédimentaires", C.clay], meta: [w * 0.15, h * 0.5, "Roches métamorphiques", C.steel] };
+      const path = [["magma", "ign", "cristallisation"], ["ign", "sed", "érosion, transport"], ["sed", "rsed", "diagenèse"], ["rsed", "meta", "métamorphisme"], ["meta", "magma", "fusion"]];
+      const autres = [["rsed", "magma"], ["sed", "magma"], ["ign", "magma"], ["ign", "meta"], ["meta", "sed"], ["rsed", "sed"]];
+      autres.forEach(([a, b]) => { const A = n[a], B = n[b]; D.line(ctx, [[lerp(A[0], B[0], 0.2), lerp(A[1], B[1], 0.2)], [lerp(A[0], B[0], 0.8), lerp(A[1], B[1], 0.8)]], C.line, 1.2, [5, 4]); });
       path.forEach(([a, b, l]) => {
-        const A = nodes[a], B = nodes[b], mx = (A[0] + B[0]) / 2, my = (A[1] + B[1]) / 2;
-        D.arrow(ctx, lerp(A[0], B[0], 0.22), lerp(A[1], B[1], 0.22), lerp(A[0], B[0], 0.78), lerp(A[1], B[1], 0.78), C.muted, 1.6);
-        D.text(ctx, l, mx + (mx < w / 2 ? -8 : 8), my + (my < h / 2 ? -6 : 14), { align: mx < w / 2 ? "right" : "left", size: 10, color: C.ink });
+        const A = n[a], B = n[b], mx = (A[0] + B[0]) / 2, my = (A[1] + B[1]) / 2, off = a === "magma" ? 10 : 0;
+        D.arrow(ctx, lerp(A[0], B[0], 0.22) - off, lerp(A[1], B[1], 0.22), lerp(A[0], B[0], 0.78) - off, lerp(A[1], B[1], 0.78), C.muted, 1.6);
+        const dx = a === "magma" ? -16 : a === "meta" ? 0 : mx < w / 2 ? -8 : 8;
+        D.text(ctx, l, mx + dx, my + (a === "meta" ? -8 : my < h / 2 ? -6 : 14), { align: a === "meta" ? "center" : (mx + dx < w / 2 ? "right" : "left"), size: 10, color: C.ink });
       });
-      Object.values(nodes).forEach(([x, y, n, c]) => { D.circle(ctx, x, y, 16, c, C.ink, 1); D.text(ctx, n, x, y + (y > h / 2 ? 32 : -22), { align: "center", color: C.ink, weight: 500, size: 11 }); });
-      const T = 12, u = cyc(t, T), k = Math.floor(u * 4), s = ease((u * 4) % 1);
-      const A = nodes[path[k][0]], B = nodes[path[k][1]];
+      Object.values(n).forEach(([x, y, nom, c]) => { D.circle(ctx, x, y, 14, c, C.ink, 1); D.text(ctx, nom, x, y + (y > h * 0.6 || (y === h * 0.5 && x !== w * 0.5) ? 28 : -20), { align: "center", color: C.ink, weight: 500, size: 11 }); });
+      const T = 15, u = cyc(t, T), k = Math.floor(u * 5), s = ease((u * 5) % 1);
+      const A = n[path[k][0]], B = n[path[k][1]];
       D.circle(ctx, lerp(A[0], B[0], s), lerp(A[1], B[1], s), 7, C.ink, C.surface, 2);
     }},
     texte: [
@@ -3091,10 +3110,10 @@ MODULES.push({
   {
     titre: "Compléter le diagramme du cycle",
     texte: [
-      "À l'examen, le diagramme du cycle des roches est donné avec des cases vides : il faut nommer les familles de roches (et le magma, et les sédiments) et les processus sur les flèches. La logique suffit : chaque flèche répond à « qu'est-ce qui transforme ceci en cela ? ».",
-      "Trois flèches de « raccourci » font souvent perdre des points : une roche ignée peut être métamorphisée sans passer par les sédiments ; une roche métamorphique ou sédimentaire soulevée peut être altérée et érodée à son tour."
+      "À l'examen, le schéma du prof est donné avec des cases vides : le magma au centre, les roches sédimentaires en haut, les sédiments à droite, les roches magmatiques (ignées) en bas et les roches métamorphiques à gauche. Il faut nommer les cases et les processus sur les flèches. La logique suffit : chaque flèche répond à « qu'est-ce qui transforme ceci en cela ? ».",
+      "Les flèches qui font perdre des points : la fusion ramène au magma toutes les roches, et même les sédiments ; une roche magmatique ou sédimentaire peut être métamorphisée directement, et une roche métamorphique peut l'être de nouveau (la boucle) ; toute roche soulevée est érodée, et ses débris sont transportés jusqu'aux sédiments."
     ],
-    cle: { label: "Les 5 processus", html: "Cristallisation (magma → roche ignée) · altération et érosion, puis transport (toute roche → sédiments) · diagenèse (sédiments → roche sédimentaire) · métamorphisme (P, T, à l'état solide) · fusion (→ magma)." },
+    cle: { label: "Les processus du schéma", html: "Cristallisation (magma → roche magmatique) · érosion et transport (toute roche → sédiments) · sédimentation et diagenèse (sédiments → roche sédimentaire) · métamorphisme (P, T, à l'état solide ; aussi d'une roche métamorphique) · fusion (toute roche, et même les sédiments → magma)." },
     widget: box => cycleWidget(box),
     quiz: [
       { q: "Sur le diagramme, quelle flèche relie directement « sédiments » à « roche sédimentaire » ?", o: ["Métamorphisme", "Diagenèse (compaction, cimentation)", "Cristallisation", "Fusion"], r: 1, e: "La diagenèse lithifie les sédiments : compaction et surtout cimentation." },
