@@ -817,7 +817,8 @@ const QUIZ_DATA = {
   },
   "roches-sedimentaires": {
     0: [
-      { q: "Les quatre processus de formation des roches sédimentaires, dans l'ordre ?", e: "Altération (météorisation) → transport → sédimentation → diagenèse." },
+      /* retirée le 2026-11-01 (doublon de la liste de mémoire QUIZ_PLUS ci-dessous) ; gardée pour que la progression ne bouge pas */
+      { retiree: true, q: "Les quatre processus de formation des roches sédimentaires, dans l'ordre ?", e: "Altération (météorisation) → transport → sédimentation → diagenèse." },
       { q: "Le feldspath altéré chimiquement devient…", o: ["Du quartz", "De l'argile (+ silice + K soluble)", "De la calcite", "Du mica"], r: 1, e: "2 KAlSi₃O₈ + H₂CO₃ + H₂O → K₂CO₃ + kaolinite + 4 SiO₂." }
     ],
     1: [
@@ -1117,13 +1118,13 @@ const QUIZ_PLUS = [{
       e: "À l'examen, il faut les nommer sur l'image : la relation avec les couches est la clé (recoupe, entre, bombe)." }
   },
   "roches-sedimentaires": {
-    0: { liste: { q: "Nomme les 4 processus qui produisent une roche sédimentaire.", items: [["Altération", "alter", "meteoris"], ["Transport", "transport"], ["Sédimentation", "sedimentation", "depot"], ["Diagenèse", "diagen", "ciment"]] },
-      q: "Associe chacun des 4 processus à son rôle.", a: [
-      ["Altération (météorisation)", "Produit des particules"],
-      ["Transport", "Amène les particules au bassin"],
-      ["Sédimentation", "Dépose les particules en couches"],
-      ["Diagenèse", "Transforme le sédiment en roche (cimentation)"]],
-      e: "Altération → transport → sédimentation → diagenèse. L'altération peut être mécanique, chimique ou biologique." },
+    0: { liste: { q: "Nomme, dans l'ordre, les 4 étapes de la formation d'une roche sédimentaire.", items: [["Altération et érosion (météorisation)", "alter", "erosion", "erode", "meteoris"], ["Transport", "transport"], ["Sédimentation", "sedimentation", "depot"], ["Diagenèse", "diagen", "ciment", "compact"]] },
+      q: "Place chacune des 4 étapes à son rang et à son rôle.", a: [
+      ["Diagenèse", "4. Transforme le sédiment en roche (compaction, cimentation)"],
+      ["Altération et érosion (météorisation)", "1. Dégrade la roche en surface et en dégage des particules"],
+      ["Sédimentation", "3. Dépose les particules en couches dans le bassin"],
+      ["Transport", "2. Amène les particules jusqu'au bassin (eau, vent, glace)"]],
+      e: "Dans l'ordre : 1. altération et érosion (météorisation) → 2. transport → 3. sédimentation → 4. diagenèse. Le prof les appelle les « 4 grands processus sédimentaires » : à l'examen, « processus » et « étapes » désignent la même liste. La météorisation peut être mécanique, chimique ou biologique ; la compaction et la cimentation font partie de la diagenèse, ce ne sont pas des étapes à part." },
     1: { liste: { q: "Nomme les 3 fractions sédimentaires.", items: [["Terrigène", "terrig"], ["Allochimique", "allo"], ["Orthochimique", "ortho"]] },
       q: "Classe chaque sédiment ou roche dans sa fraction.", a: [
       ["Grès", "Terrigène"],
@@ -5034,10 +5035,12 @@ function ton(partie) {
   readColors(); invalidateStages();                     // les canvas relisent les couleurs
 }
 const quizOf = (mod, i) => (mod.sections[i].quiz || ((QUIZ[mod.id] || {})[i]) || []).concat(((QUIZ_EN_PLUS[mod.id] || {})[i]) || []);
-const allQuestions = () => MODULES.flatMap(m => m.sections.flatMap((s, i) => quizOf(m, i).map((q, k) => ({ q, id: `${m.id}:${i}:${k}`, mod: m, sec: i }))));
+/* { retiree: true } sur une question : elle n'est plus posée, mais garde sa place (les ids `module:notion:k` des suivantes, donc la progression, ne bougent pas) */
+const actives = (mod, i) => quizOf(mod, i).map((q, k) => ({ q, k })).filter(x => !x.q.retiree);
+const allQuestions = () => MODULES.flatMap(m => m.sections.flatMap((s, i) => actives(m, i).map(({ q, k }) => ({ q, id: `${m.id}:${i}:${k}`, mod: m, sec: i }))));
 function modStats(mod) {
   let n = 0, ok = 0, seen = 0;
-  mod.sections.forEach((s, i) => quizOf(mod, i).forEach((q, k) => { n++; const r = results[`${mod.id}:${i}:${k}`]; if (r != null) seen++; if (r) ok++; }));
+  mod.sections.forEach((s, i) => actives(mod, i).forEach(({ k }) => { n++; const r = results[`${mod.id}:${i}:${k}`]; if (r != null) seen++; if (r) ok++; }));
   return { n, ok, seen };
 }
 
@@ -5061,8 +5064,8 @@ const dot = e => `<span class="dot${e ? " s-" + e : ""}" title="${e ? ETATS[e].l
 function diagOf(mod, i) {
   const d = mod.sections[i].diag || (DIAG[mod.id] || {})[i];
   if (d) return { q: d, id: `${mod.id}:${i}:d`, mod, sec: i };
-  const qs = quizOf(mod, i), k = Math.max(0, qs.findIndex(q => q.o));
-  return qs[k] ? { q: qs[k], id: `${mod.id}:${i}:${k}`, mod, sec: i } : null;
+  const qs = actives(mod, i), x = qs.find(x => x.q.o) || qs[0];
+  return x ? { q: x.q, id: `${mod.id}:${i}:${x.k}`, mod, sec: i } : null;
 }
 
 /* ---------- une question : réponse, puis confiance, puis correction ---------- */
@@ -5296,11 +5299,11 @@ function questionEl(item, onDone) {
   return box;
 }
 function testBlock(mod, i) {
-  const qs = quizOf(mod, i); if (!qs.length) return null;
+  const qs = actives(mod, i); if (!qs.length) return null;
   const box = el("div", { class: "test" });
   const head = el("div", { class: "test-head" }, `<h3>Teste-toi</h3><span class="note">Réponds, règle ta confiance de 0 à 100 %, puis compare.</span>`);
   box.append(head);
-  qs.forEach((q, k) => box.append(questionEl({ q, id: `${mod.id}:${i}:${k}`, mod, sec: i }, () => refreshEtats(mod))));
+  qs.forEach(({ q, k }) => box.append(questionEl({ q, id: `${mod.id}:${i}:${k}`, mod, sec: i }, () => refreshEtats(mod))));
   return box;
 }
 /* met à jour les pastilles de la page d'un sujet */
