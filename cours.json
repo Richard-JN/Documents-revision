@@ -22,5 +22,16 @@
       "Module 7 · Les continents"
     ],
     "sujets": 16
+  },
+  "gci-1010": {
+    "code": "GCI-1010",
+    "nom": "Dessin, plans et BIM",
+    "parties": [
+      "Cours 1 · Arpentage en génie civil",
+      "Cours 2 · Levés topométriques",
+      "Cours 3 · Dessin technique",
+      "Cours 4 · Lecture de plans"
+    ],
+    "sujets": 16
   }
 }
