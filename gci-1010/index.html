@@ -329,6 +329,7 @@ footer{margin-top:40px;color:var(--muted);font-size:.8rem}
 :root[data-partie="c2"]{--steel:#1f6f5c;--rebar:#9a4a1a}@media (prefers-color-scheme:dark){:root[data-partie="c2"]:not([data-theme="light"]){--steel:#5fc2a6;--rebar:#ee9a62}}:root[data-partie="c2"][data-theme="dark"]{--steel:#5fc2a6;--rebar:#ee9a62}
 :root[data-partie="c3"]{--steel:#3b4a8c;--rebar:#b0452d}@media (prefers-color-scheme:dark){:root[data-partie="c3"]:not([data-theme="light"]){--steel:#8f9ee6;--rebar:#f08f78}}:root[data-partie="c3"][data-theme="dark"]{--steel:#8f9ee6;--rebar:#f08f78}
 :root[data-partie="c4"]{--steel:#5a3f86;--rebar:#8a5a12}@media (prefers-color-scheme:dark){:root[data-partie="c4"]:not([data-theme="light"]){--steel:#b9a0e8;--rebar:#e2b55e}}:root[data-partie="c4"][data-theme="dark"]{--steel:#b9a0e8;--rebar:#e2b55e}
+:root[data-partie="c5"]{--steel:#5b5b5b;--rebar:#a23b52}@media (prefers-color-scheme:dark){:root[data-partie="c5"]:not([data-theme="light"]){--steel:#c2c2c2;--rebar:#ee8aa0}}:root[data-partie="c5"][data-theme="dark"]{--steel:#c2c2c2;--rebar:#ee8aa0}
 </style>
 </head>
 <body>
@@ -345,7 +346,8 @@ const COURSE = {
     { id: "c1", titre: "Cours 1 · Arpentage en génie civil" },
     { id: "c2", titre: "Cours 2 · Levés topométriques" },
     { id: "c3", titre: "Cours 3 · Dessin technique" },
-    { id: "c4", titre: "Cours 4 · Lecture de plans" }
+    { id: "c4", titre: "Cours 4 · Lecture de plans" },
+    { id: "c5", titre: "Compléments · tout peut être demandé" }
   ],
   diagAvant: false,
   textes: {
@@ -903,6 +905,103 @@ const QUIZ_DATA = {
       { q: "Selon l'AICQ, quel est l'objectif premier de la méthode d'identification des calques ?", o: ["Faciliter l'échange de dessins", "Réduire la taille des fichiers", "Remplacer le cartouche", "Choisir l'échelle"], r: 0, e: "Souple, mais avec une rigueur essentielle pour l'échange." }
     ]
   }
+  ,
+  "historique": {
+    0: [
+      { q: "La chaîne d'arpentage de 1620 mesurait…", o: ["66 pieds, 100 maillons", "100 pieds, 66 maillons", "20 m, 100 maillons", "66 m, 10 maillons"], r: 0, e: "66 pi et 100 maillons (cours 1, diapo 55)." },
+      { q: "Associe chaque date à son repère historique.", liste: { q: "Nomme les 5 villes reliées par les marégraphes de la ligne transcontinentale de 1916.", items: [["Halifax", "halifax"], ["Yarmouth", "yarmouth"], ["Pointe-au-Père", "pointe"], ["Vancouver", "vancouver"], ["Prince Rupert", "rupert"]] },
+        a: [["1626", "Champlain mesure trois seigneuries"], ["1905", "première station de triangulation (Ottawa)"], ["1916", "ligne de nivellement transcontinentale"], ["1927", "NAD27"], ["1976", "premier EDM (Ranger de K&E)"], ["1993", "pleine constellation GPS"]], x: ["CGVD2013"],
+        e: "Le CGVD2013 est adopté en 2015. La ligne de 1916 suit les chemins de fer sur 94 % de sa longueur." },
+      { q: "Série d'énoncés sur l'histoire de la topométrie au Canada.", forme: "faux", vf: [
+        ["La ligne de 1916 relie 5 marégraphes, sur l'Atlantique et le Pacifique.", true, "Halifax, Yarmouth, Pointe-au-Père, Vancouver, Prince Rupert."],
+        ["Le CGVD28 a été établi de 1927 à 1935.", true, "Diapo 53."],
+        ["Le positionnement GPS précis (1995–2007) a fait passer la précision en post-traitement de 100 m à 1 m.", true, "GPSPace."],
+        ["La première station de triangulation a été établie à Sherbrooke.", false, "À Ottawa (1905) ; Sherbrooke, c'est le premier nivellement de la DLG (1906)."],
+        ["La photogrammétrie aérienne date de 1990.", false, "De 1920 ; les premières photos de photogrammétrie, de 1860."]
+      ], e: "Ottawa = triangulation, Sherbrooke = nivellement." }
+    ],
+    1: [
+      { q: "Associe chaque représentation à son mode.", liste: { q: "Nomme les 3 modes de représentation 2D du cours.", items: [["Schéma", "schema"], ["Dessin", "dessin"], ["Croquis", "croquis"]] },
+        a: [["Schéma", "2D"], ["Dessin", "2D"], ["Perspective", "3D"], ["Vue éclatée", "3D"]], x: ["4D"],
+        e: "2D : schéma, dessin, croquis. 3D : perspective, vue éclatée, croquis." },
+      { q: "En numérisant les plans papier pour le DAO, on a découvert que…", o: ["près de 10 % des cotations étaient inexactes", "toutes les cotes étaient justes", "les échelles étaient toutes 1:100", "les plans n'avaient pas de cartouche"], r: 0, e: "Aussi : des références en double et une référence pour plusieurs plans. Le gain de fiabilité a généralisé la CAO." }
+    ],
+    2: [
+      { q: "Nomme les 4 questions à se poser avant un levé topographique.",
+        e: "1) Que devons-nous mesurer ? 2) Quelle précision ? 3) Quel appareil ? 4) Où sont nos références géodésiques ? (cours 2, diapo 31)" },
+      { q: "Associe chaque source ou outil à son usage.", a: [["Images d'archives", "suivre l'étalement urbain, retrouver les axes"], ["GÉODEQ", "trouver les points géodésiques pour la mise en station"], ["SIG-Web", "saisir des données sur le terrain, connecté ou non"], ["Radiodétection", "localiser les infrastructures souterraines"]], x: ["Clinomètre"],
+        e: "Le clinomètre mesure une pente, ce n'est pas une source de données." },
+      { q: "Quels formats de fichiers contiennent un nuage de points ? (cochez la ou les réponses exactes)", o: ["E57", "LAS", "PTS", "DWG", "PDF"], r: [0, 1, 2], oe: ["Nuage de points.", "Nuage de points.", "Nuage de points.", "Dessin Autodesk.", "Plan imprimable."], e: "Les trois formats de levé : PDF, DWG, nuage de points (PTS, E57, LAS)." }
+    ]
+  },
+  "lexique": {
+    0: [
+      { q: "Associe chaque terme à sa définition.", a: [["Baie", "ouverture dans un mur"], ["Trumeau", "mur plein entre deux baies"], ["Linteau", "pièce horizontale au-dessus d'une baie"], ["Décrochement", "changement de niveau ou de plan d'un mur"], ["Faîtage", "ligne de crête au sommet du toit"], ["Noue", "creux où deux versants se rencontrent"]], x: ["mur intérieur non porteur"],
+        e: "Le mur intérieur qui sépare des pièces, c'est la cloison." },
+      { q: "La semelle d'une fondation sert à…", o: ["répartir la charge sur le sol", "relier deux baies", "évacuer l'eau du toit", "fixer le cartouche"], r: 0, e: "La semelle, base élargie de la fondation, apparaît sur les coupes (diapo 18 du cours 4 suite)." },
+      { q: "Série d'énoncés : lequel est vrai ?", forme: "vrai", vf: [
+        ["Le pignon est le mur de côté dont le haut suit les pentes du toit.", true, "D'où « pignon gauche », « pignon droit »."],
+        ["Les culées sont les appuis intermédiaires d'un pont.", false, "Les culées sont aux extrémités ; les piliers sont intermédiaires."],
+        ["L'égout de toiture est la conduite d'égout de la maison.", false, "C'est le bas du versant du toit, d'où l'eau s'écoule."],
+        ["Les entremises stabilisent l'ouvrage contre le vent.", false, "Ce sont les contreventements ; les entremises sont des pièces entre les solives."]
+      ], e: "Pignon = mur de côté ; culée = appui d'extrémité." }
+    ],
+    1: [
+      { q: "Associe chaque élément de réseau à son rôle.", liste: { q: "Nomme 4 éléments d'un réseau souterrain sous la rue.", items: [["Regard", "regard"], ["Puisard", "puisard"], ["Vanne", "vanne"], ["Branchement", "branchement"]] },
+        a: [["Regard", "accès à la conduite"], ["Puisard", "capte l'eau de ruissellement de la rue"], ["Vanne", "ouvre ou ferme une conduite d'aqueduc"], ["Branchement", "relie la maison à la conduite principale"], ["Invert", "bas intérieur de la conduite"]], x: ["dessus du couvercle"],
+        e: "Les profondeurs se donnent à l'invert, pas au dessus de la conduite." },
+      { q: "Un réseau unitaire…", o: ["transporte eaux usées et pluviales dans une même conduite", "ne transporte que l'eau potable", "sépare toujours eaux usées et pluviales", "est un réseau électrique"], r: 0, e: "Le séparatif, lui, les sépare." }
+    ],
+    2: [
+      { q: "Associe chaque sigle à son sens.", a: [["GNSS", "ensemble des systèmes de positionnement satellite"], ["CGVD2013", "référence altimétrique canadienne (géoïde)"], ["COAS", "certificat pour l'usage commercial d'un drone"], ["CCQ", "régit l'arpentage de construction"], ["SLAM", "localisation et cartographie simultanées"], ["MEP", "mécanique, électricité, plomberie"]], x: ["norme québécoise de DAO"],
+        e: "La norme québécoise de DAO, c'est NADAO." },
+      { q: "Quels sont des systèmes de positionnement par satellites ? (cochez la ou les réponses exactes)", o: ["GLONASS", "Galileo", "BeiDou", "NADAO", "GÉODEQ"], r: [0, 1, 2], oe: ["Russie.", "Union européenne.", "Chine.", "Norme de dessin.", "Système de gestion des points géodésiques du Québec."], e: "Avec le GPS (NAVSTAR, É.-U.), ils forment le GNSS." }
+    ]
+  },
+  "lire-plan": {
+    0: [
+      { q: "Associe chaque question d'exercice à l'endroit du plan qui y répond.", a: [["Échelle du plan", "cartouche"], ["Matériau des poteaux", "légende et notes"], ["Point cardinal de la droite du dessin", "rose des vents"], ["Page du détail", "symbole de renvoi"], ["Élévation du pavage au chaînage 0+150", "profil en long"]], x: ["ligne de coupe"],
+        e: "La ligne de coupe montre où et dans quel sens est faite une coupe ; elle ne répond à aucune de ces questions." },
+      { q: "« Quel élément essentiel est manquant sur ce plan ? » Que vérifier en premier ?", o: ["échelle, orientation (nord), cartouche, légende", "la couleur des traits", "le nombre de pages du cahier", "la signature du client"], r: 0, e: "Un plan doit avoir une échelle, une orientation, un cartouche et une légende." }
+    ],
+    1: [
+      { q: "Remets les 5 passes de lecture dans l'ordre.", a: [["1", "cartouche"], ["2", "orientation et vues"], ["3", "légende et notes"], ["4", "axes, cotes, niveaux"], ["5", "détails et renvois"]], x: ["calques"],
+        e: "On commence par le cartouche : il dit ce qu'on lit et si on peut construire avec (CO)." },
+      { q: "Sur un plan d'infrastructures, qu'est-ce qui remplace les axes pour se repérer ?", o: ["le chaînage", "le nord projet", "la légende", "l'échelle"], r: 0, e: "Origine au centre-ligne de la rue, au début du projet." }
+    ],
+    2: [
+      { q: "Invert 243,77 m au chaînage 0+020 et 243,27 m au 0+120. Pente de la conduite ?", o: ["0,5 %", "5 %", "0,05 %", "50 %"], r: 0, e: "0,50 m ÷ 100 m × 100 = 0,5 %." },
+      { q: "Dessus du regard 245,784 m, invert 243,77 m : profondeur ?", o: ["2,014 m", "2,14 m", "1,986 m", "489,554 m"], r: 0, e: "Profondeur = Z dessus − Z invert (exemple du cours)." }
+    ]
+  }
+
+};
+
+/* Vague 1 (2026-11-02) : détails des diapos encore jamais testés (« tout peut être demandé »). */
+const QUIZ_PLUS = {
+  "terre": {
+    2: { q: "À la latitude 63°37′30″, 1° de longitude vaut 49 452,8 m. Combien vaut 1′ ?", o: ["824 m", "49,5 m", "1 852 m", "8 240 m"], r: 0, e: "49 452,8 ÷ 60 = 824 m (exemple du cours)." },
+    3: { q: "Combien le Québec compte-t-il de repères altimétriques de chaque ordre ?", a: [["1er ordre", "12 600"], ["2e ordre", "3 500"], ["3e ordre", "5 100"], ["Au Canada (CGVD28)", "88 000"]], x: ["120 000"],
+         e: "Cours 1, diapos 47 et 49." }
+  },
+  "arpentage": {
+    2: { q: "Selon Services Canada, que font les technologues et techniciens en arpentage ?", o: ["ils effectuent des levés ou y participent pour déterminer la position des éléments à la surface, sous la terre et sous l'eau", "ils signent les plans de bornage", "ils conçoivent les structures", "ils délivrent les certificats COAS"], r: 0, e: "Le bornage relève de l'arpenteur-géomètre." }
+  },
+  "caracteristiques": {
+    1: { q: "Série d'énoncés sur les échelles et les formats.", forme: "faux", vf: [
+      ["Une échelle peut s'écrire 1:100 ou 1/128.", true, "Les deux notations du cours."],
+      ["Un contrat peut exiger un plan lisible à 1:200 ou plus grand sur une feuille 11″ × 17″.", true, "Exemple de clause du cours."],
+      ["Pour un bâtiment d'environ 50 m × 85 m, le cours utilise 1:125 sur un ARCH E (914 × 1219 mm).", true, "Exemple du cours."],
+      ["L'échelle se choisit seulement selon la taille de la feuille.", false, "Selon les dimensions de l'ouvrage, le niveau de détail et les exigences du client."]
+    ], e: "Trois critères : dimensions, détail, client." }
+  },
+  "lecture": {
+    1: { q: "Une cote de niveau +3,05, flèche tournée vers le bas, désigne…", o: ["le sol fini du 1er étage (face supérieure)", "la face inférieure du linteau", "le niveau de référence", "une profondeur sous le sol"], r: 0, e: "Flèche vers le bas = face supérieure d'un ouvrage ; +2,50, flèche vers le haut = face inférieure du linteau." }
+  },
+  "cahier": {
+    0: { q: "Que trouve-t-on sur la page titre (frontispice) d'un cahier de plans ? (cochez la ou les réponses exactes)", o: ["la liste des dessins", "le plan de situation", "les notes générales et la légende", "le titre du projet, le client et le contrat", "le profil en long des conduites"], r: [0, 1, 2, 3], oe: ["Aussi la liste des dessins de référence.", "Oui, sur la page titre.", "Oui.", "Oui, avec le bureau d'architecture et l'équipe.", "Le profil a sa propre feuille (élément 6)."], e: "Page titre : vue générale, listes de dessins, légende, notes générales, logo, titre, équipe, client et contrat, plan de situation, date." },
+    1: { q: "À quoi servent les plateaux de nivellement d'un plan de nivellement ?", o: ["de base pour déterminer les hauteurs maximales des constructions autorisées", "à placer le cartouche", "à mesurer les inverts", "à orienter le nord projet"], r: 0, e: "Le plan de nivellement donne aussi les pentes et la correspondance local/géodésique (10 000 mm = 99,80 m)." }
+  }
 };
 
 /* GCI-1010 — quiz diagnostique : une question à choix par notion ; p = pourquoi chaque mauvais choix est tentant. */
@@ -1061,13 +1160,39 @@ const DIAG_DATA = {
     3: { q: "Une feuille « S-201 » appartient à la discipline…", o: ["structure", "sanitaire", "situation", "soumission"], r: 0, e: "A, E, M, S.",
          p: [null, "Le sanitaire fait partie de la mécanique ou des infrastructures.", "Le plan de situation n'a pas de lettre de discipline.", "SO est un statut, pas une discipline."] }
   }
+  ,
+  "historique": {
+    0: { q: "La première station de triangulation au Canada a été établie en 1905…", o: ["à Ottawa", "à Sherbrooke", "à Québec", "à Tadoussac"], r: 0, e: "Ottawa (1905) ; Sherbrooke = premier nivellement de la DLG (1906).",
+         p: [null, "Sherbrooke, c'est le premier nivellement (1906), l'année suivante.", "Québec fait partie des levés municipaux de 1917.", "Tadoussac : contrôle de la croûte terrestre en 1964."] },
+    1: { q: "Une vue éclatée est une représentation…", o: ["3D qui sépare les pièces d'un assemblage", "2D d'une seule face", "en coupe horizontale", "à l'échelle 1:1 obligatoirement"], r: 0, e: "3D : perspective, vue éclatée, croquis.",
+         p: [null, "Une seule face, c'est une vue projetée 2D.", "La coupe horizontale, c'est la vue en plan.", "L'échelle n'a rien à voir avec le mode de représentation."] },
+    2: { q: "Pourquoi consulter des images d'archives (ex. 2007) avant un levé ?", o: ["suivre l'étalement urbain et retrouver les axes routiers, même si les noms de rues ont changé", "parce qu'elles sont plus précises que le GPS", "pour remplacer le levé", "pour obtenir le certificat COAS"], r: 0, e: "Elles servent à planifier, pas à mesurer.",
+         p: [null, "Google Earth : au moins 15 m de résolution, loin du GPS.", "On fait quand même le levé sur le terrain.", "Le COAS concerne les drones."] }
+  },
+  "lexique": {
+    0: { q: "Le trumeau est…", o: ["le mur plein entre deux baies", "l'ouverture d'une fenêtre", "la crête du toit", "la base d'une fondation"], r: 0, e: "Baie = ouverture ; trumeau = mur plein entre deux baies.",
+         p: [null, "C'est la baie.", "C'est le faîtage.", "C'est la semelle."] },
+    1: { q: "Le puisard…", o: ["capte l'eau de ruissellement de la rue vers l'égout pluvial", "donne accès à l'égout sanitaire au centre de la rue", "relie la maison à l'aqueduc", "ferme une conduite d'aqueduc"], r: 0, e: "Puisard : sous une grille, en bordure de rue.",
+         p: [null, "C'est le regard sanitaire.", "C'est le branchement.", "C'est la vanne."] },
+    2: { q: "GNSS désigne…", o: ["l'ensemble des systèmes de positionnement par satellites", "seulement le GPS américain", "le système géodésique du Québec", "une norme de dessin"], r: 0, e: "GPS, GLONASS, Galileo, BeiDou.",
+         p: [null, "Le GPS (NAVSTAR) n'en est qu'un.", "C'est GÉODEQ.", "Ce sont NADAO et CDAO."] }
+  },
+  "lire-plan": {
+    0: { q: "Pour trouver la date d'émission d'un plan, on regarde…", o: ["le cartouche", "la légende", "la rose des vents", "le profil en long"], r: 0, e: "Cartouche : date (A-M-J), statut, révisions.",
+         p: [null, "La légende décrit les symboles.", "Elle donne l'orientation.", "Il donne les élévations le long du tracé."] },
+    1: { q: "Par quoi commence-t-on la lecture d'un plan ?", o: ["le cartouche", "les détails", "les cotes", "les calques"], r: 0, e: "Le cartouche dit ce qu'on lit et son statut.",
+         p: [null, "On les suit en dernier, par les renvois.", "On les lit une fois le plan situé.", "Les calques servent au DAO, pas à la lecture d'un plan imprimé."] },
+    2: { q: "Inverts 244,00 m (0+000) et 243,40 m (0+120). Pente ?", o: ["0,5 %", "0,6 %", "5 %", "0,05 %"], r: 0, e: "0,60 ÷ 120 × 100 = 0,5 %.",
+         p: [null, "0,6 m est le Δz ; il faut le diviser par 120 m.", "Erreur d'un facteur 10.", "Erreur d'un facteur 10 dans l'autre sens."] }
+  }
+
 };
 
 /* GCI-1010 : pas de liste d'examen fournie. On reprend les objectifs du prof (diapo 2 de chaque cours)
    et son « Que retenir aujourd'hui du cours ? » (cours 1). À remplacer si le prof donne une liste. */
 const EXAMEN_DATA = {
   titre: "Objectifs du prof",
-  intro: "Le prof n'a pas (encore) donné de liste d'examen : voici ses objectifs, cours par cours, et son « Que retenir » du cours 1. Chaque ligne t'amène à la notion qui la couvre ; la pastille montre où tu en es.",
+  intro: "Le prof n'a pas (encore) donné de liste d'examen : voici ses objectifs, cours par cours, et son « Que retenir » du cours 1. Dans ce cours, tout peut être demandé : toutes les notions des cours 1 à 4 sont donc 🎯, et la partie « Compléments » reprend le reste des diapos (chronologie, exercices de lecture de plans) et le vocabulaire connexe (📘). Chaque ligne t'amène à la notion qui la couvre ; la pastille montre où tu en es.",
   liste: [
     { titre: "Cours 1 · Arpentage en génie civil", items: [
       { t: "Retour sur les concepts de trigonométrie en topométrie", cible: [["angles", 0], ["angles", 1], ["angles", 2], ["angles", 3], ["angles", 4]] },
@@ -1101,37 +1226,45 @@ const EXAMEN_DATA = {
       { t: "Identifier les vues, les niveaux, les élévations, la cotation, les axes et leur orientation par rapport aux façades", cible: [["lecture", 0], ["lecture", 1], ["lecture", 2], ["lecture", 3]] },
       { t: "Savoir lire l'information d'un plan (révisions, détails, profondeur, matériaux…)", cible: [["infrastructures", 0], ["infrastructures", 1], ["infrastructures", 2], ["infrastructures", 3]] }
     ]}
+    ,{ titre: "Tout peut être demandé · compléments", items: [
+      { t: "Chronologie de la topométrie au Canada, modes de représentation, données pour planifier un levé", cible: [["historique", 0], ["historique", 1], ["historique", 2]] },
+      { t: "Vocabulaire du bâtiment, des réseaux et sigles employés dans les diapos et les exercices", cible: [["lexique", 0], ["lexique", 1], ["lexique", 2]], note: "Connexe : certaines définitions ne sont pas dans les diapos (indiqué dans chaque notion)." },
+      { t: "Exercices de lecture de plans (plan de bâtiment, plan du MTQ, plan à la main, eau refroidie)", cible: [["lire-plan", 0], ["lire-plan", 1], ["lire-plan", 2]] }
+    ]}
   ],
   ponderation: {
     "angles": {
-      0: { niveau: "examen", examen: "Distinguer <b>azimut</b> (0 à 360° depuis le nord, sens horaire) et <b>gisement</b> (angle aigu depuis N ou S, vers E ou O), et les trois nords." },
+      0: { niveau: "examen", examen: "Distinguer <b>azimut</b> (depuis le nord géographique) et <b>gisement</b> (depuis le nord du quadrillage) : tous deux de 0 à 360°, sens horaire. Les trois nords : géographique, magnétique, du quadrillage." },
       1: { niveau: "examen", examen: "Calculer <b>ΔX = D·sin(az)</b> et <b>ΔY = D·cos(az)</b> : en topométrie, l'angle part du nord." },
       2: { niveau: "examen" },
       3: { niveau: "examen", examen: "Nivellement direct : <b>Alt B = Alt A + R − V</b> (visée arrière moins visée avant)." },
       4: { niveau: "examen", examen: "Nivellement trigonométrique avec l'angle zénithal, Hi et Hr." }
     },
-    "arpentage": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "utile" } },
+    "arpentage": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
     "terre": {
       0: { niveau: "examen" }, 1: { niveau: "examen" },
-      2: { niveau: "utile", examen: "Retenir l'idée : un degré de longitude rétrécit avec la latitude (× cos φ)." },
-      3: { niveau: "utile" }
+      2: { niveau: "examen", examen: "Retenir l'idée : un degré de longitude rétrécit avec la latitude (× cos φ)." },
+      3: { niveau: "examen" }
     },
     "instruments": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" }, 4: { niveau: "examen" } },
-    "leves": { 0: { niveau: "examen" }, 1: { niveau: "utile" }, 2: { niveau: "examen", examen: "Associer chaque besoin à sa <b>précision</b> et au bon appareil." } },
-    "conduites": { 0: { niveau: "utile" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
-    "implantation": { 0: { niveau: "examen" }, 1: { niveau: "examen", examen: "Les <b>5 étapes</b> de l'implantation d'un bâtiment, dans l'ordre." }, 2: { niveau: "utile" }, 3: { niveau: "utile" } },
+    "leves": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen", examen: "Associer chaque besoin à sa <b>précision</b> et au bon appareil." } },
+    "conduites": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
+    "implantation": { 0: { niveau: "examen" }, 1: { niveau: "examen", examen: "Les <b>5 étapes</b> de l'implantation d'un bâtiment, dans l'ordre." }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
     "documents": {
       0: { niveau: "examen", examen: "Situer le passage du papier au <b>DAO</b>, à la <b>CAO</b>, puis au <b>BIM</b>. Les dates exactes : survol." },
-      1: { niveau: "examen" }, 2: { niveau: "utile" }
+      1: { niveau: "examen" }, 2: { niveau: "examen" }
     },
     "vues": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
     "vues-batiment": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
     "caracteristiques": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
-    "cahier": { 0: { niveau: "examen" }, 1: { niveau: "utile" }, 2: { niveau: "examen" } },
+    "cahier": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
     "cartouche": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
     "types-plans": { 0: { niveau: "examen", examen: "Lister les <b>9 types de plans</b> dans l'ordre du projet." }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
     "lecture": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
-    "infrastructures": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "utile" } }
+    "historique": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
+    "lexique": { 0: { niveau: "utile", prof: "Connexe : les diapos emploient ces mots sans tous les définir." }, 1: { niveau: "utile" }, 2: { niveau: "examen", examen: "Les sigles viennent tous des diapos." } },
+    "lire-plan": { 0: { niveau: "examen", prof: "Les exercices de lecture de plans du cours 4 posent ce genre de questions." }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
+    "infrastructures": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } }
   }
 };
 
@@ -3419,6 +3552,341 @@ MODULES.push({
       "Les <b>noms des calques</b> identifient au minimum le <b>domaine</b> et le <b>statut</b>. La méthode de l'<b>AICQ</b> (norme CDAO AICQ-2008) est souple, mais impose une rigueur dont l'objectif premier est de <b>faciliter l'échange de dessins</b>. Exemple de la Ville de Laval : <b>R-x-AQU-VAN-PRJ</b> = <b>R</b>éseau, <b>AQU</b>educ, <b>VAN</b>ne, <b>PR</b>o<b>J</b>eté."
     ],
     cle: { label: "À retenir", html: "A · E · M · S · nom de dessin = origine + statut · nom de calque = domaine + statut (AICQ : faciliter l'échange) · R-x-AQU-VAN-PRJ = réseau, aqueduc, vanne, projeté." }
+  }
+  ]
+});
+
+/* ===================== Sujet 17 — Compléments : histoire, représentations, données ===================== */
+MODULES.push({
+  id: "historique",
+  partie: "c5",
+  titre: "Histoire, modes de représentation et données gratuites",
+  resume: "La chronologie complète de la topométrie au Canada, les modes de représentation 2D et 3D, et les données géospatiales qu'on utilise pour planifier un levé.",
+  sources: "cours 1, diapos 51 à 56 et 86 à 89 · cours 2, diapos 6 et 12 à 16 · cours 3, diapos 4 à 6 et 14",
+  sections: [
+  {
+    titre: "La topométrie au Canada, date par date",
+    anim: { ratio: 0.42, alt: "Une frise du temps de 1620 à 2015 ; un curseur s'arrête sur chaque date du cours", draw(ctx, t, w, h) {
+      const ev = [[1620, "chaîne 66 pi"], [1626, "Champlain"], [1882, "DLS"], [1905, "triangulation"], [1916, "transcontinentale"], [1927, "NAD27"], [1976, "EDM"], [1993, "GPS complet"], [2015, "CGVD2013"]];
+      const x0 = 20, x1 = w - 20, y = h * 0.55, X = a => lerp(x0, x1, (a - 1600) / 430), k = Math.floor(cyc(t, 18) * ev.length);
+      D.line(ctx, [[x0, y], [x1, y]], C.line, 2);
+      ev.forEach(([a, n], i) => { const on = i === k, x = X(a);
+        D.circle(ctx, x, y, on ? 7 : 4, on ? C.rebar : C.surface, C.steel, 1.5);
+        if (on) { D.text(ctx, String(a), x, y - 18, { align: "center", color: C.rebar, size: 14, weight: 500 }); D.text(ctx, n, x, y + 26, { align: "center", color: C.ink, size: 12 }); } });
+      D.text(ctx, "1600", x0, h - 8, { color: C.muted }); D.text(ctx, "2030", x1, h - 8, { align: "right", color: C.muted });
+    }},
+    texte: [
+      "Les instruments : <b>1620</b> chaîne d'arpentage (<b>66 pieds, 100 maillons</b>) ; <b>1860</b> premières photographies de photogrammétrie ; <b>1905</b> théodolites et tours en bois ; <b>1906</b> niveaux géodésiques et mires en bois ; <b>1920</b> photogrammétrie aérienne ; <b>1976</b> premier télémètre électronique (EDM, le Ranger de K&E) ; <b>1982</b> niveau Ni-002 ; <b>1989</b> GPS de poche (Magellan NAV-1000) ; <b>1993</b> le GPS atteint sa pleine constellation.",
+      "Les réseaux : <b>1626</b> Champlain mesure les trois premières seigneuries ; <b>1882</b> Association of Dominion Land Surveyors ; <b>1883</b> premiers nivellements de précision ; <b>1905</b> première station de triangulation (Ottawa) ; <b>1906</b> premier nivellement de la DLG (Sherbrooke) ; <b>1916</b> ligne de nivellement transcontinentale, qui relie <b>5 marégraphes</b> (Halifax, Yarmouth, Pointe-au-Père, Vancouver, Prince Rupert) et suit les chemins de fer sur <b>94 %</b> de sa longueur.",
+      "Suite : <b>1917</b> levés municipaux (Montréal, Toronto, puis London, Québec, Halifax, St. John, Vancouver, New Westminster) ; <b>1921</b> cheminement de précision de 120 km (Niagara) ; <b>1925</b> renivellement après un séisme ; <b>1926</b> repère altimétrique fondamental ; <b>1927</b> NAD27 ; <b>1927–1935</b> CGVD28 ; <b>1964</b> contrôle horizontal de la croûte terrestre (Tadoussac) ; <b>1995–2007</b> positionnement ponctuel précis par GPS (post-traitement de 100 m à 1 m) ; <b>1997–2009</b> corrections GPS en temps réel ; <b>2015</b> adoption du CGVD2013."
+    ],
+    cle: { label: "À retenir", html: "Chaîne <strong>1620</strong> (66 pi, 100 maillons) · Champlain <strong>1626</strong> · triangulation à Ottawa <strong>1905</strong> · transcontinentale <strong>1916</strong> (5 marégraphes) · NAD27 · CGVD28 → <strong>CGVD2013</strong> (2015)." },
+    widget: box => etapesWidget(box, {
+      titre: "La chronologie, une date à la fois", label: "Date",
+      etapes: [
+        { court: "1620", texte: "Chaîne d'arpentage : 66 pieds, 100 maillons." },
+        { court: "1626", texte: "Champlain mesure les trois premières seigneuries." },
+        { court: "1860", texte: "Premières photographies de photogrammétrie." },
+        { court: "1882–1883", texte: "Association of Dominion Land Surveyors ; premiers travaux de nivellement de précision." },
+        { court: "1905–1906", texte: "Première station de triangulation (Ottawa), théodolites et tours en bois ; premier nivellement de la DLG (Sherbrooke), niveaux et mires en bois." },
+        { court: "1916", texte: "Ligne de nivellement transcontinentale : 5 marégraphes, 94 % le long des chemins de fer." },
+        { court: "1917–1926", texte: "Levés municipaux ; photogrammétrie aérienne (1920) ; cheminement de 120 km (1921) ; renivellement après un séisme (1925) ; repère altimétrique fondamental (1926)." },
+        { court: "1927–1935", texte: "NAD27, puis CGVD28 (référence altimétrique en usage jusqu'au CGVD2013)." },
+        { court: "1964–1993", texte: "Tadoussac (1964) ; EDM Ranger de K&E (1976) ; niveau Ni-002 (1982) ; GPS de poche (1989) ; pleine constellation GPS (1993)." },
+        { court: "1995–2015", texte: "GPS précis en post-traitement (100 m → 1 m) ; corrections en temps réel (1997–2009) ; CGVD2013 adopté en 2015." }
+      ]
+    })
+  },
+  {
+    titre: "Les modes de représentation 2D et 3D",
+    anim: { ratio: 0.5, alt: "Une même pièce passe d'un croquis 2D à une vue en perspective, puis à une vue éclatée", draw(ctx, t, w, h) {
+      const u = cyc(t, 9), k = Math.floor(u * 3), cx = w / 2, cy = h * 0.5, s = Math.min(w, h) * 0.22;
+      const iso = (x, y, z) => [cx + (x - y) * s * 0.87, cy + (x + y) * s * 0.5 - z * s];
+      const box = (dz, col) => { const P = (x, y, z) => iso(x, y, z + dz);
+        D.poly(ctx, [P(0, 0, 1), P(1, 0, 1), P(1, 1, 1), P(0, 1, 1)], col + "55", C.ink, 1.2);
+        D.poly(ctx, [P(1, 0, 0), P(1, 1, 0), P(1, 1, 1), P(1, 0, 1)], col + "33", C.ink, 1.2);
+        D.poly(ctx, [P(0, 1, 0), P(1, 1, 0), P(1, 1, 1), P(0, 1, 1)], col + "22", C.ink, 1.2); };
+      if (k === 0) { D.rect(ctx, cx - s * 1.6, cy - s * 0.5, s * 1.2, s, null, C.ink, 1.4); D.rect(ctx, cx + s * 0.4, cy - s * 0.5, s, s, null, C.ink, 1.4);
+        D.text(ctx, "face", cx - s, cy + s * 0.8, { align: "center" }); D.text(ctx, "droite", cx + s * 0.9, cy + s * 0.8, { align: "center" }); }
+      else if (k === 1) { box(-0.4, C.steel); box(0.2, C.rebar); }
+      else { const e = 0.4 + 0.4 * seg(u * 3 - 2, 0, 0.6); box(-0.6, C.steel); box(-0.6 + 0.6 + e, C.rebar); }
+      D.text(ctx, ["2D : croquis, dessin, schéma", "3D : perspective", "3D : vue éclatée"][k], cx, 18, { align: "center", color: C.rebar, weight: 500, size: 13 });
+    }},
+    texte: [
+      "Le cours distingue les <b>modes de représentation 2D</b> (le <b>schéma</b>, le <b>dessin</b>, le <b>croquis</b>) et <b>3D</b> (la <b>perspective</b>, la <b>vue éclatée</b>, le croquis). La vue éclatée sépare les pièces d'un assemblage pour montrer comment elles s'emboîtent.",
+      "Côté histoire : l'architecture remonte à l'<b>Antiquité</b> (le cours montre une image de 1693 d'Andrea Pozzo) ; le <b>DAO et la CAO décollent dans les années 75–90</b>, puis viennent le <b>BIM</b>, la 3D, la <b>réalité virtuelle</b> et la <b>réalité augmentée</b>. En numérisant les plans papier, on a découvert que près de <b>10 % des cotations</b> étaient inexactes, que des références existaient en double et qu'une même référence pouvait désigner plusieurs plans."
+    ],
+    cle: { label: "À retenir", html: "2D = <strong>schéma, dessin, croquis</strong> · 3D = <strong>perspective, vue éclatée</strong>, croquis · DAO/CAO : années <strong>75–90</strong> · ~<strong>10 %</strong> de cotes inexactes sur papier." },
+    widget: box => triWidget(box, {
+      titre: "2D ou 3D ?", consigne: "Classe chaque représentation selon le cours.",
+      cats: ["2D", "3D"],
+      items: [
+        { nom: "Schéma", rep: "2D", pourquoi: "Le schéma est un mode 2D." },
+        { nom: "Perspective", rep: "3D", pourquoi: "La perspective montre les trois dimensions." },
+        { nom: "Vue éclatée", rep: "3D", pourquoi: "Les pièces séparées en 3D." },
+        { nom: "Dessin (vues projetées)", rep: "2D", pourquoi: "Chaque vue projetée est en 2D." },
+        { nom: "Vue isométrique", rep: "3D", pourquoi: "Les trois axes à 120° : une représentation 3D sur papier." }
+      ]
+    })
+  },
+  {
+    titre: "Planifier un levé avec les données disponibles",
+    anim: { ratio: 0.5, alt: "Une même vue aérienne en 2007 puis en 2026 : de nouvelles rues et maisons apparaissent", draw(ctx, t, w, h) {
+      const u = cyc(t, 8), new_ = u > 0.5, rnd = seeded(5);
+      D.rect(ctx, 10, 10, w - 20, h - 20, C.veg + "33", C.line, 1);
+      D.rect(ctx, 10, h * 0.45, w - 20, 14, C.stone, null);
+      for (let i = 0; i < 7; i++) D.rect(ctx, 30 + i * (w - 60) / 7, h * 0.25, 22, 18, C.sand, C.ink, 0.8);
+      if (new_) { D.rect(ctx, w * 0.62, h * 0.45, 14, h * 0.5 - 10, C.stone, null);
+        for (let i = 0; i < 5; i++) D.rect(ctx, w * 0.62 + 24, h * 0.58 + i * 0.07 * h, 20, 14, C.rebar + "88", C.ink, 0.8); }
+      D.text(ctx, new_ ? "2026 : la nouvelle rue est là" : "2007 : image d'archive", w / 2, 26, { align: "center", color: C.ink, weight: 500, size: 13 });
+    }},
+    texte: [
+      "La planification commence au bureau avec des données souvent <b>gratuites</b> : <b>Google Earth</b>, <b>OpenStreetMap</b>, etc. Les <b>images d'archives</b> (ex. 2007 contre 2026) servent à suivre l'étalement urbain, retrouver les axes routiers existants (utile quand le nom des rues change) et planifier le projet. On cherche aussi les <b>points géodésiques</b> proches (GÉODEQ) pour la mise en station.",
+      "Pour un levé, le prof pose <b>4 questions</b> : que faut-il mesurer ? quelle précision ? quel appareil ? où sont nos références géodésiques ? Les livrables d'un levé topographique : le <b>PDF</b> du plan, le <b>DWG</b> (Autodesk) et le <b>nuage de points</b> (PTS, E57, LAS).",
+      "Autres outils : les <b>SIG-Web</b> et applications mobiles saisissent des données sur le terrain, en mode connecté ou déconnecté (alors en temps différé), avec le GPS des tablettes et cellulaires ; la <b>radiodétection</b> (RD8200SG) localise et cartographie les infrastructures souterraines en une seule opération, avec une précision d'arpentage."
+    ],
+    cle: { label: "À retenir", html: "Google Earth, OpenStreetMap, <strong>archives</strong> · 4 questions : <strong>quoi, quelle précision, quel appareil, quelles références</strong> · formats : PDF, DWG, nuage (PTS, E57, LAS)." },
+    widget: box => triWidget(box, {
+      titre: "Quel format ?", consigne: "Classe chaque fichier selon ce qu'il contient.",
+      cats: ["Plan imprimable", "Dessin DAO", "Nuage de points"],
+      items: [
+        { nom: "PDF", rep: "Plan imprimable", pourquoi: "Le PDF du plan topographique." },
+        { nom: "DWG", rep: "Dessin DAO", pourquoi: "Le format Autodesk (AutoCAD)." },
+        { nom: "E57", rep: "Nuage de points", pourquoi: "Format de nuage de points." },
+        { nom: "LAS", rep: "Nuage de points", pourquoi: "Format de nuage de points (LiDAR)." },
+        { nom: "PTS", rep: "Nuage de points", pourquoi: "Format de nuage de points." }
+      ]
+    })
+  }
+  ]
+});
+
+/* ===================== Sujet 18 — Compléments : lexique et sigles ===================== */
+MODULES.push({
+  id: "lexique",
+  partie: "c5",
+  titre: "Lexique du bâtiment, des réseaux et des sigles",
+  resume: "Les mots que les diapos emploient sans toujours les définir : baie, linteau, noue, pignon, semelle, puisard, col de cygne… et tous les sigles du cours.",
+  sources: "cours 2 à 4 (termes employés dans les diapos et les exercices) ; définitions courantes du génie civil quand les diapos n'en donnent pas",
+  sections: [
+  {
+    titre: "Le bâtiment, de la semelle au faîtage",
+    anim: { ratio: 0.62, alt: "Une coupe de maison ; les éléments s'allument un à un : semelle, mur, baie, linteau, seuil, trumeau, pignon, égout de toiture, faîtage", draw(ctx, t, w, h) {
+      const u = cyc(t, 18), gx = w * 0.14, gw = w * 0.72, gy = h * 0.78, top = h * 0.42, peak = h * 0.1;
+      const parts = [
+        ["semelle", () => D.rect(ctx, gx - 10, gy + 8, gw + 20, 12, C.stone, C.ink, 1), gx + gw / 2, gy + 34],
+        ["mur", () => D.rect(ctx, gx, top, gw, gy - top + 8, null, C.ink, 1.5), gx + 30, top + 16],
+        ["baie (ouverture)", () => { D.rect(ctx, gx + gw * 0.18, top + 30, gw * 0.18, gy - top - 30, C.surface, C.steel, 1.5); D.rect(ctx, gx + gw * 0.62, top + 30, gw * 0.2, gw * 0.12, C.water + "55", C.steel, 1.5); }, gx + gw * 0.27, top + 22],
+        ["linteau", () => D.rect(ctx, gx + gw * 0.6, top + 20, gw * 0.24, 8, C.rebar, null), gx + gw * 0.72, top + 14],
+        ["seuil", () => D.rect(ctx, gx + gw * 0.16, gy - 2, gw * 0.22, 6, C.rebar, null), gx + gw * 0.27, gy - 8],
+        ["trumeau (mur plein entre 2 baies)", () => D.rect(ctx, gx + gw * 0.36, top + 30, gw * 0.26, gy - top - 30, C.sand + "88", null), gx + gw * 0.49, gy - 30],
+        ["pignon", () => D.poly(ctx, [[gx, top], [gx + gw / 2, peak], [gx + gw, top]], C.sand + "66", C.ink, 1.5), gx + gw / 2, top - 14],
+        ["égout de toiture", () => D.line(ctx, [[gx - 14, top + 8], [gx + 4, top]], C.rebar, 4), gx - 4, top + 26],
+        ["faîtage", () => D.circle(ctx, gx + gw / 2, peak, 6, C.rebar, null), gx + gw / 2, peak - 10]
+      ];
+      const k = Math.floor(u * parts.length);
+      parts.forEach(([n, f], i) => { if (i <= k) D.alpha(ctx, i === k ? 1 : 0.55, f); });
+      D.line(ctx, [[0, gy + 8], [w, gy + 8]], C.muted, 1);
+      const [n, , lx, ly] = parts[k]; D.text(ctx, n, lx, ly, { align: "center", color: C.rebar, weight: 500, size: 13 });
+    }},
+    texte: [
+      "Termes des diapos : une <b>baie</b> est une ouverture dans un mur (porte, fenêtre, porte-fenêtre) ; le <b>trumeau</b> est le mur plein entre deux baies ; un <b>décrochement</b> est un changement de niveau ou de plan dans un mur ; le <b>linteau</b> est la pièce horizontale au-dessus d'une baie (la cote +2,50 du cours en vise la face inférieure). Le <b>seuil</b> est le bas d'une baie de porte. Le <b>pignon</b> est le mur de côté dont le haut suit les pentes du toit (façade gauche ou droite = pignon gauche ou droit).",
+      "Toiture : le <b>faîtage</b> est la ligne de crête au sommet ; la <b>noue</b> est l'angle rentrant où deux versants se rencontrent et où l'eau converge ; l'<b>égout de toiture</b> est le bas du versant, d'où l'eau s'écoule.",
+      "Structure : la <b>semelle</b> est la base élargie d'une fondation qui répartit la charge au sol ; les <b>contreventements</b> stabilisent l'ouvrage contre le vent et les séismes ; les <b>entremises</b> sont de courtes pièces entre les solives ; les <b>culées</b> sont les appuis d'extrémité d'un pont (les <b>piliers</b>, les appuis intermédiaires) ; une <b>cloison</b> est un mur intérieur qui sépare des pièces.",
+      "Les définitions de seuil, pignon, faîtage, noue, égout de toiture, semelle, contreventement, entremise, culée et cloison sont les définitions courantes du génie civil : les diapos emploient ces mots (plan de toiture, élévations, coupes) sans les définir."
+    ],
+    cle: { label: "À retenir", html: "<strong>Baie</strong> = ouverture · <strong>trumeau</strong> = mur plein entre deux baies · <strong>linteau</strong> au-dessus · <strong>seuil</strong> en bas · <strong>faîtage</strong> = crête · <strong>noue</strong> = creux · <strong>semelle</strong> = base de fondation." },
+    widget: box => triWidget(box, {
+      titre: "Où se trouve-t-il ?", consigne: "Classe chaque élément selon sa place dans le bâtiment.",
+      cats: ["Toiture", "Mur et ouvertures", "Fondation et structure"],
+      items: [
+        { nom: "Faîtage", rep: "Toiture", pourquoi: "La crête au sommet du toit." },
+        { nom: "Noue", rep: "Toiture", pourquoi: "Le creux entre deux versants." },
+        { nom: "Trumeau", rep: "Mur et ouvertures", pourquoi: "Le mur plein entre deux baies." },
+        { nom: "Linteau", rep: "Mur et ouvertures", pourquoi: "Au-dessus d'une baie." },
+        { nom: "Semelle", rep: "Fondation et structure", pourquoi: "La base élargie de la fondation." },
+        { nom: "Contreventement", rep: "Fondation et structure", pourquoi: "Stabilise la structure contre les charges latérales." }
+      ]
+    })
+  },
+  {
+    titre: "Les réseaux sous la rue",
+    anim: { ratio: 0.55, alt: "Coupe d'une rue : un puisard capte l'eau de pluie, le regard descend jusqu'à la conduite, le branchement de la maison rejoint la conduite principale", draw(ctx, t, w, h) {
+      const u = cyc(t, 10), gy = h * 0.3, iy = h * 0.82;
+      D.rect(ctx, 0, gy, w, h - gy, C.sand + "55", null); D.line(ctx, [[0, gy], [w, gy]], C.ink, 2);
+      D.rect(ctx, w * 0.12, gy, 26, iy - gy, C.surface, C.ink, 1.2); D.text(ctx, "regard", w * 0.12 + 13, gy - 8, { align: "center", color: C.ink });
+      D.rect(ctx, 0, iy - 22, w, 22, C.stone + "88", C.ink, 1); D.line(ctx, [[0, iy], [w, iy]], C.rebar, 2.5);
+      D.text(ctx, "invert = bas intérieur", w * 0.62, iy + 14, { color: C.rebar, weight: 500 });
+      D.text(ctx, "conduite principale (maîtresse)", w * 0.3, iy - 28, { color: C.ink });
+      D.rect(ctx, w * 0.45, gy, 20, h * 0.18, C.surface, C.steel, 1.2); D.text(ctx, "puisard", w * 0.45 + 10, gy + h * 0.18 + 14, { align: "center", color: C.steel });
+      for (let i = 0; i < 4; i++) { const d = (u * 4 + i / 4) % 1; D.circle(ctx, w * 0.45 + 10, gy - 30 + d * 60, 2.5, C.water); }
+      D.line(ctx, [[w * 0.95, gy + 20], [w * 0.82, gy + 20], [w * 0.78, iy - 30], [w * 0.74, iy - 22]], C.steel, 3);
+      D.text(ctx, "branchement", w * 0.97, gy + 14, { align: "right", color: C.steel });
+    }},
+    texte: [
+      "Termes des diapos : le <b>regard</b> donne accès à une conduite (sanitaire au centre de la chaussée, pluvial souvent en bordure) ; l'<b>invert</b> est la base, la partie basse intérieure de la conduite, d'où se mesurent les profondeurs ; le <b>réseau d'aqueduc</b> porte l'eau potable ; le réseau d'égouts recueille les eaux usées (sanitaire) et les eaux de pluie (pluvial).",
+      "Termes des exercices de plans : le <b>puisard</b> capte l'eau de ruissellement de la rue (sous une grille) et la dirige vers l'égout pluvial ; la <b>conduite maîtresse</b> est la conduite principale de la rue ; le <b>col de cygne</b> est un coude en S sur un branchement, près de la conduite principale ; la <b>purge</b> sert à vidanger une conduite. Un <b>réseau unitaire</b> transporte eaux usées et pluviales dans une même conduite ; un réseau <b>séparatif</b> les sépare.",
+      "Aussi : une <b>vanne</b> ouvre ou ferme une conduite (le calque R-x-AQU-VAN-PRJ de Laval) ; le <b>branchement</b> relie la maison aux infrastructures de la municipalité ; la <b>borne d'incendie</b> est relevée parmi les infrastructures municipales.",
+      "Les définitions de puisard, conduite maîtresse, col de cygne, purge et réseau séparatif sont les définitions courantes : les exercices du prof (plan du MTQ, plan à la main) emploient ces mots sans les définir."
+    ],
+    cle: { label: "À retenir", html: "<strong>Regard</strong> = accès · <strong>invert</strong> = bas intérieur · <strong>puisard</strong> = capte la pluie de la rue · <strong>branchement</strong> = la maison vers la conduite principale · unitaire = tout ensemble." },
+    widget: box => triWidget(box, {
+      titre: "Quel réseau ?", consigne: "Pour chaque élément, le réseau auquel il appartient.",
+      cats: ["Aqueduc (eau potable)", "Égout pluvial", "Égout sanitaire"],
+      items: [
+        { nom: "Vanne", rep: "Aqueduc (eau potable)", pourquoi: "R-x-AQU-VAN : une vanne d'aqueduc." },
+        { nom: "Borne d'incendie", rep: "Aqueduc (eau potable)", pourquoi: "Elle est alimentée par l'aqueduc." },
+        { nom: "Puisard", rep: "Égout pluvial", pourquoi: "Il capte l'eau de ruissellement." },
+        { nom: "Couvercle « EP »", rep: "Égout pluvial", pourquoi: "EP = eaux pluviales." },
+        { nom: "Couvercle « EU », hermétique", rep: "Égout sanitaire", pourquoi: "EU = eaux usées." },
+        { nom: "Regard au centre de la chaussée", rep: "Égout sanitaire", pourquoi: "Le sanitaire est généralement au centre (le pluvial peut aussi y être)." }
+      ]
+    })
+  },
+  {
+    titre: "Tous les sigles du cours",
+    anim: { ratio: 0.45, alt: "Des cartes de sigles défilent et se retournent pour montrer leur sens", draw(ctx, t, w, h) {
+      const L = [["GNSS", "tous les systèmes satellites"], ["CGVD2013", "référence altimétrique (géoïde)"], ["NAD83 (SCRS)", "référence planimétrique"], ["GÉODEQ", "points géodésiques du Québec"], ["COAS", "certificat pour drone"], ["CCQ", "régit l'arpentage de construction"], ["NADAO · CDAO", "normes de dessin"], ["SQI", "cartouches standardisés"], ["MEP", "mécanique, électricité, plomberie"], ["LOD", "niveau de détail BIM"]];
+      const u = cyc(t, 20) * L.length, k = Math.floor(u), f = u - k, flip = seg(f, 0.35, 0.55);
+      const cw = Math.min(w * 0.7, 340), x = (w - cw) / 2, sc = Math.abs(Math.cos(flip * Math.PI));
+      D.rect(ctx, w / 2 - cw / 2 * sc, h * 0.2, cw * sc, h * 0.6, flip < 0.5 ? C.steel : C.surface, C.ink, 1.5);
+      if (sc > 0.3) D.text(ctx, flip < 0.5 ? L[k][0] : L[k][1], w / 2, h * 0.53, { align: "center", color: flip < 0.5 ? C.surface : C.ink, size: flip < 0.5 ? 20 : 13, weight: 500 });
+      D.text(ctx, (k + 1) + " / " + L.length, w - 12, h - 8, { align: "right" });
+    }},
+    texte: [
+      "Référentiels : <b>NAD27</b>, <b>NAD83</b> et <b>NAD83 (SCRS)</b> (planimétrie) ; <b>CGVD28</b> remplacé en 2015 par <b>CGVD2013</b> (altimétrie, réalisé par un modèle de géoïde) ; <b>NMM</b> = niveau moyen des mers ; <b>MTM</b> et <b>UTM</b> = quadrillages cartographiques ; <b>GÉODEQ</b> = gestion des informations géodésiques du Québec.",
+      "Organismes et normes : <b>CCQ</b> (Commission de la construction du Québec) ; <b>COAS</b> (certificat d'opérations aériennes spécialisées, Transport Canada) ; <b>NADAO</b> (norme québécoise de DAO, plans municipaux et « tel que construit ») ; <b>CDAO</b> (norme nationale de conception et dessin assistés par ordinateur) ; <b>AICQ</b> (Association des ingénieurs-conseils du Québec, calques) ; <b>SQI</b> (Société québécoise des infrastructures, cartouches) ; <b>MTMD</b> (anciennement MTQ, codes de points).",
+      "Plans : <b>DAO</b>, <b>CAO</b>, <b>BIM</b>, <b>LOD</b> (niveau de détail, ex. LOD 200), <b>MEP</b> (mécanique, électricité, plomberie), <b>PP</b>, <b>SO</b>, <b>CO</b>, <b>TC/TQC</b> (tel que construit, remplacé par plan final ou relevé), <b>PGA</b> (plan de gestion des actifs), <b>A-M-J</b> (format des dates).",
+      "Positionnement : <b>GPS</b> (NAVSTAR, É.-U.), <b>GLONASS</b>, <b>Galileo</b>, <b>BeiDou</b>, réunis sous <b>GNSS</b> ; <b>LiDAR</b> = Light Detection And Ranging ; <b>SLAM</b> = localisation et cartographie simultanées ; <b>EDM</b> = télémètre électronique ; <b>UAV</b> = véhicule aérien non habité ; <b>SIG</b> = système d'information géographique."
+    ],
+    cle: { label: "À retenir", html: "<strong>GNSS</strong> = GPS + GLONASS + Galileo + BeiDou · <strong>CGVD2013</strong> remplace CGVD28 · <strong>COAS</strong> drone · <strong>CCQ</strong> chantier · <strong>NADAO / CDAO</strong> dessin · <strong>SQI</strong> cartouches." },
+    widget: box => triWidget(box, {
+      titre: "Quel domaine ?", consigne: "Classe chaque sigle.",
+      cats: ["Référence géodésique", "Positionnement et capture", "Normes et organismes", "Plans et BIM"],
+      items: [
+        { nom: "CGVD2013", rep: "Référence géodésique", pourquoi: "Système canadien de référence altimétrique (2013)." },
+        { nom: "NAD83 (SCRS)", rep: "Référence géodésique", pourquoi: "Référence planimétrique." },
+        { nom: "GLONASS", rep: "Positionnement et capture", pourquoi: "Le système satellite russe." },
+        { nom: "SLAM", rep: "Positionnement et capture", pourquoi: "Localisation et cartographie simultanées (NavVis VLX)." },
+        { nom: "NADAO", rep: "Normes et organismes", pourquoi: "Norme québécoise de DAO." },
+        { nom: "COAS", rep: "Normes et organismes", pourquoi: "Certificat de Transport Canada pour les drones." },
+        { nom: "MEP", rep: "Plans et BIM", pourquoi: "Les conduits mécaniques, électriques et de plomberie (coordination BIM)." },
+        { nom: "LOD 200", rep: "Plans et BIM", pourquoi: "Niveau de détail d'un projet BIM issu d'un scan." }
+      ]
+    })
+  }
+  ]
+});
+
+/* ===================== Sujet 19 — Compléments : lire un vrai plan ===================== */
+MODULES.push({
+  id: "lire-plan",
+  partie: "c5",
+  titre: "Lire un vrai plan : les questions du prof",
+  resume: "Où trouver chaque réponse sur un plan (cartouche, légende, rose des vents, cotes, renvois, profil), la méthode en 5 passes et le calcul d'une pente sur un profil.",
+  sources: "cours 4, diapos 59 à 62 (exercice 1, plan de bâtiment) · suite, diapos 58 à 67 (plan du MTQ, plan à la main, plan d'eau refroidie)",
+  sections: [
+  {
+    titre: "Où trouver chaque réponse",
+    anim: { ratio: 0.6, alt: "Une feuille de plan ; une loupe passe tour à tour sur le cartouche, la légende, la rose des vents, une cote et un renvoi de détail", draw(ctx, t, w, h) {
+      const u = cyc(t, 15), fx = 10, fy = 10, fw = w - 20, fh = h - 20;
+      D.rect(ctx, fx, fy, fw, fh, C.surface, C.ink, 1.5);
+      D.rect(ctx, fx + 20, fy + 30, fw * 0.5, fh * 0.42, null, C.ink, 2);
+      const z = [
+        ["cartouche : échelle, firme, date, statut", fx + fw * 0.7, fy + fh * 0.62, fw * 0.28, fh * 0.36],
+        ["légende : symboles, matériaux", fx + fw * 0.7, fy + 8, fw * 0.28, fh * 0.3],
+        ["rose des vents : orientation", fx + fw * 0.58, fy + 8, 30, 30],
+        ["cotes : dimensions, niveaux", fx + 20, fy + 12, fw * 0.5, 14],
+        ["renvoi : n° détail / n° feuille", fx + fw * 0.4, fy + fh * 0.6, 30, 30]
+      ];
+      z.forEach(([, x, y, ww, hh]) => D.rect(ctx, x, y, ww, hh, null, C.line, 1));
+      D.line(ctx, [[fx + 20, fy + 19], [fx + 20 + fw * 0.5, fy + 19]], C.ink, 1); D.text(ctx, "12 500", fx + 20 + fw * 0.25, fy + 16, { align: "center", size: 9, color: C.ink });
+      D.arrow(ctx, fx + fw * 0.58 + 15, fy + 34, fx + fw * 0.58 + 15, fy + 12, C.ink, 1.5); D.text(ctx, "N", fx + fw * 0.58 + 22, fy + 22, { size: 9, color: C.ink });
+      D.circle(ctx, fx + fw * 0.4 + 15, fy + fh * 0.6 + 15, 13, null, C.ink, 1); D.line(ctx, [[fx + fw * 0.4 + 2, fy + fh * 0.6 + 15], [fx + fw * 0.4 + 28, fy + fh * 0.6 + 15]], C.ink, 1);
+      const k = Math.floor(u * z.length), [n, x, y, ww, hh] = z[k];
+      D.rect(ctx, x - 3, y - 3, ww + 6, hh + 6, C.rebar + "22", C.rebar, 2.5);
+      D.text(ctx, n, w / 2, h - 18, { align: "center", color: C.rebar, weight: 500, size: 13 });
+    }},
+    texte: [
+      "Les exercices du prof posent des questions très concrètes : à quelle <b>échelle</b> ? quelle <b>firme</b> a fait l'architecture ? à quelle <b>date</b> le plan a-t-il été émis et quel est le <b>statut</b> de la révision ? Toutes ces réponses sont dans le <b>cartouche</b> (et son historique des révisions). Les <b>matériaux</b> (poteaux, tuyauterie, conduite d'aqueduc) et les <b>symboles</b> (raccord, deux conduites qui se croisent sans être connectées) se lisent dans la <b>légende</b>, les notes et les étiquettes du dessin.",
+      "L'<b>orientation</b> (« à quel point cardinal est la droite du dessin ? ») se lit sur la <b>rose des vents</b> ; les <b>dimensions totales</b> sur la cotation extérieure ; le <b>niveau d'un plancher</b> sur une cote de niveau ; la <b>page d'un détail</b> sur le symbole de renvoi (n° de détail sur n° de feuille). Sur un plan d'infrastructures, l'<b>élévation du pavage</b> ou la <b>profondeur d'une conduite</b> à un chaînage donné se lisent sur le <b>profil en long</b>.",
+      "Le prof demande aussi ce qui <b>manque</b> : un plan doit avoir une échelle, une orientation (nord), un cartouche et une légende ; si l'un d'eux est absent, c'est la réponse. Autres questions types : l'unité du chaînage (mètres ou pieds), le nombre de détails, de puisards, d'escaliers ou de portes (on compte sur la vue en plan), si tout est à sa position exacte (un plan schématique ne l'est pas : vérifier la note ou l'échelle)."
+    ],
+    cle: { label: "À retenir", html: "<strong>Cartouche</strong> = échelle, firme, date, statut · <strong>légende</strong> = symboles et matériaux · <strong>rose des vents</strong> = orientation · <strong>renvoi</strong> = page du détail · <strong>profil</strong> = élévations et pentes au chaînage." },
+    widget: box => triWidget(box, {
+      titre: "Où chercher ?", consigne: "Pour chaque question d'exercice, l'endroit du plan où se trouve la réponse.",
+      cats: ["Cartouche", "Légende", "Rose des vents", "Cotation", "Symbole de renvoi", "Profil en long"],
+      items: [
+        { nom: "À quelle échelle a été produit le plan ?", rep: "Cartouche", pourquoi: "L'échelle est une donnée du cartouche (ou sous chaque vue)." },
+        { nom: "Quelle firme a réalisé l'architecture ?", rep: "Cartouche", pourquoi: "Les professionnels responsables sont dans le cartouche." },
+        { nom: "Quel symbole montre deux conduites qui se croisent sans être connectées ?", rep: "Légende", pourquoi: "La légende décrit les symboles." },
+        { nom: "À quel point cardinal est la droite du dessin ?", rep: "Rose des vents", pourquoi: "La flèche du nord donne l'orientation réelle." },
+        { nom: "Dimensions totales de la nouvelle section ?", rep: "Cotation", pourquoi: "La cote totale, en cotation extérieure." },
+        { nom: "Sur quelle page est le détail des gicleurs de fenêtre ?", rep: "Symbole de renvoi", pourquoi: "Le marqueur de détail donne le n° de détail et le n° de feuille." },
+        { nom: "Élévation du pavage au chaînage 0+150 ?", rep: "Profil en long", pourquoi: "Le profil montre les élévations le long du tracé." }
+      ]
+    })
+  },
+  {
+    titre: "La méthode en 5 passes",
+    anim: { ratio: 0.45, alt: "Cinq passes de lecture s'allument l'une après l'autre", draw(ctx, t, w, h) {
+      const P = ["1 cartouche", "2 orientation et vues", "3 légende et notes", "4 axes, cotes, niveaux", "5 détails et renvois"], k = Math.floor(cyc(t, 12) * 5);
+      P.forEach((p, i) => { const y = 18 + i * (h - 26) / 5, on = i === k;
+        D.rect(ctx, 20, y, w - 40, (h - 26) / 5 - 6, on ? C.steel : i < k ? C.steel + "33" : C.surface, C.steel, 1.2);
+        D.text(ctx, p, 32, y + (h - 26) / 10 + 2, { color: on ? C.surface : C.ink, weight: on ? 500 : 400, size: 12 }); });
+    }},
+    texte: [
+      "Une mauvaise interprétation d'un plan peut coûter très cher : on lit donc dans un ordre fixe. <b>1. Le cartouche</b> : titre, projet, client, échelle, date, statut (seul un plan <b>CO</b> sert à construire). <b>2. L'orientation et les vues</b> : où est le nord, quelles vues sont présentées (plan, élévations, coupes, profil). <b>3. La légende et les notes générales</b> : symboles, matériaux, existant contre projeté (épaisseur du trait).",
+      "<b>4. Les axes, les cotes et les niveaux</b> : se repérer par les axes (A/1 en haut à gauche), lire les cotes (vraies valeurs, en mm) et les cotes de niveau (en m, par rapport au 0,00). <b>5. Les détails et les renvois</b> : suivre les symboles vers les coupes et détails des autres feuilles. Sur un plan d'infrastructures, on remplace les axes par le <b>chaînage</b> et on lit le <b>profil</b>."
+    ],
+    cle: { label: "Dans l'ordre", html: "1 cartouche · 2 orientation et vues · 3 légende et notes · 4 axes, cotes, niveaux · 5 détails et renvois" },
+    widget: box => etapesWidget(box, {
+      titre: "Les 5 passes, une à une", label: "Passe",
+      etapes: [
+        { court: "1. Cartouche", texte: "Titre, client, firme, échelle, date (A-M-J), statut et historique des révisions." },
+        { court: "2. Orientation et vues", texte: "Rose des vents (nord géographique) contre nord projet ; vues présentes : plan, façades, coupes, profil." },
+        { court: "3. Légende et notes", texte: "Symboles, matériaux, notes générales ; existant contre projeté par l'épaisseur du trait." },
+        { court: "4. Axes, cotes, niveaux", texte: "Axes A/1 ; cotes en vraie grandeur (mm) ; niveaux en m par rapport au 0,00 ; chaînage sur un plan d'infrastructures." },
+        { court: "5. Détails et renvois", texte: "Marqueur de détail : n° du détail et n° de la feuille où il se trouve." }
+      ]
+    })
+  },
+  {
+    titre: "Lire un profil : élévation et pente d'une conduite",
+    anim: { ratio: 0.5, alt: "Un profil en long : terrain naturel, conduite en pente entre deux regards, chaînages en abscisse", draw(ctx, t, w, h) {
+      const u = cyc(t, 8), x0 = 30, x1 = w - 20, yT = h * 0.25, yA = h * 0.62, yB = h * 0.78;
+      D.line(ctx, range(x0, x1, 30).map(x => [x, yT + 8 * Math.sin(x / 40)]), C.veg, 2);
+      D.line(ctx, [[x0, yA], [x1, yB]], C.steel, 4);
+      [[x0 + 20, yA + (yB - yA) * 20 / (x1 - x0)], [x1 - 30, yA + (yB - yA) * (x1 - x0 - 30) / (x1 - x0)]].forEach(([x, y], i) => {
+        D.rect(ctx, x - 6, yT, 12, y - yT, C.surface, C.ink, 1); D.text(ctx, "R" + (i + 1), x, yT - 6, { align: "center", color: C.ink }); });
+      const px = lerp(x0, x1, u), py = yA + (yB - yA) * u;
+      D.circle(ctx, px, py, 5, C.water, null);
+      D.text(ctx, "0+000", x0, h - 6, { color: C.muted }); D.text(ctx, "0+100", x1, h - 6, { align: "right", color: C.muted });
+      D.text(ctx, "terrain naturel", x0, yT - 14, { color: C.veg }); D.text(ctx, "pente = Δz ÷ distance", w / 2, h * 0.5, { align: "center", color: C.rebar, weight: 500 });
+    }},
+    texte: [
+      "Le <b>profil en long</b> est une coupe verticale le long du tracé : terrain naturel, pavage, conduites et regards, avec le <b>chaînage</b> en abscisse. Entre deux regards, la conduite descend pour que l'eau s'écoule par gravité, selon une <b>pente</b> précise calculée selon la longueur du tracé (précision au centimètre).",
+      "La pente se calcule avec deux élévations d'invert et la distance entre leurs chaînages : <b>pente (%) = (Z amont − Z aval) ÷ distance × 100</b>. Exemple : invert 243,77 m à 0+020 et 243,27 m à 0+120 → 0,50 m sur 100 m = <b>0,5 %</b>. La profondeur à un chaînage = élévation du terrain (ou du dessus du regard) − élévation de l'invert."
+    ],
+    cle: { label: "Formule", html: '<span class="formula">pente = (Z₁ − Z₂) ÷ (ch₂ − ch₁) × 100 %</span> · profondeur = Z dessus − Z invert' },
+    graphique: {
+      titre: "Pente d'une conduite entre deux regards", source: "calcul",
+      x: { min: 0, max: 200, label: "chaînage (m)" }, y: { min: 240, max: 246, label: "élévation (m)" },
+      params: [
+        { id: "z1", label: "Invert amont (0+020)", min: 242, max: 245, step: 0.01, value: 243.77, unit: " m" },
+        { id: "z2", label: "Invert aval", min: 240.5, max: 244, step: 0.01, value: 243.27, unit: " m" },
+        { id: "d", label: "Chaînage aval", min: 60, max: 200, step: 5, value: 120, unit: " m" }
+      ],
+      calc(p) {
+        const L = p.d - 20, pente = (p.z1 - p.z2) / L * 100;
+        return {
+          courbes: [{ pts: [[20, p.z1], [p.d, p.z2]], style: "main", nom: "conduite (invert)" }, { pts: [[0, 245.784], [200, 245.6]], style: "ref", nom: "terrain" }],
+          marqueurs: [{ x: 20, y: p.z1, nom: "R1" }, { x: p.d, y: p.z2, nom: "R2" }],
+          lecture: [["Pente", fr(pente, 2) + " %"], ["Δz", fr(p.z1 - p.z2, 2) + " m"], ["Distance", fr(L, 0) + " m", "muted"], ["Écoulement", pente <= 0 ? "aucun par gravité ⚠" : "vers l'aval"]]
+        };
+      },
+      note: "Calcul exact : pente = Δz ÷ distance. L'invert amont reprend l'exemple du cours (243,77 m) ; les autres valeurs sont des exemples."
+    }
   }
   ]
 });
