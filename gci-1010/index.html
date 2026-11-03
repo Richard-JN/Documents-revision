@@ -10,15 +10,15 @@
 <style>
 /* Mise en page : carnet d'étude — bande d'en-tête, notions empilées (animation | texte), outil interactif pleine largeur, puis « Teste-toi » */
 :root{
-  --bg:#e9eaee; --surface:#f6f7f9; --ink:#1c2030; --muted:#5a5f70; --line:#c6c9d3; --steel:#3b4a8c; --rebar:#b36b1f; --sage:#4f7d57; --alert:#b23a3a; --water:#9cbfe0; --hydrate:#8b8f9c; --grain:#444a5c; --sand:#cfb27a; --stone:#8e8a86; --magma:#c8502e; --ice:#d6e3f2; --sea:#3d6fa6; --veg:#5f8a3c; --clay:#a68a6a;
+  --bg:#eef2f6; --surface:#fbfcfd; --ink:#13233a; --muted:#4f5f73; --line:#b7c4d2; --steel:#1d5b9a; --rebar:#c0392b; --sage:#3c7d4f; --alert:#b42d2d; --water:#7fb3dc; --hydrate:#8b97a6; --grain:#3d4b5e; --sand:#d6c08a; --stone:#8f969e; --magma:#d05a2c; --ice:#dbe7f3; --sea:#2f6aa3; --veg:#5b8a3a; --clay:#a6896a;
   --display:"Barlow Condensed","Arial Narrow",sans-serif;
   --body:"IBM Plex Sans",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#14161d;--surface:#1d2029;--ink:#e4e6ee;--muted:#a0a5b5;--line:#363a48;--steel:#8f9ee6;--rebar:#e3a25e;--sage:#82b88a;--alert:#e07070;--water:#2c4f73;--hydrate:#8e93a0;--grain:#c7cad6;--sand:#b0925a;--stone:#8a8580;--magma:#f07450;--ice:#34485f;--sea:#6f9fd6;--veg:#86b45f;--clay:#a88d6d;color-scheme:dark}}
+  --bg:#0d2846;--surface:#123459;--ink:#eaf2fb;--muted:#a9c0d8;--line:#2e5379;--steel:#8cc4f0;--rebar:#ff9a7f;--sage:#8fd19e;--alert:#ff8a80;--water:#4f8fc6;--hydrate:#8ea3ba;--grain:#cfdcea;--sand:#c9b27a;--stone:#93a2b3;--magma:#f08050;--ice:#1d4670;--sea:#6fa8dc;--veg:#88c070;--clay:#b8987a;color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#14161d;--surface:#1d2029;--ink:#e4e6ee;--muted:#a0a5b5;--line:#363a48;--steel:#8f9ee6;--rebar:#e3a25e;--sage:#82b88a;--alert:#e07070;--water:#2c4f73;--hydrate:#8e93a0;--grain:#c7cad6;--sand:#b0925a;--stone:#8a8580;--magma:#f07450;--ice:#34485f;--sea:#6f9fd6;--veg:#86b45f;--clay:#a88d6d;color-scheme:dark}
+  --bg:#0d2846;--surface:#123459;--ink:#eaf2fb;--muted:#a9c0d8;--line:#2e5379;--steel:#8cc4f0;--rebar:#ff9a7f;--sage:#8fd19e;--alert:#ff8a80;--water:#4f8fc6;--hydrate:#8ea3ba;--grain:#cfdcea;--sand:#c9b27a;--stone:#93a2b3;--magma:#f08050;--ice:#1d4670;--sea:#6fa8dc;--veg:#88c070;--clay:#b8987a;color-scheme:dark}
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--body);
@@ -321,6 +321,81 @@ footer{margin-top:40px;color:var(--muted);font-size:.8rem}
 @media (prefers-reduced-motion:reduce){.card{transition:none}}
 </style>
 <style>
+/* Thème « plan » : feuille de dessin technique. Le jour : papier quadrillé et encre bleu nuit ; la nuit : bleu de plan (blueprint).
+   Cartouches, bulles d'axe, traits mixtes et cotes. À utiliser avec la palette "plan". Chargé après head.html ; ne touche qu'à l'apparence. */
+:root{
+  --display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --grille-fine:color-mix(in srgb,var(--steel) 9%,transparent);
+  --grille:color-mix(in srgb,var(--steel) 17%,transparent);
+  --trait:1.5px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--grille-fine:rgba(234,242,251,.05);--grille:rgba(234,242,251,.11)}}
+:root[data-theme="dark"]{--grille-fine:rgba(234,242,251,.05);--grille:rgba(234,242,251,.11)}
+
+/* Papier quadrillé (5 mm et 25 mm), fixe derrière la page */
+body{background-color:var(--bg)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background-image:linear-gradient(var(--grille) 1px,transparent 1px),linear-gradient(90deg,var(--grille) 1px,transparent 1px),
+    linear-gradient(var(--grille-fine) 1px,transparent 1px),linear-gradient(90deg,var(--grille-fine) 1px,transparent 1px);
+  background-size:100px 100px,100px 100px,20px 20px,20px 20px}
+
+/* Lettrage technique */
+h1,h2,h3{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+h1{font-size:clamp(2.3rem,7vw,3.8rem);line-height:.98}
+.sec-head h2{text-transform:none;letter-spacing:.01em}
+.card h3{text-transform:none;letter-spacing:.01em}
+.eyebrow{font:500 .72rem/1.2 var(--mono);letter-spacing:.16em;color:var(--steel)}
+
+/* En-tête = cartouche : cadre double, bande de titre */
+.masthead{position:relative;margin-top:18px;padding:16px 18px 18px;border:var(--trait) solid var(--ink);border-bottom-width:var(--trait);
+  background:color-mix(in srgb,var(--surface) 82%,transparent);box-shadow:inset 0 0 0 4px var(--surface),inset 0 0 0 5px var(--line)}
+.masthead{grid-template-columns:minmax(0,1fr);min-width:0}
+.masthead > *{position:relative;min-width:0}
+@media (max-width:520px){.masthead{padding:14px 12px 16px}.plan-tete{margin:-14px -12px 6px}h1{overflow-wrap:anywhere}}
+.plan-tete{display:flex;justify-content:space-between;gap:10px;margin:-16px -18px 6px;padding:6px 12px;border-bottom:1px solid var(--line);
+  font:500 .68rem/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.plan-tete span{min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plan-tete span:last-child{text-align:right;flex:none}
+.masthead.avec-hero{grid-template-columns:minmax(0,1fr)}
+.plan-hero{display:block;width:100%;max-width:560px;justify-self:center;color:var(--ink);pointer-events:none}
+.plan-hero svg{display:block;width:100%;height:auto;overflow:visible}
+@media (min-width:860px){
+  .masthead.avec-hero{grid-template-columns:minmax(0,1fr) minmax(0,.9fr);column-gap:22px}
+  .masthead.avec-hero > *{grid-column:1}
+  .masthead.avec-hero > .plan-tete{grid-column:1 / -1}
+  .masthead.avec-hero > .plan-hero{grid-column:2;grid-row:2 / span 6;align-self:center}
+}
+
+/* Accueil : parties = lignes d'axe (trait mixte) ; cartes = feuilles avec cartouche */
+.part-head{border-bottom:0;padding-bottom:10px;background-image:repeating-linear-gradient(90deg,var(--steel) 0 22px,transparent 22px 28px,var(--steel) 28px 31px,transparent 31px 37px);
+  background-size:100% 1.5px;background-repeat:no-repeat;background-position:0 100%}
+.part-head h2{font-size:1.45rem}
+.card{border:var(--trait) solid var(--ink);border-radius:0;background:color-mix(in srgb,var(--surface) 90%,transparent);padding:16px 16px 34px;position:relative}
+.card::after{content:attr(data-feuille);position:absolute;right:-1px;bottom:-1px;min-width:72px;padding:3px 8px;border:1px solid var(--ink);
+  font:500 .66rem/1.2 var(--mono);letter-spacing:.08em;color:var(--ink);background:var(--surface);text-align:center}
+.card:hover{border-color:var(--rebar);transform:translateY(-2px)}
+.card .code{font:500 .7rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--steel)}
+.card .done{bottom:auto;top:12px}
+
+/* Sujet : numéro de notion dans une bulle d'axe */
+.sec-num{display:inline-grid;place-items:center;width:2.3rem;height:2.3rem;border:2px solid var(--steel);border-radius:50%;
+  font:700 1.15rem/1 var(--display);color:var(--steel);flex:none;background:var(--surface)}
+.stage,.chart,.test,.diag,.key,.prof,.exam,.calib,.fiche-bloc,.conf,.toc button,.toggle-done{border-radius:0}
+.stage{border:var(--trait) solid var(--ink)}
+.chart{border-color:var(--ink)}
+.key{border-left:3px solid var(--steel);position:relative}
+.key::before{content:"";position:absolute;left:-8px;top:0;width:13px;height:1.5px;background:var(--steel);box-shadow:0 calc(100% - 1px) 0 var(--steel)}
+.key b,.prof .lab,.exam .lab{font-family:var(--mono);letter-spacing:.08em}
+.next button,.action,.conf-ok{border-radius:0;font:700 1rem/1 var(--display);letter-spacing:.06em;text-transform:uppercase;padding:11px 16px}
+.action.alt{border:var(--trait) solid var(--ink)}
+.q-opts button,.btn,.seg button,.q-item,.q-paire,.q-vfl,.q-ecrit{border-radius:0}
+.test{border-left-width:4px}
+.fiche-bloc{border-color:var(--ink)}
+.fiche-bloc h3{font-size:1.2rem}
+svg text{font-family:var(--mono)}
+
+/* Pied de page = bande de cartouche */
+footer{border:1px solid var(--ink);padding:10px 12px;font:.78rem/1.5 var(--mono);background:color-mix(in srgb,var(--surface) 85%,transparent)}
 /* Retouches visuelles propres à ce cours (facultatif), ajoutées après la palette et le thème.
    Exemple : une couleur de titre par partie (l'attribut data-partie est posé sur les pages de sujet)
    :root[data-partie="p2"] h1 { letter-spacing: .01em; }
@@ -978,7 +1053,7 @@ const QUIZ_DATA = {
 };
 
 /* Vague 1 (2026-11-02) : détails des diapos encore jamais testés (« tout peut être demandé »). */
-const QUIZ_PLUS = {
+const QUIZ_PLUS = [{
   "terre": {
     2: { q: "À la latitude 63°37′30″, 1° de longitude vaut 49 452,8 m. Combien vaut 1′ ?", o: ["824 m", "49,5 m", "1 852 m", "8 240 m"], r: 0, e: "49 452,8 ÷ 60 = 824 m (exemple du cours)." },
     3: { q: "Combien le Québec compte-t-il de repères altimétriques de chaque ordre ?", a: [["1er ordre", "12 600"], ["2e ordre", "3 500"], ["3e ordre", "5 100"], ["Au Canada (CGVD28)", "88 000"]], x: ["120 000"],
@@ -1002,7 +1077,57 @@ const QUIZ_PLUS = {
     0: { q: "Que trouve-t-on sur la page titre (frontispice) d'un cahier de plans ? (cochez la ou les réponses exactes)", o: ["la liste des dessins", "le plan de situation", "les notes générales et la légende", "le titre du projet, le client et le contrat", "le profil en long des conduites"], r: [0, 1, 2, 3], oe: ["Aussi la liste des dessins de référence.", "Oui, sur la page titre.", "Oui.", "Oui, avec le bureau d'architecture et l'équipe.", "Le profil a sa propre feuille (élément 6)."], e: "Page titre : vue générale, listes de dessins, légende, notes générales, logo, titre, équipe, client et contrat, plan de situation, date." },
     1: { q: "À quoi servent les plateaux de nivellement d'un plan de nivellement ?", o: ["de base pour déterminer les hauteurs maximales des constructions autorisées", "à placer le cartouche", "à mesurer les inverts", "à orienter le nord projet"], r: 0, e: "Le plan de nivellement donne aussi les pentes et la correspondance local/géodésique (10 000 mm = 99,80 m)." }
   }
-};
+},
+/* Vague 2 (2026-11-03) : « Révision pour le Quiz1 » du prof (Exemples_Questions Quiz1.pdf), transcrit avec ses formats. */
+{
+  "angles": {
+    0: { q: "La mesure d'angle faite selon le quadrillage cartographique représente…", o: ["un gisement", "un azimut"], r: 0, source: "tiré du quiz exemple du prof",
+         e: "Gisement = depuis le nord du quadrillage (cartographique) ; azimut = depuis le nord géographique." },
+    1: [
+      { q: "La station totale est au point A (Xa = 274 598,213 ; Ya = 5 123 554,213). Elle vise B avec un angle horizontal de 60° depuis le nord et AB = 55,00 m. Calcule Xb et Yb.", source: "tiré du quiz exemple du prof",
+        e: "ΔX = 55 · sin 60° = +47,631 m ; ΔY = 55 · cos 60° = +27,500 m. <b>Xb = 274 645,844</b> ; <b>Yb = 5 123 581,713</b>. En topométrie, sin pour X, cos pour Y." },
+      { q: "La station totale est au point B (Xb = 262 315,111 ; Yb = 5 223 334,111). Elle vise A avec un angle horizontal de 220° depuis le nord et BA = 70,00 m. Calcule Xa et Ya.", source: "tiré du quiz exemple du prof",
+        e: "220° pointe vers le Sud-Ouest : les deux Δ sont négatifs. ΔX = 70 · sin 220° = −44,995 m ; ΔY = 70 · cos 220° = −53,623 m. <b>Xa = 262 270,116</b> ; <b>Ya = 5 223 280,488</b>. (L'énoncé du prof dit « station au point A », mais la figure la place en B.)" },
+      { q: "Station en B (X = 262 315,111), azimut 220° vers A, BA = 70,00 m. Combien vaut Xa ?", o: ["262 270,116", "262 360,106", "262 261,488", "262 368,734"], r: 0, source: "tiré du quiz exemple du prof",
+        e: "ΔX = 70 · sin 220° = −44,995 m. 262 360,106 : signe oublié. 262 261,488 : cos au lieu de sin (−53,623)." }
+    ],
+    3: [
+      { q: "Le niveau lit 3,222 m sur la mire du point de départ (altitude 63,50 m) et 1,101 m sur la mire du point Z1. Calcule l'élévation de Z1.", source: "tiré du quiz exemple du prof",
+        e: "Alt Z1 = Alt A + R − V = 63,50 + 3,222 − 1,101 = <b>65,621 m</b> (le terrain monte)." },
+      { q: "Une figure montre un niveau sur trépied entre deux mires : visée arrière R sur le point de hauteur connue A, visée avant V sur le point inconnu B, avec la hauteur de l'instrument HI au-dessus du niveau de référence. De quel type de nivellement s'agit-il ?", source: "tiré du quiz exemple du prof",
+        e: "Le <b>nivellement direct</b> (ou <b>différentiel</b>) : niveau et mires, différence de lectures R − V. Le trigonométrique (indirect) utilise une station totale, un angle et une distance." }
+    ]
+  },
+  "instruments": {
+    0: { q: "Une station totale peut fonctionner selon 2 types de coordonnées. Lesquelles ?", source: "tiré du quiz exemple du prof",
+         e: "Réponse la plus probable d'après les notes : des <b>coordonnées locales</b> (arbitraires, propres au chantier) ou des <b>coordonnées géoréférencées</b> (on se met en station sur des points géodésiques connus, ex. MTM / NAD83). Autre lecture possible : elle mesure en <b>coordonnées polaires</b> (angle et distance) et calcule des <b>coordonnées rectangulaires</b> (X, Y, Z). Les diapos ne tranchent pas : à valider avec le prof." },
+    2: { q: "« Permet de mesurer des millions de points en X, Y et Z et fonctionne sans réflecteur. » De quel appareil parlons-nous ?", o: ["Station totale", "Scanner laser", "Niveau", "GPS/GNSS"], r: 1, source: "tiré du quiz exemple du prof",
+         e: "Le scanner laser 3D : jusqu'à 500 000 points par seconde, un nuage de points. La station totale vise un prisme point par point." },
+    3: { q: "Un GPS vous positionne n'importe où sur la planète en coordonnées géographiques et cartographiques.", o: ["C'est vrai", "C'est faux"], r: 0, source: "tiré du quiz exemple du prof",
+         e: "Le GPS calcule la position 3D (latitude, longitude, hauteur) de n'importe quel point de la planète ; le récepteur la convertit en coordonnées cartographiques (MTM, UTM). Réponse attendue la plus probable : vrai. À valider avec le prof." },
+    4: { q: "Un équipement LiDAR équipé de caméras, embarqué sur un véhicule (camionnette), permet de produire…", o: ["un levé bathymétrique", "une cartographie mobile", "des distances et des angles"], r: 1, source: "tiré du quiz exemple du prof",
+         e: "La cartographie mobile : un véhicule muni de caméras étalonnées et d'un GPS compensé, levés à 360°, environ 100 km par jour." }
+  },
+  "arpentage": {
+    2: { q: "Le rôle de l'arpentage permet de… (encerclez la ou les bonnes réponses)", o: ["Localiser", "Positionner", "Mesurer", "Évaluer", "Toutes ces réponses", "Aucune de ces réponses"], r: [0, 1, 2, 3, 4], source: "tiré du quiz exemple du prof",
+         oe: ["Oui : localiser – positionner.", "Oui.", "Oui : mesurer – évaluer.", "Oui.", "Oui : les quatre sont le rôle de l'arpentage.", "Non."],
+         e: "Diapo 22 du cours 1 : « Localiser – Positionner · Mesurer – Évaluer ». Au quiz, encercle « Toutes ces réponses »." }
+  },
+  "terre": {
+    2: { q: "Un navire est à la latitude 46°. Il se déplace de 4° vers l'Est en gardant la même latitude. Quelle distance a-t-il parcourue ?", source: "tiré du quiz exemple du prof",
+         e: "1° de longitude à 46° = cos 46° × 111 319 m = 77 328,7 m. Pour 4° : 4 × 77 328,7 = <b>309 315 m ≈ 309,3 km</b>." },
+    3: { q: "Les points altimétriques sont plus précis que les points planimétriques en…", o: ["X, Y", "X, Y, Z", "Z"], r: 2, source: "tiré du quiz exemple du prof",
+         e: "Les repères altimétriques (réseau de nivellement) donnent l'élévation : leur force est la précision en <b>Z</b>. Les points planimétriques (réseau géodésique) donnent la position en X, Y." }
+  },
+  "leves": {
+    2: [
+      { q: "Implantation d'un nouveau bâtiment (études préliminaires faites). Quelle précision utiliserez-vous ?", o: ["Décimètres (dm)", "Millimètres (mm)", "Centimètres (cm)"], r: 1, source: "tiré du quiz exemple du prof",
+        e: "L'empreinte de la maison s'implante au <b>millimètre</b>, à la station totale (cours 2)." },
+      { q: "Même projet : quel appareil utiliserez-vous pour implanter le bâtiment ?", o: ["Scanneur laser", "GPS", "Station totale", "Niveau"], r: 2, source: "tiré du quiz exemple du prof",
+        e: "Précision au millimètre → <b>station totale</b>. Le GPS (cm) sert à l'état des lieux ; le niveau, aux pentes et élévations." }
+    ]
+  }
+}];
 
 /* GCI-1010 — quiz diagnostique : une question à choix par notion ; p = pourquoi chaque mauvais choix est tentant. */
 const DIAG_DATA = {
@@ -3890,6 +4015,53 @@ MODULES.push({
   }
   ]
 });
+
+/* Thème « plan » : en-tête façon cartouche, numéros de feuille, dessin filaire d'un bâtiment à l'accueil (SVG, aucun fichier externe). */
+const THEME = {
+  decor(cfg = {}) {
+    const tete = (a, b) => { const d = document.createElement("div"); d.className = "plan-tete"; d.innerHTML = `<span>${a}</span><span>${b}</span>`; return d; };
+    const feuille = (mod) => { const i = MODULES.indexOf(mod) + 1, p = PARTIES.findIndex(x => x.id === mod.partie) + 1; return `FEUILLE ${p}-${String(i).padStart(2, "0")}`; };
+    const hero = () => {
+      const s = 26, ox = 250, oy = 150, P = (x, y, z) => [ox + (x - y) * s * .866, oy + (x + y) * s * .5 - z * s], f = q => q.map(v => v.toFixed(1)).join(",");
+      const L = (a, b, k = "") => `<line x1="${P(...a)[0].toFixed(1)}" y1="${P(...a)[1].toFixed(1)}" x2="${P(...b)[0].toFixed(1)}" y2="${P(...b)[1].toFixed(1)}" ${k}/>`;
+      const Pg = (pts, k = "") => `<polygon points="${pts.map(q => f(P(...q))).join(" ")}" ${k}/>`;
+      const H = 3, fp = [[0, 0], [8, 0], [8, 3], [5, 3], [5, 6], [0, 6]];
+      let g = Pg(fp.map(([x, y]) => [x, y, 0]), 'fill="var(--surface)" stroke="currentColor" stroke-width="1.4"');
+      g += Pg(fp.map(([x, y]) => [x, y, H]), 'fill="none" stroke="currentColor" stroke-width="1.4"');
+      fp.forEach(([x, y]) => g += L([x, y, 0], [x, y, H], 'stroke="currentColor" stroke-width="1.2"'));
+      g += L([0, 3, 0], [5, 3, 0], 'stroke="currentColor" stroke-width=".9"') + L([2.5, 0, 0], [2.5, 3, 0], 'stroke="currentColor" stroke-width=".9"') + L([5, 0, 0], [5, 3, 0], 'stroke="currentColor" stroke-width=".9"');
+      for (let k = 1; k < 6; k++) g += L([5.4 + k * .4, 3, 0], [5.4 + k * .4, 3, H * k / 6], 'stroke="currentColor" stroke-width=".6" opacity=".6"');
+      [[1, 2], [3, 4]].forEach(([a, b]) => g += Pg([[a, 6, 1], [b, 6, 1], [b, 6, 2.2], [a, 6, 2.2]], 'fill="var(--water)" fill-opacity=".35" stroke="var(--steel)" stroke-width="1"'));
+      [[.6, 2.2]].forEach(([a, b]) => g += Pg([[8, a, 1], [8, b, 1], [8, b, 2.2], [8, a, 2.2]], 'fill="var(--water)" fill-opacity=".35" stroke="var(--steel)" stroke-width="1"'));
+      g += Pg([[5, 4, 0], [5, 5, 0], [5, 5, 2.2], [5, 4, 2.2]], 'fill="var(--bg)" stroke="var(--steel)" stroke-width="1"');
+      g += Pg([[0, 0, H], [5, 0, H], [5, 3, H], [0, 3, H]].map(([x, y, z]) => [x, y, z + 2.4]), 'fill="none" stroke="var(--steel)" stroke-width="1" stroke-dasharray="5 4"');
+      [[0, 0], [5, 0], [5, 3], [0, 3]].forEach(([x, y]) => g += L([x, y, H], [x, y, H + 2.4], 'stroke="var(--steel)" stroke-width="1" stroke-dasharray="5 4"'));
+      const axe = (a, b, t) => { const [x1, y1] = P(...a), [x2, y2] = P(...b), dx = x2 - x1, dy = y2 - y1, n = Math.hypot(dx, dy), cx = x2 + dx / n * 11, cy = y2 + dy / n * 11;
+        return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(--steel)" stroke-width=".9" stroke-dasharray="14 3 2 3"/><circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="10" fill="var(--surface)" stroke="var(--steel)" stroke-width="1.3"/><text x="${cx.toFixed(1)}" y="${(cy + 4).toFixed(1)}" text-anchor="middle" font-size="11" fill="var(--steel)">${t}</text>`; };
+      g += axe([0, 7.6, 0], [0, -1.3, 0], "A") + axe([5, 7.6, 0], [5, -1.3, 0], "B") + axe([8, 4.4, 0], [8, -1.3, 0], "C");
+      g += axe([9.3, 0, 0], [-1.3, 0, 0], "1") + axe([9.3, 3, 0], [-1.3, 3, 0], "2") + axe([6.4, 6, 0], [-1.3, 6, 0], "3");
+      const [a1, a2] = [P(0, 6.9, 0), P(5, 6.9, 0)];
+      g += `<line x1="${a1[0]}" y1="${a1[1]}" x2="${a2[0]}" y2="${a2[1]}" stroke="var(--rebar)" stroke-width="1.1"/>` + [a1, a2].map(q => `<line x1="${q[0] - 4}" y1="${q[1] + 4}" x2="${q[0] + 4}" y2="${q[1] - 4}" stroke="var(--rebar)" stroke-width="1.4"/>`).join("");
+      g += `<text x="${((a1[0] + a2[0]) / 2 - 6).toFixed(1)}" y="${((a1[1] + a2[1]) / 2 + 16).toFixed(1)}" font-size="11" fill="var(--rebar)" transform="rotate(30 ${((a1[0] + a2[0]) / 2).toFixed(1)} ${((a1[1] + a2[1]) / 2).toFixed(1)})">12 500</text>`;
+      const roul = (x, y, w, r) => `<g transform="rotate(-18 ${x} ${y})"><rect x="${x}" y="${y - r}" width="${w}" height="${2 * r}" fill="var(--surface)" stroke="currentColor" stroke-width="1.1"/><ellipse cx="${x + w}" cy="${y}" rx="${r * .45}" ry="${r}" fill="var(--surface)" stroke="currentColor" stroke-width="1.1"/><ellipse cx="${x + w}" cy="${y}" rx="${r * .18}" ry="${r * .4}" fill="none" stroke="currentColor" stroke-width=".8"/><path d="M${x + 14} ${y - r} v${2 * r} M${x + w * .55} ${y - r} v${2 * r}" stroke="var(--steel)" stroke-width=".7" opacity=".7"/></g>`;
+      g += roul(14, 46, 150, 13) + roul(30, 74, 120, 11);
+      g += `<g transform="rotate(-12 340 300)"><rect x="300" y="292" width="210" height="16" fill="var(--sand)" fill-opacity=".55" stroke="currentColor" stroke-width="1"/>${Array.from({ length: 21 }, (_, i) => `<line x1="${306 + i * 10}" y1="292" x2="${306 + i * 10}" y2="${i % 5 ? 297 : 301}" stroke="currentColor" stroke-width=".7"/>`).join("")}</g>`;
+      g += `<g transform="rotate(8 70 300)"><rect x="40" y="270" width="54" height="74" rx="4" fill="var(--surface)" stroke="currentColor" stroke-width="1.1"/><rect x="47" y="277" width="40" height="13" fill="var(--ice)" stroke="currentColor" stroke-width=".7"/>${Array.from({ length: 12 }, (_, i) => `<rect x="${47 + (i % 3) * 14}" y="${296 + Math.floor(i / 3) * 11}" width="10" height="7" fill="none" stroke="currentColor" stroke-width=".7"/>`).join("")}</g>`;
+      g += `<g transform="rotate(-38 150 330)"><rect x="110" y="326" width="90" height="7" fill="var(--sand)" stroke="currentColor" stroke-width=".9"/><polygon points="200,326 212,329.5 200,333" fill="currentColor"/></g>`;
+      return `<svg viewBox="0 0 540 360" role="img" aria-label="Maquette filaire d'un bâtiment avec ses axes et une cote, plans roulés, règle, calculatrice et crayon"><g stroke-linecap="round" stroke-linejoin="round">${g}</g></svg>`;
+    };
+    return {
+      accueil(head) {
+        head.classList.add("avec-hero");
+        const h = document.createElement("div"); h.className = "plan-hero"; h.innerHTML = hero();
+        head.prepend(h); head.prepend(tete("Feuille 0-00 · accueil", `${MODULES.length} feuilles`));
+      },
+      sujet(head, mod) { head.prepend(tete(PARTIES.find(p => p.id === mod.partie)?.titre || "", feuille(mod))); },
+      carte(card, mod) { card.dataset.feuille = feuille(mod); },
+      page(head, vue) { head.prepend(tete(`${COURSE.code} · ${COURSE.nom}`, ({ fiche: "Fiche de synthèse", examen: "Liste du prof", quiz: "Quiz" })[vue] || vue || "")); }
+    };
+  }
+};
 
 /* ============================ Vues ============================ */
 /* examen.js (facultatif) : EXAMEN_DATA = { titre, intro, liste, ponderation }, même rôle que COURSE.examen / COURSE.ponderation */
