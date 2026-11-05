@@ -422,14 +422,14 @@ const COURSE = {
     { id: "c2", titre: "Cours 2 · Levés topométriques" },
     { id: "c3", titre: "Cours 3 · Dessin technique" },
     { id: "c4", titre: "Cours 4 · Lecture de plans" },
-    { id: "c5", titre: "Compléments · tout peut être demandé" }
+    { id: "c5", titre: "Compléments" }
   ],
   diagAvant: false,
   textes: {
-    liste: "🎯 Objectifs du prof", listeCourt: "Objectifs du prof", listeEyebrow: "objectifs du prof",
+    liste: "🎯 Liste du prof", listeCourt: "Liste du prof", listeEyebrow: "liste du prof",
     listeIntro: "Les objectifs et les « à retenir » des diapos du prof, cours par cours. Chaque ligne t'amène à la notion qui la couvre ; la pastille montre où tu en es.",
     survol: "Hors des objectifs du prof : lis-la une fois pour le contexte, sans y mettre d'énergie.",
-    ficheLegende: "🎯 = au cœur des objectifs du prof · 💤 = contexte, à survoler."
+    ficheLegende: "🎯 = sur la liste du prof · 💤 = contexte, à survoler."
   },
   fiche: [
     { titre: "Angles et dénivelées", items: [
@@ -444,9 +444,9 @@ const COURSE = {
     { titre: "Terre et coordonnées", items: [
       ["Géodésie", "dimensions, forme (géoïde, aplati aux pôles) et champ de gravité de la Terre, en fonction du temps"],
       ["Rayons", "équatorial a = 6378 km · polaire b = 6356 km · a − b = 22 km", "examen"],
-      ["Origines", "méridien de Greenwich (longitude 0°) · équateur (latitude 0°)"],
+      ["Origines", "méridien de Greenwich (longitude 0°) · équateur (latitude 0°)", "examen"],
       ["1° de longitude", "= cos φ × 111 319 m (111 319 m à l'équateur, 0 au pôle) · 1′ = 1° / 60", "examen"],
-      ["Repères", "géodésique (position, réseau planimétrique, GÉODEQ) · altimétrique (altitude, réseau de nivellement)"],
+      ["Repères", "géodésique (position, réseau planimétrique, GÉODEQ) · altimétrique (altitude, réseau de nivellement)", "examen"],
       ["Datum vertical", "CGVD2013 (modèle de géoïde, adopté en 2015) remplace CGVD28 (réseau de repères nivelés)"],
       ["Piquetage vs bornage", "piquet : opinion, unilatéral · borne : limite permanente et irrévocable, avec les voisins", "examen"]
     ]},
@@ -471,6 +471,7 @@ const COURSE = {
       ["Documents", "dessin (représentation normalisée) · plan (pour réaliser l'ouvrage) · devis (description écrite : descriptif ou de performance) · cahier des charges (conditions du contrat)", "examen"],
       ["6 vues", "face, arrière, dessus, dessous, gauche, droite · 3 suffisent : dessus (plan), face (élévation avant), profil", "examen"],
       ["Norme américaine", "chaque vue est placée du côté où on la regarde : dessus en haut, droite à droite (celle du cours)", "examen"],
+      ["Norme européenne", "l'inverse : chaque vue du côté opposé, dessus en bas, droite à gauche (D = G, Dessus = Dessous)", "examen"],
       ["Isométrique", "axes à 120° (30° de l'horizontale), parallèles qui restent parallèles, coefficient 0,82", "examen"],
       ["Perspective", "lignes qui convergent vers un point de fuite (imite l'œil)"],
       ["Vues d'un bâtiment", "en plan (coupe horizontale à 1,0–1,2 m) · façades / élévations (extérieur) · coupes (intérieur : longitudinale, transversale)", "examen"],
@@ -478,9 +479,10 @@ const COURSE = {
     ]},
     { titre: "Caractéristiques d'un plan", items: [
       ["Échelle", "1:100 = 1 cm sur le plan pour 1 m réel · métrique 1:500 à 1:10 · impérial 1/8″ = 1′ (1:96), 1/4″ = 1′ (1:48)", "examen"],
-      ["Traits", "continu gras = parties coupées · mixte = ligne de coupe · continu = vu · pointillés courts = caché · d'axe = axes, symétrie"],
-      ["Axes", "quadrillage : A/1 en haut à gauche ; colonnes aux intersections"],
-      ["Niveaux", "bulles de niveau, sur le dessus de la structure ; géodésiques ou arbitraires (ex. RDC = 10 000)"],
+      ["Traits", "continu gras = parties coupées · mixte = ligne de coupe · continu = vu · pointillés courts = caché · pointillés longs = au-dessus du plan de coupe · d'axe = axes, symétrie · fin = cotes, hachures", "examen"],
+      ["Matériaux (hachures)", "usage courant : fines diagonales · métal blanc : croisées · béton : points et triangles · bois : fil ondulé · plastiques : bandes noires · liquides : horizontales", "examen"],
+      ["Axes", "quadrillage : A/1 en haut à gauche ; colonnes aux intersections ; dans une vue en plan (les niveaux sont dans les élévations)", "examen"],
+      ["Niveaux", "bulles de niveau, sur le dessus de la structure ; géodésiques ou arbitraires (ex. RDC = 10 000)", "examen"],
       ["Cote", "lignes d'attache + ligne de cote + chiffre de cote (vraie valeur, pas mesurée à l'échelle)", "examen"],
       ["Règles de cotation", "les lignes d'attache ne touchent pas le contour et ne croisent jamais une ligne de cote ; la plus petite cote au plus près"]
     ]},
@@ -1127,6 +1129,46 @@ const QUIZ_PLUS = [{
         e: "Précision au millimètre → <b>station totale</b>. Le GPS (cm) sert à l'état des lieux ; le niveau, aux pentes et élévations." }
     ]
   }
+},
+/* Vague 3 (2026-11-05) : sujets de la liste d'examen du prof (cours 1-2, 3, 4), dont les deux notions ajoutées. */
+{
+  "vues": {
+    4: [
+      { q: "En norme européenne, quelle vue est placée sous la vue de face ?", o: ["la vue de dessus", "la vue de dessous", "la vue arrière", "la vue de droite"], r: 0, source: "liste du prof",
+        e: "Européenne : Dessus = Dessous. La vue de dessus va en bas (en américaine, elle va en haut)." },
+      { q: "Associe chaque position (autour de la vue de face) à la vue qu'on y dessine, selon chaque norme.", liste: { q: "Nomme les 6 vues d'un objet.", items: [["Face", "face"], ["Arrière", "arriere"], ["Dessus", "dessus"], ["Dessous", "dessous"], ["Gauche", "gauche"], ["Droite", "droite"]] },
+        a: [["Américaine, au-dessus de la face", "vue de dessus"], ["Américaine, à droite de la face", "vue de droite"], ["Européenne, au-dessus de la face", "vue de dessous"], ["Européenne, à droite de la face", "vue de gauche"]], x: ["vue arrière"], source: "liste du prof",
+        e: "Américaine : du côté regardé. Européenne : du côté opposé." },
+      { q: "Dans les énoncés suivants sur les normes de disposition des vues, lequel est vrai ?", forme: "vrai", vf: [
+        ["En norme européenne, la vue de droite est dessinée à gauche de la vue de face.", true, "D = G."],
+        ["En norme américaine, la vue de dessus est dessinée sous la vue de face.", false, "Au-dessus : Dessus = Dessus."],
+        ["Le cours travaille avec la norme européenne.", false, "« Nous travaillerons avec la norme Américaine. »"],
+        ["Les deux normes changent la vue de face de place.", false, "La vue de face reste la référence, au centre."]
+      ], source: "liste du prof", e: "Retenir le mot clé : américaine = même côté, européenne = côté opposé." }
+    ]
+  },
+  "caracteristiques": {
+    4: [
+      { q: "Associe chaque matériau à sa hachure symbolique.", a: [["Fonte, usage courant", "fines diagonales serrées"], ["Métal blanc, plomb, zinc", "diagonales croisées"], ["Béton", "points et petits triangles"], ["Bois (fil)", "lignes ondulées"], ["Isolants électriques, plastiques", "larges bandes noires"], ["Liquides", "lignes horizontales"]], x: ["quadrillage orthogonal fin"], source: "liste du prof",
+        e: "Le quadrillage orthogonal fin, c'est le bobinage électrique (électro-aimant, résistance)." },
+      { q: "Dans une coupe, comment trace-t-on le contour du matériau coupé et ses hachures ?", o: ["contour en trait continu gras, hachures en trait continu fin", "contour en pointillés, hachures en trait gras", "contour en trait mixte, hachures en trait d'axe", "tout en trait continu moyen"], r: 0, source: "liste du prof",
+        e: "Tableau des traits : continu gras (0,5–0,8 mm) = parties coupées ; continu fin (0,05–0,35 mm) = portes, cotes, hachures." }
+    ],
+    0: { q: "Quel trait représente tout ce qui se trouve au-dessus du plan de coupe, en vue en plan ?", o: ["pointillés longs", "pointillés courts", "trait mixte", "trait d'axe"], r: 0, source: "liste du prof",
+         e: "Pointillés longs (0,15–0,35 mm), en vue en plan uniquement. Les pointillés courts montrent ce qui est caché." }
+  },
+  "leves": {
+    2: { q: "Associe chaque usage au chantier à la précision et à l'appareil du cours.", a: [["Empreinte d'une maison (piquetage)", "mm · station totale"], ["État des lieux d'une rue sur plusieurs km", "cm · GPS"], ["Pente d'une conduite d'égout", "cm · niveau"], ["Relevé d'un bâtiment existant pour le BIM", "nuage de points · scanner laser"]], x: ["m · Google Earth"], source: "liste du prof",
+         e: "La précision choisit l'appareil : mm → station totale, cm → GPS ou niveau. Google Earth sert à planifier, pas à mesurer." }
+  },
+  "terre": {
+    1: { q: "Un système de référence géodésique (ou terrestre) a pour origines…", o: ["le méridien de Greenwich et l'équateur", "le pôle Nord et le pôle Sud", "Ottawa et Sherbrooke", "le nord magnétique et l'Est"], r: 0, source: "liste du prof",
+         e: "Méridien origine = Greenwich (longitude 0°) ; parallèle origine = équateur (latitude 0°)." }
+  },
+  "types-plans": {
+    0: { q: "Dans l'ordre chronologique du prof, quel type de plan vient juste après l'addenda ?", o: ["plans émis pour coordination", "plans émis pour soumission", "plans finaux", "plan d'esquisse"], r: 0, source: "liste du prof",
+         e: "Situation · masse · esquisse · préliminaires · soumission · addenda · <b>coordination</b> · construction · finaux." }
+  }
 }];
 
 /* GCI-1010 — quiz diagnostique : une question à choix par notion ; p = pourquoi chaque mauvais choix est tentant. */
@@ -1217,7 +1259,9 @@ const DIAG_DATA = {
     2: { q: "En norme américaine, la vue de droite se place…", o: ["à droite de la vue de face", "à gauche de la vue de face", "sous la vue de face", "au-dessus de la vue de face"], r: 0, e: "Chaque vue du côté où on la regarde.",
          p: [null, "C'est la norme européenne.", "C'est la place de la vue de dessous (américaine).", "C'est la place de la vue de dessus (américaine)."] },
     3: { q: "Dans une vue isométrique…", o: ["les parallèles restent parallèles", "les lignes convergent vers un point de fuite", "les axes sont à 90° entre eux", "les dimensions sont agrandies"], r: 0, e: "Axes à 120°, coefficient 0,82.",
-         p: [null, "C'est la perspective.", "À 120° entre eux (30° de l'horizontale).", "Elles sont réduites (0,82)."] }
+         p: [null, "C'est la perspective.", "À 120° entre eux (30° de l'horizontale).", "Elles sont réduites (0,82)."] },
+    4: { q: "En norme européenne, la vue de gauche est dessinée…", o: ["à droite de la vue de face", "à gauche de la vue de face", "au-dessus de la vue de face", "sous la vue de face"], r: 0, e: "Européenne : G = D, du côté opposé à celui d'où on regarde.",
+         p: [null, "C'est la norme américaine (celle du cours).", "Au-dessus, c'est la vue de dessus (américaine) ou de dessous (européenne).", "Sous la face : la vue de dessous (américaine) ou de dessus (européenne)."] }
   },
   "vues-batiment": {
     0: { q: "Une vue en plan est…", o: ["une coupe horizontale vers 1,0–1,2 m, vue de dessus", "une vue extérieure d'une façade", "une coupe verticale", "une perspective"], r: 0, e: "Vue « à vol d'oiseau » de l'étage.",
@@ -1237,7 +1281,9 @@ const DIAG_DATA = {
     2: { q: "Les colonnes d'un bâtiment à ossature sont…", o: ["à l'intersection de deux axes", "au milieu entre les axes", "sur les bulles de niveau", "hors du quadrillage"], r: 0, e: "A/1 en haut à gauche.",
          p: [null, "Les axes servent justement à les positionner.", "Les bulles indiquent des hauteurs.", "Le quadrillage les repère."] },
     3: { q: "Le chiffre de cote indique…", o: ["la vraie valeur de la dimension", "la longueur mesurée sur la feuille", "l'échelle du plan", "le numéro de la feuille"], r: 0, e: "Pas la mesure graphique à l'échelle.",
-         p: [null, "Les cotes donnent les vraies valeurs, pas le dessin.", "L'échelle est dans le cartouche.", "C'est le marqueur de détail."] }
+         p: [null, "Les cotes donnent les vraies valeurs, pas le dessin.", "L'échelle est dans le cartouche.", "C'est le marqueur de détail."] },
+    4: { q: "Dans une coupe, une hachure de points et de petits triangles représente…", o: ["du béton", "du bois", "un liquide", "de l'acier"], r: 0, e: "Béton : points et petits triangles (granulats).",
+         p: [null, "Le bois : lignes ondulées (fil) ou grain en bout.", "Les liquides : lignes horizontales.", "L'acier : des diagonales."] }
   },
   "cahier": {
     0: { q: "La première feuille d'un cahier de plans est…", o: ["la page frontispice", "le plan de structure", "les coupes et détails", "le plan de profil"], r: 0, e: "Page titre : liste des dessins, légende, notes…",
@@ -1313,83 +1359,66 @@ const DIAG_DATA = {
 
 };
 
-/* GCI-1010 : pas de liste d'examen fournie. On reprend les objectifs du prof (diapo 2 de chaque cours)
-   et son « Que retenir aujourd'hui du cours ? » (cours 1). À remplacer si le prof donne une liste. */
+/* GCI-1010 : liste d'examen du prof (reçue le 2026-11-05, photo), transcrite telle quelle.
+   Avant : objectifs du prof (copie : trousse, historique). On ne supprime rien : 🎯 = sur la liste, 📘 = aide à comprendre, 💤 = hors liste. */
 const EXAMEN_DATA = {
-  titre: "Objectifs du prof",
-  intro: "Le prof n'a pas (encore) donné de liste d'examen : voici ses objectifs, cours par cours, et son « Que retenir » du cours 1. Dans ce cours, tout peut être demandé : toutes les notions des cours 1 à 4 sont donc 🎯, et la partie « Compléments » reprend le reste des diapos (chronologie, exercices de lecture de plans) et le vocabulaire connexe (📘). Chaque ligne t'amène à la notion qui la couvre ; la pastille montre où tu en es.",
+  titre: "Liste du prof",
+  intro: "Les sujets d'examen donnés par le prof, cours par cours. Chaque ligne t'amène aux notions qui la couvrent ; la pastille montre où tu en es. Rien n'a été retiré de la page : les notions hors liste restent là, marquées 📘 ou 💤.",
   liste: [
-    { titre: "Cours 1 · Arpentage en génie civil", items: [
-      { t: "Retour sur les concepts de trigonométrie en topométrie", cible: [["angles", 0], ["angles", 1], ["angles", 2], ["angles", 3], ["angles", 4]] },
-      { t: "Comprendre l'utilité de l'arpentage en génie civil", cible: [["arpentage", 0], ["arpentage", 1], ["arpentage", 2], ["arpentage", 3]] },
-      { t: "Domaine de l'arpentage", cible: [["arpentage", 0], ["arpentage", 3]] },
-      { t: "Outils de mesure d'arpentage utilisés en génie civil", cible: [["instruments", 0], ["instruments", 1], ["instruments", 2], ["instruments", 3]] },
-      { t: "Forme de la terre et coordonnées géographiques", cible: [["terre", 0], ["terre", 1], ["terre", 2], ["terre", 3]] },
-      { t: "Évolution technologique et tendances dans le domaine du génie civil", cible: [["instruments", 2], ["instruments", 4]] }
+    { titre: "Cours 1 et 2", items: [
+      { t: "Repères géodésiques", cible: [["terre", 3], ["leves", 1]] },
+      { t: "Référentiel et système géodésique", cible: [["terre", 0], ["terre", 1]] },
+      { t: "Types d'appareil de mesure", cible: [["instruments", 0], ["instruments", 1], ["instruments", 2], ["instruments", 3], ["instruments", 4]] },
+      { t: "Calculs de dénivelée", cible: [["angles", 2], ["angles", 3], ["angles", 4], ["conduites", 1], ["conduites", 2]] },
+      { t: "La précision des instruments versus utilisation au chantier (projet)", cible: [["leves", 2], ["implantation", 0], ["implantation", 1], ["implantation", 2], ["arpentage", 2]] }
     ]},
-    { titre: "Cours 1 · Que retenir aujourd'hui du cours ?", items: [
-      { t: "Rappels sur les notions de mesure d'angle et de dénivelée pour la collecte de données sur le terrain", cible: [["angles", 0], ["angles", 2], ["angles", 3], ["angles", 4]] },
-      { t: "Le rôle et l'usage de l'arpentage en génie civil", cible: [["arpentage", 1], ["arpentage", 2]] },
-      { t: "Les instruments de mesure d'arpentage utilisés en génie civil", cible: [["instruments", 0], ["instruments", 1]] },
-      { t: "Les autres moyens d'acquisition de la donnée géospatiale utilisable en génie civil", cible: [["instruments", 2], ["instruments", 3], ["instruments", 4]] }
+    { titre: "Cours 3", items: [
+      { t: "La projection orthogonale des vues", cible: [["vues", 0], ["vues", 1]] },
+      { t: "Les vues (normes américaine et européenne)", cible: [["vues", 2], ["vues", 4]] },
+      { t: "Identification et association des vues", cible: [["vues", 1], ["vues", 3], ["vues", 4], ["vues-batiment", 0], ["vues-batiment", 1], ["vues-batiment", 2]] },
+      { t: "La cotation", cible: ["caracteristiques", 3] }
     ]},
-    { titre: "Cours 2 · Levés topométriques", items: [
-      { t: "Passer en revue les usages de la topométrie et les différents levés en génie civil", cible: [["leves", 0], ["leves", 1], ["conduites", 0]] },
-      { t: "Être en mesure d'identifier les précisions et de choisir les bons outils pour y répondre", cible: ["leves", 2] },
-      { t: "Comprendre les phases d'implantation d'un nouveau bâtiment", sous: ["Levés topographiques", "Plans et devis : levés", "Chantier : levés et implantation", "Gestion : levés"], cible: [["conduites", 1], ["conduites", 2], ["implantation", 0], ["implantation", 1], ["implantation", 2], ["implantation", 3]] }
-    ]},
-    { titre: "Cours 3 · Dessin technique", items: [
-      { t: "DAO et CAO et leur début en dessin technique", cible: [["documents", 0], ["documents", 1], ["documents", 2]] },
-      { t: "Les vues 2D et 3D en dessin technique et leurs différences", cible: [["vues", 0], ["vues", 1], ["vues", 2], ["vues", 3]] },
-      { t: "Les vues de plan en 2D et en 3D en architecture appliquée à l'ingénierie et leurs différences", cible: [["vues-batiment", 0], ["vues-batiment", 1], ["vues-batiment", 2], ["vues-batiment", 3]] },
-      { t: "Les représentations graphiques et les composantes et caractéristiques d'un plan pour ingénieur", cible: [["caracteristiques", 0], ["caracteristiques", 1], ["caracteristiques", 2], ["caracteristiques", 3]] }
-    ]},
-    { titre: "Cours 4 · Lecture de plans", items: [
-      { t: "Apprendre à lire et à comprendre un plan d'architecture dans le domaine de l'ingénierie", cible: [["cahier", 0], ["cahier", 1], ["cahier", 2]] },
-      { t: "Identifier les caractéristiques d'un plan : cartouche, révisions, statut", cible: [["cartouche", 0], ["cartouche", 1], ["cartouche", 2]] },
-      { t: "Lister les différents types de plans d'architecture pour ingénierie", cible: [["types-plans", 0], ["types-plans", 1], ["types-plans", 2], ["types-plans", 3]] },
-      { t: "Identifier les vues, les niveaux, les élévations, la cotation, les axes et leur orientation par rapport aux façades", cible: [["lecture", 0], ["lecture", 1], ["lecture", 2], ["lecture", 3]] },
-      { t: "Savoir lire l'information d'un plan (révisions, détails, profondeur, matériaux…)", cible: [["infrastructures", 0], ["infrastructures", 1], ["infrastructures", 2], ["infrastructures", 3]] }
-    ]}
-    ,{ titre: "Tout peut être demandé · compléments", items: [
-      { t: "Chronologie de la topométrie au Canada, modes de représentation, données pour planifier un levé", cible: [["historique", 0], ["historique", 1], ["historique", 2]] },
-      { t: "Vocabulaire du bâtiment, des réseaux et sigles employés dans les diapos et les exercices", cible: [["lexique", 0], ["lexique", 1], ["lexique", 2]], note: "Connexe : certaines définitions ne sont pas dans les diapos (indiqué dans chaque notion)." },
-      { t: "Exercices de lecture de plans (plan de bâtiment, plan du MTQ, plan à la main, eau refroidie)", cible: [["lire-plan", 0], ["lire-plan", 1], ["lire-plan", 2]] }
+    { titre: "Cours 4", items: [
+      { t: "Les styles de trait, matériaux (hachures et remplissage, etc.)", cible: [["caracteristiques", 0], ["caracteristiques", 4]] },
+      { t: "La cotation des niveaux, des plans, etc.", cible: [["lecture", 1], ["lecture", 3], ["caracteristiques", 2]] },
+      { t: "Les plans de coupe", cible: [["lecture", 2], ["vues-batiment", 3]] },
+      { t: "Lecture des plans (chaînage, mesures de distance, de profondeur, légende, etc.)", cible: [["infrastructures", 0], ["infrastructures", 1], ["infrastructures", 2], ["cartouche", 0], ["cahier", 1], ["lire-plan", 0], ["lire-plan", 1], ["lire-plan", 2]] },
+      { t: "Le cartouche", cible: [["cartouche", 0], ["cartouche", 1], ["cartouche", 2]] },
+      { t: "Les axes et les niveaux", cible: [["caracteristiques", 2], ["lecture", 0], ["lecture", 1]] },
+      { t: "Les types de plan et leur ordre chronologique", cible: [["types-plans", 0], ["types-plans", 1], ["types-plans", 2], ["types-plans", 3], ["cartouche", 2]] }
     ]}
   ],
   ponderation: {
     "angles": {
-      0: { niveau: "examen", examen: "Distinguer <b>azimut</b> (depuis le nord géographique) et <b>gisement</b> (depuis le nord du quadrillage) : tous deux de 0 à 360°, sens horaire. Les trois nords : géographique, magnétique, du quadrillage." },
-      1: { niveau: "examen", examen: "Calculer <b>ΔX = D·sin(az)</b> et <b>ΔY = D·cos(az)</b> : en topométrie, l'angle part du nord." },
-      2: { niveau: "examen" },
-      3: { niveau: "examen", examen: "Nivellement direct : <b>Alt B = Alt A + R − V</b> (visée arrière moins visée avant)." },
+      0: { niveau: "utile", prof: "Pas sur la liste, mais au quiz 1 (azimut, gisement) : utile pour les calculs.", examen: "Azimut (depuis le nord géographique) et gisement (depuis le nord du quadrillage) : 0 à 360°, sens horaire." },
+      1: { niveau: "utile", prof: "Pas sur la liste, mais au quiz 1 (coordonnées de B à partir de A)." },
+      2: { niveau: "examen", examen: "Dénivelée = h<sub>B</sub> − h<sub>A</sub> : positive si on monte, négative si on descend." },
+      3: { niveau: "examen", examen: "Nivellement direct : <b>Alt B = Alt A + R − V</b> (visée arrière sur le point connu)." },
       4: { niveau: "examen", examen: "Nivellement trigonométrique avec l'angle zénithal, Hi et Hr." }
     },
-    "arpentage": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
+    "arpentage": { 0: { niveau: "utile" }, 1: { niveau: "utile" }, 2: { niveau: "examen", examen: "Précision du cm au mm (microgéodésie) selon l'usage." }, 3: { niveau: "utile" } },
     "terre": {
-      0: { niveau: "examen" }, 1: { niveau: "examen" },
-      2: { niveau: "examen", examen: "Retenir l'idée : un degré de longitude rétrécit avec la latitude (× cos φ)." },
-      3: { niveau: "examen" }
+      0: { niveau: "examen", examen: "Géodésie, géoïde, forme de la Terre (rayons 6378 et 6356 km)." },
+      1: { niveau: "examen", examen: "Système de référence géodésique : origines <b>Greenwich</b> et <b>équateur</b> ; latitude et longitude." },
+      2: { niveau: "utile", prof: "Au quiz 1 (distance du navire) : 1° de longitude = cos φ × 111 319 m." },
+      3: { niveau: "examen", examen: "Repère géodésique (position, réseau planimétrique, GÉODEQ, NAD83) contre repère altimétrique (élévation, réseau de nivellement, CGVD2013)." }
     },
     "instruments": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" }, 4: { niveau: "examen" } },
-    "leves": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen", examen: "Associer chaque besoin à sa <b>précision</b> et au bon appareil." } },
-    "conduites": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
-    "implantation": { 0: { niveau: "examen" }, 1: { niveau: "examen", examen: "Les <b>5 étapes</b> de l'implantation d'un bâtiment, dans l'ordre." }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
-    "documents": {
-      0: { niveau: "examen", examen: "Situer le passage du papier au <b>DAO</b>, à la <b>CAO</b>, puis au <b>BIM</b>. Les dates exactes : survol." },
-      1: { niveau: "examen" }, 2: { niveau: "examen" }
-    },
-    "vues": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
+    "leves": { 0: { niveau: "utile" }, 1: { niveau: "examen" }, 2: { niveau: "examen", examen: "Associer chaque usage au chantier à sa <b>précision</b> et au bon appareil (mm → station totale, cm → GPS ou niveau)." } },
+    "conduites": { 0: { niveau: "utile" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
+    "implantation": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "utile" } },
+    "documents": { 0: { niveau: "survol" }, 1: { niveau: "utile" }, 2: { niveau: "utile" } },
+    "vues": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen", prof: "Connaître les <b>deux</b> normes : américaine et européenne." }, 3: { niveau: "examen" }, 4: { niveau: "examen", prof: "Connaître les <b>deux</b> normes et savoir identifier et associer les vues." } },
     "vues-batiment": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
-    "caracteristiques": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
-    "cahier": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
+    "caracteristiques": { 0: { niveau: "examen" }, 1: { niveau: "utile" }, 2: { niveau: "examen" }, 3: { niveau: "examen" }, 4: { niveau: "examen", prof: "Sur la liste : « styles de trait, matériaux (hachures et remplissage) »." } },
+    "cahier": { 0: { niveau: "utile" }, 1: { niveau: "examen" }, 2: { niveau: "utile" } },
     "cartouche": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
-    "types-plans": { 0: { niveau: "examen", examen: "Lister les <b>9 types de plans</b> dans l'ordre du projet." }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
+    "types-plans": { 0: { niveau: "examen", examen: "Lister les <b>9 types de plans</b> dans l'ordre chronologique." }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
     "lecture": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } },
-    "historique": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
-    "lexique": { 0: { niveau: "utile", prof: "Connexe : les diapos emploient ces mots sans tous les définir." }, 1: { niveau: "utile" }, 2: { niveau: "examen", examen: "Les sigles viennent tous des diapos." } },
-    "lire-plan": { 0: { niveau: "examen", prof: "Les exercices de lecture de plans du cours 4 posent ce genre de questions." }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
-    "infrastructures": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "examen" } }
+    "infrastructures": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "utile" } },
+    "historique": { 0: { niveau: "survol" }, 1: { niveau: "survol" }, 2: { niveau: "utile" } },
+    "lexique": { 0: { niveau: "utile", prof: "Connexe : les diapos emploient ces mots sans tous les définir." }, 1: { niveau: "utile" }, 2: { niveau: "utile" } },
+    "lire-plan": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } }
   }
 };
 
@@ -3026,6 +3055,41 @@ MODULES.push({
       note: "100 mm → 82 mm. Le coefficient vient de la projection : √(2/3) ≈ 0,816."
     }
   }
+  ,
+  {
+    titre: "Norme européenne : placer et identifier les vues",
+    anim: { ratio: 0.62, alt: "Le même objet en L : ses vues sont placées d'abord selon la norme américaine, puis selon la norme européenne, où dessus et dessous, gauche et droite s'échangent", draw(ctx, t, w, h) {
+      const u = cyc(t, 12), eu = u > 0.5, s = Math.min(w / 4.6, h / 3.5), cx = w / 2 - s / 2, cy = h / 2 - s / 2;
+      const V = { "Dessus": [0, eu ? 1 : -1], "Dessous": [0, eu ? -1 : 1], "Gauche": [eu ? 1 : -1, 0], "Droite": [eu ? -1 : 1, 0], "Face": [0, 0] };
+      const forme = { "Face": [[0, 0], [1, 0], [1, .45], [.45, .45], [.45, 1], [0, 1]], "Dessus": [[0, 0], [1, 0], [1, 1], [0, 1]], "Dessous": [[0, 0], [1, 0], [1, 1], [0, 1]], "Gauche": [[0, 0], [1, 0], [1, 1], [0, 1]], "Droite": [[0, 0], [1, 0], [1, 1], [0, 1]] };
+      const p = ease(seg(u % 0.5, 0.05, 0.3));
+      Object.entries(V).forEach(([n, [i, j]]) => { const x = cx + i * s * 1.05 * p, y = cy + j * s * 1.05 * p, m = 10, z = s - 2 * m;
+        D.poly(ctx, forme[n].map(([a, b]) => [x + m + a * z, y + m + (1 - b) * z]), n === "Face" ? C.water + "88" : C.surface, C.ink, 1.3);
+        if (n === "Dessus" || n === "Dessous") D.line(ctx, [[x + m + .45 * z, y + m], [x + m + .45 * z, y + m + z]], C.ink, 1, n === "Dessous" ? [4, 3] : null);
+        if (n === "Droite" || n === "Gauche") D.line(ctx, [[x + m, y + m + .55 * z], [x + m + z, y + m + .55 * z]], C.ink, 1, n === "Gauche" ? [4, 3] : null);
+        D.text(ctx, n, x + s / 2, y + s - 1, { align: "center", color: C.ink, size: 10.5 }); });
+      D.text(ctx, eu ? "Européenne : dessus en bas, droite à gauche" : "Américaine : dessus en haut, droite à droite", 10, 16, { color: eu ? C.rebar : C.steel, weight: 500 });
+    }},
+    texte: [
+      "Le prof compare les deux normes de disposition. <b>Américaine</b> (celle du cours) : D = D, G = G, Dessus = Dessus, Dessous = Dessous, Face = Face, Arrière = Arrière : chaque vue est dessinée <b>du côté d'où on la regarde</b>. <b>Européenne</b> : D = G, G = D, Dessus = Dessous, Dessous = Dessus, Face = Arrière, Arrière = Face : chaque vue est dessinée <b>du côté opposé</b>. La vue de dessus se retrouve donc <b>sous</b> la vue de face, et la vue de droite <b>à gauche</b>.",
+      "Pour <b>identifier une vue</b> sur une feuille : repère d'abord la vue de face (souvent la plus détaillée, au centre), puis demande-toi de quel côté chaque autre vue est placée et quelle norme s'applique. Les lignes d'une vue <b>se correspondent</b> avec la vue voisine (même hauteur à gauche et à droite, même largeur au-dessus et au-dessous).",
+      "Ce qui est caché est en <b>pointillés courts</b>. C'est l'exercice du cours : « Identifiez les vues de la maison selon la norme américaine », puis « Vue de… » sur une vue isométrique (dessus, face, droite)."
+    ],
+    cle: { label: "À retenir", html: "Américaine : vue placée <strong>du côté regardé</strong> · Européenne : <strong>du côté opposé</strong> (dessus en bas, droite à gauche) · hauteurs alignées à gauche et à droite, largeurs alignées en haut et en bas." },
+    widget: box => diagrammeWidget(box, {
+      titre: "Place les vues selon la norme européenne", source: "cours", vb: [600, 460], etiquette: [130, 44],
+      consigne: "La vue de face est au centre. Glisse le nom de chaque vue dans sa case, selon la norme européenne. Une étiquette est de trop.",
+      cases: {
+        haut: { x: 300, y: 75, w: 130, h: 120, rep: "Vue de dessous" },
+        gauche: { x: 160, y: 230, w: 130, h: 120, rep: "Vue de droite" },
+        face: { x: 300, y: 230, w: 130, h: 120, rep: "Vue de face" },
+        droite: { x: 440, y: 230, w: 130, h: 120, rep: "Vue de gauche" },
+        bas: { x: 300, y: 385, w: 130, h: 120, rep: "Vue de dessus" }
+      },
+      fleches: [], leurres: ["Vue isométrique"],
+      note: "Européenne = l'inverse de l'américaine : la vue de dessus va sous la vue de face, la vue de gauche à droite. Au cours, on travaille avec la norme américaine, mais le prof demande de connaître les deux."
+    })
+  }
   ]
 });
 
@@ -3233,6 +3297,51 @@ MODULES.push({
         <text x="300" y="108" text-anchor="middle" fill="currentColor" font-size="18" font-weight="600">2252</text>
         <path d="M175 200 L120 200" stroke="currentColor"/><path d="M425 200 L480 200" stroke="currentColor"/><path d="M300 142 L300 120" stroke="currentColor"/><path d="M300 63 L300 92" stroke="currentColor"/>`,
       note: "Deux lignes d'attache, une ligne de cote entre elles, et le chiffre de cote (vraie valeur, en mm)."
+    })
+  }
+  ,
+  {
+    titre: "Les matériaux : hachures symboliques",
+    anim: { ratio: 0.5, alt: "Six rectangles se remplissent tour à tour de la hachure d'un matériau : usage courant, métal blanc, béton, bois, isolant électrique, liquides", draw(ctx, t, w, h) {
+      const M = [["usage courant", "diag"], ["métal blanc", "croise"], ["béton", "beton"], ["bois (fil)", "bois"], ["plastiques", "gras"], ["liquides", "liq"]];
+      const k = Math.floor(cyc(t, 12) * M.length), cw = (w - 40) / 3, ch = (h - 60) / 2;
+      M.forEach(([n, ty], i) => { const x = 10 + (i % 3) * (cw + 10), y = 14 + Math.floor(i / 3) * (ch + 24), on = i === k, col = on ? C.rebar : C.ink;
+        ctx.save(); ctx.beginPath(); ctx.rect(x, y, cw, ch - 10); ctx.clip();
+        if (ty === "diag" || ty === "croise") for (let d = -ch; d < cw + ch; d += 6) { D.line(ctx, [[x + d, y + ch], [x + d + ch, y]], col, 0.7); if (ty === "croise") D.line(ctx, [[x + d, y], [x + d + ch, y + ch]], col, 0.7); }
+        if (ty === "gras") for (let d = -ch; d < cw + ch; d += 14) D.line(ctx, [[x + d, y + ch], [x + d + ch, y]], col, 4);
+        if (ty === "liq") for (let j = 6; j < ch; j += 7) D.line(ctx, [[x + 4, y + j], [x + cw - 4, y + j]], col, 0.8, j % 14 ? [10, 4] : null);
+        if (ty === "bois") for (let j = 0; j < 5; j++) D.line(ctx, range(0, cw, 12).map(xx => [x + xx, y + 8 + j * (ch / 5) + 5 * Math.sin(xx / 14 + j)]), col, 0.9);
+        if (ty === "beton") { const r = seeded(7); for (let j = 0; j < 90; j++) D.circle(ctx, x + r() * cw, y + r() * ch, 1.3, col); for (let j = 0; j < 12; j++) { const a = x + r() * cw, b = y + r() * ch; D.poly(ctx, [[a, b], [a + 6, b + 2], [a + 2, b + 6]], null, col, 1); } }
+        ctx.restore(); D.rect(ctx, x, y, cw, ch - 10, null, col, on ? 2.2 : 1.2);
+        D.text(ctx, n, x + cw / 2, y + ch + 6, { align: "center", color: on ? C.rebar : C.muted, size: 10.5, weight: on ? 500 : 400 }); });
+    }},
+    texte: [
+      "Dans une coupe, chaque <b>matériau coupé</b> se reconnaît à sa <b>hachure symbolique</b> (remplissage). Le tableau du cours (« Hachures symboliques », norme ANSI Y14.2 / CSA B78.1) en donne 12 : <b>fonte ou usage courant</b> (fines diagonales serrées), <b>acier</b>, <b>bronze, laiton, cuivre</b>, <b>métal blanc, plomb, zinc</b> (diagonales croisées), <b>magnésium, aluminium</b>, <b>isolants électriques, plastiques</b> (larges bandes noires), <b>bois</b> (le fil en lignes ondulées, le grain en bout), <b>béton</b> (points et petits triangles), <b>lit de roches</b>, <b>isolant acoustique</b>, <b>matériaux transparents</b> et <b>liquides</b> (lignes horizontales).",
+      "Les hachures se tracent en <b>trait continu fin</b> (0,05 à 0,35 mm, avec les cotes et les ouvertures de porte), tandis que le <b>contour</b> de la partie coupée est en <b>trait continu gras</b>. Sur les plans, ces remplissages sont rangés dans leurs propres <b>calques</b> (le prof les montre sous « Les matériaux (Calques) »). En comparant coupe et façade, le cours dit que les éléments coupés sont « dessinés avec des traits plus épais ou <b>pochés</b> »."
+    ],
+    cle: { label: "À retenir", html: "Coupe = matériau <strong>hachuré</strong> · usage courant : fines diagonales · béton : <strong>points et triangles</strong> · bois : <strong>fil ondulé</strong> · liquides : <strong>horizontales</strong> · hachures en <strong>trait fin</strong>, contour coupé en <strong>trait gras</strong>." },
+    widget: box => diagrammeWidget(box, {
+      titre: "Reconnais le matériau de chaque hachure", source: "cours", vb: [600, 420], etiquette: [170, 44],
+      consigne: "Glisse le nom de chaque matériau sous sa hachure (ou touche une étiquette, puis la case). Deux étiquettes sont de trop.",
+      cases: {
+        a: { x: 105, y: 160, w: 175, h: 44, rep: "Fonte, usage courant" },
+        b: { x: 300, y: 160, w: 175, h: 44, rep: "Béton" },
+        c: { x: 495, y: 160, w: 175, h: 44, rep: "Bois" },
+        d: { x: 105, y: 375, w: 175, h: 44, rep: "Liquides" },
+        e: { x: 300, y: 375, w: 175, h: 44, rep: "Métal blanc, plomb" },
+        f: { x: 495, y: 375, w: 175, h: 44, rep: "Isolants, plastiques" }
+      },
+      fleches: [], leurres: ["Acier", "Lit de roches"],
+      dessin: () => {
+        const box = (cx, y, inner) => `<g><clipPath id="hc${cx}${y}"><rect x="${cx - 80}" y="${y}" width="160" height="100"/></clipPath><g clip-path="url(#hc${cx}${y})" stroke="currentColor" fill="none">${inner(cx - 80, y)}</g><rect x="${cx - 80}" y="${y}" width="160" height="100" fill="none" stroke="currentColor" stroke-width="2"/></g>`;
+        const diag = (x, y, sp, lw, croise) => { let s = ""; for (let d = -100; d < 260; d += sp) { s += `<line x1="${x + d}" y1="${y + 100}" x2="${x + d + 100}" y2="${y}" stroke-width="${lw}"/>`; if (croise) s += `<line x1="${x + d}" y1="${y}" x2="${x + d + 100}" y2="${y + 100}" stroke-width="${lw}"/>`; } return s; };
+        const beton = (x, y) => { const r = seeded(11); let s = ""; for (let j = 0; j < 70; j++) s += `<circle cx="${(x + r() * 160).toFixed(1)}" cy="${(y + r() * 100).toFixed(1)}" r="1.4" fill="currentColor" stroke="none"/>`; for (let j = 0; j < 11; j++) { const a = x + r() * 150, b = y + r() * 90; s += `<polygon points="${a.toFixed(1)},${b.toFixed(1)} ${(a + 9).toFixed(1)},${(b + 3).toFixed(1)} ${(a + 3).toFixed(1)},${(b + 9).toFixed(1)}" stroke-width="1.2"/>`; } return s; };
+        const bois = (x, y) => { let s = ""; for (let j = 0; j < 6; j++) s += `<path d="M${x} ${y + 10 + j * 16} ${Array.from({ length: 9 }, (_, k) => `Q${x + k * 20 + 10} ${y + 10 + j * 16 + (k % 2 ? 7 : -7)} ${x + k * 20 + 20} ${y + 10 + j * 16}`).join(" ")}" stroke-width="1.3"/>`; return s; };
+        const liq = (x, y) => { let s = ""; for (let j = 8; j < 100; j += 9) s += `<line x1="${x + 6}" y1="${y + j}" x2="${x + 154}" y2="${y + j}" stroke-width="1.1" ${j % 18 ? 'stroke-dasharray="16 6"' : ""}/>`; return s; };
+        return box(105, 30, (x, y) => diag(x, y, 7, 1)) + box(300, 30, beton) + box(495, 30, bois)
+          + box(105, 245, liq) + box(300, 245, (x, y) => diag(x, y, 7, 1, true)) + box(495, 245, (x, y) => diag(x, y, 18, 6));
+      },
+      note: "Tableau « Hachures symboliques » du cours (cours 3, diapo 53 ; rappel au cours 4, diapo 8). L'acier et la fonte se ressemblent : retiens surtout béton, bois, liquides et le quadrillé du métal blanc."
     })
   }
   ]
