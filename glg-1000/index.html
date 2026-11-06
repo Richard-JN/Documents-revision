@@ -224,6 +224,7 @@ details.plus p{margin-top:8px;font-size:.92rem;color:var(--ink);max-width:62ch}
 /* Confiance et maîtrise des notions */
 .q-opts button.pick{border-color:var(--steel);box-shadow:inset 0 0 0 1px var(--steel)}
 .conf{display:grid;gap:6px;max-width:460px;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+.conf.conf-sans{padding:0;border:0;background:none;justify-items:start}
 .conf > label{font:500 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .conf output{font:500 .95rem var(--mono);font-variant-numeric:tabular-nums;color:var(--steel)}
 .conf-ligne{display:flex;gap:8px;align-items:center}
@@ -426,6 +427,7 @@ footer{font-style:italic;border-top:1px solid var(--line);padding-top:10px}
 <div class="wrap" id="app"></div>
 <script>
 const COURSE = {
+  confiance: "diagnostic",   // pas de curseur de confiance dans les Teste-toi et le quiz aléatoire (demande du 2026-11-06)
   code: "GLG-1000",
   nom: "Planète Terre",
   storageKey: "glg1000",
@@ -5049,6 +5051,10 @@ const CONF = ["Je devine", "Pas sûr", "Sûr"];
 /* Confiance au curseur, de 0 à 100 % par pas de 10. Le seuil « sûr » (≥ 70 %) garde les 4 états. */
 const SEUIL_SUR = COURSE.seuilSur || 70;
 const confMot = p => p <= 20 ? "je devine" : p <= 40 ? "peu sûr" : p <= 60 ? "mitigé" : p <= 80 ? "plutôt sûr" : "certain";
+/* Option de cours COURSE.confiance : true (défaut) = curseur partout ; "diagnostic" = curseur seulement au quiz diagnostique ;
+   false = aucun curseur. Sans curseur, une réponse juste compte « Maîtrisé », une fausse « À apprendre ». */
+const avecConf = diag => COURSE.confiance !== false && !(COURSE.confiance === "diagnostic" && !diag);
+const noteConf = p => p == null ? "" : `<span class="note"> · Confiance : ${p} % (${confMot(p)})</span>`;
 const pctDe = x => x.p != null ? x.p : [20, 50, 90][x.c];          // anciennes réponses à 3 boutons
 const niveauDe = p => p >= SEUIL_SUR ? 2 : p >= 40 ? 1 : 0;
 const ETATS = {
@@ -5063,9 +5069,9 @@ const dot = e => `<span class="dot${e ? " s-" + e : ""}" title="${e ? ETATS[e].l
 /* Question du diagnostic : question dédiée (section.diag ou DIAG_DATA), sinon la première « Teste-toi » à choix */
 function diagOf(mod, i) {
   const d = mod.sections[i].diag || (DIAG[mod.id] || {})[i];
-  if (d) return { q: d, id: `${mod.id}:${i}:d`, mod, sec: i };
+  if (d) return { q: d, id: `${mod.id}:${i}:d`, mod, sec: i, diag: true };
   const qs = actives(mod, i), x = qs.find(x => x.q.o) || qs[0];
-  return x ? { q: x.q, id: `${mod.id}:${i}:${x.k}`, mod, sec: i } : null;
+  return x ? { q: x.q, id: `${mod.id}:${i}:${x.k}`, mod, sec: i, diag: true } : null;
 }
 
 /* ---------- une question : réponse, puis confiance, puis correction ---------- */
@@ -5097,15 +5103,20 @@ function questionEl(item, onDone) {
   if (etiquette) box.append(el("div", { class: "q-type" }, etiquette));   // types à identifier d'un coup d'œil
   box.append(el("div", { class: "q-text" }, q.a && q.liste ? q.liste.q : q.q));
   const fb = el("div", { class: "q-fb", hidden: "" });
+  const sansConf = !avecConf(item.diag);
   const record = (ok, p) => {
-    const c = niveauDe(p);
+    const c = p == null ? (ok ? 2 : 0) : niveauDe(p);
     if (!id.endsWith(":d")) { results[id] = ok; saveRes(); }
-    conf[id] = { c, p, ok };
+    conf[id] = p == null ? { c, p: null, ok, nc: true } : { c, p, ok };
     if (item.mod) notions[`${item.mod.id}:${item.sec}`] = { ok, c, p, t: Date.now() };
     saveConf();
     if (onDone) onDone(ok, c);
   };
   const confRow = (onPick, label = "Ta confiance ?", bouton = "Valider") => {
+    if (sansConf) {   // pas de curseur : un simple bouton
+      const row = el("div", { class: "conf conf-sans" }), ok = el("button", { type: "button", class: "conf-ok" }, bouton);
+      ok.addEventListener("click", () => onPick(null, row)); row.append(ok); return row;
+    }
     const rid = "cf-" + id.replace(/[^a-z0-9]/gi, "-") + "-" + (++uid);
     const row = el("div", { class: "conf" }, `<label for="${rid}">${label}</label>`);
     const rg = el("input", { type: "range", id: rid, min: 0, max: 100, step: 10, value: 50 });
@@ -5119,7 +5130,7 @@ function questionEl(item, onDone) {
     row.insertBefore(out, row.querySelector(".conf-ligne"));
     return row;
   };
-  const verdict = (ok, p) => { const e = etatDe(ok, niveauDe(p)); return `<span class="cas s-${e}">${ETATS[e].label}</span>`; };
+  const verdict = (ok, p) => { const e = p == null ? (ok ? "vert" : "orange") : etatDe(ok, niveauDe(p)); return `<span class="cas s-${e}">${ETATS[e].label}</span>`; };
   if (q.o && multi) {
     /* choix multiple : { o, r: [indices], oe: [pourquoi chaque énoncé est vrai ou faux] } ; juste si l'ensemble coché est exact */
     const opts = el("div", { class: "q-opts multi", role: "group" });
@@ -5148,7 +5159,7 @@ function questionEl(item, onDone) {
       const ok = n === q.o.length;
       r.remove();
       fb.hidden = false;
-      fb.innerHTML = `${verdict(ok, p)}<b class="${ok ? "ok" : "no"}">${ok ? "Exact." : "Non."} ${n} / ${q.o.length} énoncés bien jugés.</b> ${q.e || ""}<span class="note"> · Confiance : ${p} % (${confMot(p)})</span>`;
+      fb.innerHTML = `${verdict(ok, p)}<b class="${ok ? "ok" : "no"}">${ok ? "Exact." : "Non."} ${n} / ${q.o.length} énoncés bien jugés.</b> ${q.e || ""}${noteConf(p)}`;
       record(ok, p);
     }
     box.append(el("p", { class: "q-consigne" }, q.cible === "faux" ? TXT.multiFauxConsigne : TXT.multiConsigne), opts, fb);
@@ -5162,6 +5173,7 @@ function questionEl(item, onDone) {
       b.addEventListener("click", () => {
         choix = j;
         opts.querySelectorAll("button").forEach(x => x.classList.toggle("pick", x === b));
+        if (sansConf) { valider(null, el("span")); return; }   // sans curseur : un clic suffit
         if (!row) { row = confRow(valider); box.insertBefore(row, fb); }
       });
       opts.append(b);
@@ -5173,7 +5185,7 @@ function questionEl(item, onDone) {
       r.remove();
       const piege = !ok && q.p && q.p[choix] ? `<span class="piege">Pourquoi c'est tentant : ${q.p[choix]}</span>` : "";
       fb.hidden = false;
-      fb.innerHTML = `${verdict(ok, p)}<b class="${ok ? "ok" : "no"}">${ok ? "Exact." : "Non."}</b> ${q.e || ""}${piege}<span class="note"> · Confiance : ${p} % (${confMot(p)})</span>`;
+      fb.innerHTML = `${verdict(ok, p)}<b class="${ok ? "ok" : "no"}">${ok ? "Exact." : "Non."}</b> ${q.e || ""}${piege}${noteConf(p)}`;
       record(ok, p);
     }
     box.append(opts, fb);
@@ -5209,7 +5221,7 @@ function questionEl(item, onDone) {
       });
       const ok = n === lignes.length;
       fb.hidden = false;
-      fb.innerHTML = `${verdict(ok, p)}<b class="${ok ? "ok" : "no"}">${n} / ${lignes.length} énoncés bien jugés.</b> ${q.e || ""}<span class="note"> · Confiance : ${p} % (${confMot(p)})</span>`;
+      fb.innerHTML = `${verdict(ok, p)}<b class="${ok ? "ok" : "no"}">${n} / ${lignes.length} énoncés bien jugés.</b> ${q.e || ""}${noteConf(p)}`;
       record(ok, p);
     }
     box.append(el("p", { class: "q-consigne" }, TXT.vfConsigne), liste, fb);
@@ -5239,7 +5251,7 @@ function questionEl(item, onDone) {
       });
       const memoire = rappel ? rappel() : null, ok = n === lignes.length && (!memoire || memoire.n === memoire.N);
       fb.hidden = false;
-      fb.innerHTML = `${verdict(ok, p)}${memoire ? `<b class="${memoire.n === memoire.N ? "ok" : "no"}">De mémoire : ${memoire.n} / ${memoire.N}.</b> ` : ""}<b class="${n === lignes.length ? "ok" : "no"}">${n} / ${lignes.length} bonnes associations.</b> ${q.e || ""}<span class="note"> · Confiance : ${p} % (${confMot(p)})</span>`;
+      fb.innerHTML = `${verdict(ok, p)}${memoire ? `<b class="${memoire.n === memoire.N ? "ok" : "no"}">De mémoire : ${memoire.n} / ${memoire.N}.</b> ` : ""}<b class="${n === lignes.length ? "ok" : "no"}">${n} / ${lignes.length} bonnes associations.</b> ${q.e || ""}${noteConf(p)}`;
       record(ok, p);
     }
     const partieAssoc = [el("p", { class: "q-consigne" }, TXT.assocConsigne), tab];
@@ -5287,7 +5299,7 @@ function questionEl(item, onDone) {
       if (!ecrit.value.trim() && !averti && COURSE.rappelInsiste !== false) { averti = true; insiste.hidden = false; ecrit.focus(); return; }
       insiste.remove(); r.remove(); ecrit.readOnly = true;
       if (!ecrit.value.trim()) ecrit.remove();
-      fb.hidden = false; fb.innerHTML = `<span class="q-corrige">Réponse attendue</span>` + q.e + `<span class="note"> · Confiance : ${c} %</span>`;
+      fb.hidden = false; fb.innerHTML = `<span class="q-corrige">Réponse attendue</span>` + q.e + (c == null ? "" : `<span class="note"> · Confiance : ${c} %</span>`);
       const ev = el("div", { class: "q-row" });
       const y = el("button", { class: "btn", type: "button" }, "Je le savais"), n = el("button", { class: "btn", type: "button" }, "Je ne le savais pas");
       const fin = ok => { record(ok, c); ev.innerHTML = verdict(ok, c); };
@@ -5301,7 +5313,7 @@ function questionEl(item, onDone) {
 function testBlock(mod, i) {
   const qs = actives(mod, i); if (!qs.length) return null;
   const box = el("div", { class: "test" });
-  const head = el("div", { class: "test-head" }, `<h3>Teste-toi</h3><span class="note">Réponds, règle ta confiance de 0 à 100 %, puis compare.</span>`);
+  const head = el("div", { class: "test-head" }, `<h3>Teste-toi</h3><span class="note">${avecConf(false) ? "Réponds, règle ta confiance de 0 à 100 %, puis compare." : "Réponds, puis compare."}</span>`);
   box.append(head);
   qs.forEach(({ q, k }) => box.append(questionEl({ q, id: `${mod.id}:${i}:${k}`, mod, sec: i }, () => refreshEtats(mod))));
   return box;
@@ -5383,7 +5395,7 @@ function diagPanel(mod, secs, onFin) {
 
 /* ---------- calibration : la confiance est-elle justifiée ? ---------- */
 function calibration() {
-  const rep = Object.values(conf).filter(x => x && x.ok != null);
+  const rep = Object.values(conf).filter(x => x && x.ok != null && !x.nc);
   if (rep.length < 8) return null;
   const moy = Math.round(rep.reduce((a, x) => a + pctDe(x), 0) / rep.length), reussi = Math.round(100 * rep.filter(x => x.ok).length / rep.length);
   const sur = rep.filter(x => pctDe(x) >= SEUIL_SUR), ecart = moy - reussi;
