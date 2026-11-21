@@ -406,24 +406,26 @@ footer{border:1px solid var(--ink);padding:10px 12px;font:.78rem/1.5 var(--mono)
 :root[data-partie="c3"]{--steel:#3b4a8c;--rebar:#b0452d}@media (prefers-color-scheme:dark){:root[data-partie="c3"]:not([data-theme="light"]){--steel:#8f9ee6;--rebar:#f08f78}}:root[data-partie="c3"][data-theme="dark"]{--steel:#8f9ee6;--rebar:#f08f78}
 :root[data-partie="c4"]{--steel:#5a3f86;--rebar:#8a5a12}@media (prefers-color-scheme:dark){:root[data-partie="c4"]:not([data-theme="light"]){--steel:#b9a0e8;--rebar:#e2b55e}}:root[data-partie="c4"][data-theme="dark"]{--steel:#b9a0e8;--rebar:#e2b55e}
 :root[data-partie="c5"]{--steel:#5b5b5b;--rebar:#a23b52}@media (prefers-color-scheme:dark){:root[data-partie="c5"]:not([data-theme="light"]){--steel:#c2c2c2;--rebar:#ee8aa0}}:root[data-partie="c5"][data-theme="dark"]{--steel:#c2c2c2;--rebar:#ee8aa0}
+:root[data-partie="c6"]{--steel:#7a4a12;--rebar:#1f6f8b}@media (prefers-color-scheme:dark){:root[data-partie="c6"]:not([data-theme="light"]){--steel:#e0b070;--rebar:#6cc4e0}}:root[data-partie="c6"][data-theme="dark"]{--steel:#e0b070;--rebar:#6cc4e0}
 </style>
 </head>
 <body>
 <div class="wrap" id="app"></div>
 <script>
-/* GCI-1010 — Dessin, plans et BIM (H. Bouheraoua, automne 2026) : cours 1 à 4 */
+/* GCI-1010 — Dessin, plans et BIM (H. Bouheraoua, automne 2026) : cours 1 à 4, cours 5 (BIM, diapos 1 à 62) ajouté le 2026-11-21 */
 const COURSE = {
   confiance: "diagnostic",   // pas de curseur de confiance dans les Teste-toi et le quiz aléatoire (demande du 2026-11-06)
   code: "GCI-1010",
   nom: "Dessin, plans et BIM",
   storageKey: "gci1010",          // NE PLUS LA CHANGER une fois la page publiée
-  accroche: "Arpentage, levés topométriques, dessin technique et lecture de plans : cours 1 à 4.",
-  footer: "Contenu tiré des diapos GCI-1010 de Hocine Bouheraoua (cours 1 à 4, automne 2026). Les calculs sont vérifiés sur les exemples des diapos.",
+  accroche: "Arpentage, levés topométriques, dessin technique, lecture de plans et introduction au BIM : cours 1 à 5.",
+  footer: "Contenu tiré des diapos GCI-1010 de Hocine Bouheraoua (cours 1 à 4 et cours 5 jusqu'à la diapo 62, automne 2026). Les calculs sont vérifiés sur les exemples des diapos.",
   parties: [
     { id: "c1", titre: "Cours 1 · Arpentage en génie civil" },
     { id: "c2", titre: "Cours 2 · Levés topométriques" },
     { id: "c3", titre: "Cours 3 · Dessin technique" },
     { id: "c4", titre: "Cours 4 · Lecture de plans" },
+    { id: "c6", titre: "Cours 5 · Introduction au BIM" },   // ajouté le 2026-11-21 (id c6 : c5 était déjà pris par les Compléments)
     { id: "c5", titre: "Compléments" }
   ],
   diagAvant: false,
@@ -500,6 +502,23 @@ const COURSE = {
       ["Profondeur", "donnée à l'invert (bas intérieur de la conduite) · profondeur = élévation du dessus − élévation de l'invert", "examen"],
       ["Existant vs projeté", "la différence principale : l'épaisseur du trait (sur les plans, le projeté est d'habitude en trait fort)"],
       ["Disciplines", "A architecture · E électricité · M mécanique · S structure"]
+    ]},
+    { titre: "Cours 5 · Introduction au BIM", items: [
+      ["Pyramide des logiciels", "DAO : AutoCAD, Revit, Navisworks (Autodesk), MicroStation · SIG : ArcGIS Pro, MapInfo, Geomedia, QGIS · SIG Web : Google Maps/Earth, ArcGIS Entreprise et Online, MapGuide, Autodesk Forma", "examen"],
+      ["Histoire", "table à dessin → (papier au numérique) → DAO → (avancée technologique) → BIM → (innovation) → avenir ? · 2D 1970 · 3D 1980-1990 · BIM 2000 à aujourd'hui", "examen"],
+      ["DAO vs CAO", "DAO = simples vecteurs, planche à dessin numérique (AutoCAD) · CAO = modèle paramétré → calculs et simulations (Revit) : la principale différence", "examen"],
+      ["Navisworks", "agrégation (modèle fédéré) · détection des conflits avant le chantier · simulation 4D (calendrier) · révision et collaboration (redlines)", "examen"],
+      ["Autres logiciels", "BIMvision = visionneuse IFC gratuite (2×3, 4.0) · MicroStation (Bentley) · DraftSight · Sogelink (infrastructures) · libres de droit : QCAD, LibreCAD"],
+      ["Principes", "fichier (DWG, DXF, IFC) · calque (couche d'un sujet, empilement ; points, lignes, polygones) · vecteur (positionné par un système de référence) · bloc (groupe nommé = un objet ; temps, cohérence, taille des fichiers)", "examen"],
+      ["BIM", "Building Information Modeling = maquette numérique pour tout le cycle de vie · modèle 3D + données (types de murs, tableaux, structure et métriques, géospatial) · visuel et quantitatif", "examen"],
+      ["Outils et géoréférence", "modélisation paramétrique · scan 3D (nuages de points) · réalité virtuelle et augmentée · réalité mixte · même point de base = un seul référentiel", "examen"],
+      ["Processus", "90 % processus, 10 % technologique · Eastman (2011) : technologie + processus pour produire, communiquer et analyser · « pas un logiciel, un processus collaboratif »", "examen"],
+      ["Transition", "résistance au changement (main → AutoCAD, 2D → 3D, traditionnel → BIM) · ordinateurs, apprentissage, formation · Québec 2015 : coexistence, incrémental, tous au même rythme", "examen"],
+      ["Modèles 3D", "architecture · structure · mécanique · coordination (détection des conflits)", "examen"],
+      ["Dimensions", "3D modélisation · 4D + temps · 5D + coûts · 6D + durabilité (énergie) · 7D + gestion des installations (cycle de vie) · XD à inventer", "examen"],
+      ["Maturité", "0 CAO papier · 1 2D/3D, fichiers · 2 BIM par discipline · 3 iBIM intégré, interopérable (Bew-Richards, 2008)", "examen"],
+      ["Avantages", "coordination des plans · représentation réaliste · moins de conflits en chantier · efficacité · équipes plus petites · autres analyses", "examen"],
+      ["Analyses", "éclairage et ensoleillement · efficacité énergétique · structurales · estimation de quantités · détection d'interférences", "examen"]
     ]}
   ]
 };
@@ -1052,6 +1071,181 @@ const QUIZ_DATA = {
       { q: "Invert 243,77 m au chaînage 0+020 et 243,27 m au 0+120. Pente de la conduite ?", o: ["0,5 %", "5 %", "0,05 %", "50 %"], r: 0, e: "0,50 m ÷ 100 m × 100 = 0,5 %." },
       { q: "Dessus du regard 245,784 m, invert 243,77 m : profondeur ?", o: ["2,014 m", "2,14 m", "1,986 m", "489,554 m"], r: 0, e: "Profondeur = Z dessus − Z invert (exemple du cours)." }
     ]
+  },
+
+  /* ===== Cours 5 · Introduction au BIM (ajouté le 2026-11-21, diapos 1 à 62) ===== */
+  "logiciels": {
+    0: [
+      { q: "Associe chaque logiciel à son étage de la pyramide « Types de logiciels en SIG et BIM ».", liste: { q: "Nomme les 3 étages de la pyramide des logiciels, du sommet à la base.", items: [["DAO", "dao"], ["SIG", "sig"], ["SIG Web", "web"]] },
+        a: [["AutoCAD", "DAO"], ["MicroStation", "DAO"], ["ArcGIS Pro", "SIG"], ["QGIS", "SIG"], ["ArcGIS Online", "SIG Web"], ["Autodesk Forma", "SIG Web"], ["Google Earth", "SIG Web"]], x: ["Nuage de points"],
+        e: "Piège : Autodesk Forma (un logiciel Autodesk) est à l'étage SIG Web ; ArcGIS Pro est un SIG de bureau, ArcGIS Online et ArcGIS Entreprise sont des SIG Web." },
+      { q: "Quels logiciels la diapo 6 range-t-elle dans les SIG (étage du milieu) ? (cochez la ou les réponses exactes)", o: ["ArcGIS Pro", "MapInfo", "Geomedia", "MapGuide", "Navisworks"], r: [0, 1, 2], oe: ["SIG.", "SIG.", "SIG (avec QGIS).", "SIG Web.", "DAO (Autodesk)."], e: "SIG : ArcGIS Pro, MapInfo, Geomedia, QGIS. SIG Web : Google Maps/Earth, ArcGIS Entreprise, MapGuide, ArcGIS Online, Autodesk Forma." }
+    ],
+    1: [
+      { q: "Associe chaque période à l'étape de l'évolution du dessin.", a: [["Années 1970", "entrée dans l'industrie et passage à la 2D"], ["Années 1980 à 1990", "ère de la modélisation tridimensionnelle"], ["Années 2000 à aujourd'hui", "spécialisation et intégration BIM / numérique"]], x: ["invention de la table à dessin"],
+        e: "Diapo 7 : 2D en 1970, 3D en 1980-1990, BIM depuis 2000." },
+      { q: "Dans le schéma de la diapo 7, quelle transition mène du DAO au BIM ?", o: ["l'avancée technologique", "le passage du papier au numérique", "l'innovation", "la résistance au changement"], r: 0, e: "Table à dessin → passage du papier au numérique → DAO → avancée technologique → BIM → innovation → avenir ?" }
+    ],
+    2: [
+      { q: "Quelle est la principale différence entre le DAO et la CAO ?", o: ["la CAO modélise des éléments paramétrés et fait des calculs et des simulations", "le DAO est seulement en 2D, la CAO seulement en 3D", "la CAO est plus précise que le DAO", "le DAO est gratuit, la CAO est payante"], r: 0, e: "Diapo 8 : les calculs complexes et les simulations à partir des paramètres, « c'est la principale différence ». Le DAO peut se faire en 2D et/ou en 3D.",
+        oe: ["Juste.", "Faux : le DAO peut aussi se faire en 3D.", "La précision n'est pas la différence ; le DAO est déjà plus précis que la planche.", "Le cours ne fait pas cette distinction."] },
+      { q: "Série d'énoncés sur le DAO et la CAO.", forme: "faux", vf: [
+        ["Le DAO est basé sur de simples vecteurs.", true, "Diapo 8."],
+        ["Le DAO est une version numérique, plus précise et plus pratique, de la planche à dessin.", true, "Diapo 8."],
+        ["Le DAO ne peut se faire qu'en 2D.", false, "Il peut se faire avec des logiciels 2D et/ou 3D."],
+        ["Revit est l'exemple de DAO du cours.", false, "Revit = CAO ; AutoCAD = DAO."],
+        ["En CAO, on paramètre les membrures pour calculer des efforts combinés de flexion et de compression.", true, "Diapo 9."]
+      ], e: "DAO = dessin (vecteurs, 2D/3D) ; CAO = conception (paramètres, calculs)." },
+      { q: "Explique en une phrase pourquoi on dit que la CAO est une évolution du DAO.", e: "En DAO, on dessine de simples vecteurs (la planche à dessin numérique). En CAO, on modélise des éléments géométriques paramétrés (membrures, composantes) : le logiciel peut alors faire des calculs complexes et des simulations à partir de leurs paramètres (diapos 8 et 9)." }
+    ],
+    3: [
+      { q: "Associe chaque fonction de Navisworks à sa description.", liste: { q: "Nomme les 4 fonctions de Navisworks présentées au cours.", items: [["Agrégation de modèles", "agreg"], ["Détection des conflits", "detect", "conflit", "clash"], ["Simulation 4D", "4d", "simul"], ["Révision et collaboration", "revis", "collab"]] },
+        a: [["Agrégation de modèles", "rassembler des maquettes de plusieurs logiciels en un modèle fédéré"], ["Détection des conflits", "repérer les collisions entre corps de métier avant le chantier"], ["Simulation 4D", "lier le modèle 3D au calendrier du projet"], ["Révision et collaboration", "inspecter en temps réel, commenter, annoter (redlines)"]], x: ["calculer les efforts dans les poutres"],
+        e: "Navisworks coordonne et révise ; le calcul des membrures relève de la CAO paramétrique." },
+      { q: "BIMvision est…", o: ["une visionneuse gratuite de modèles IFC", "un logiciel de modélisation paramétrique d'Autodesk", "un SIG Web", "un logiciel de détection des conflits payant"], r: 0, e: "Gratuite, elle lit l'IFC 2×3 et 4.0 de Revit, Archicad, Tekla, Bentley… sans licence commerciale ; première visionneuse avec une interface pour plugiciels." },
+      { q: "Dans les énoncés suivants sur Revit, Navisworks et BIMvision, lequel est vrai ?", forme: "vrai", vf: [
+        ["Navisworks peut rassembler dans un modèle fédéré des maquettes venues de Revit, MicroStation, ArchiCAD ou IFC.", true, "Agrégation de modèles."],
+        ["Navisworks détecte les conflits une fois la construction terminée.", false, "Avant le début du chantier."],
+        ["BIMvision demande une licence Revit pour ouvrir un modèle Revit.", false, "Justement non : c'est son intérêt."],
+        ["Revit ne produit que des vues 3D, pas de plans ni de coupes.", false, "Révisions instantanées des plans, élévations, calendriers, coupes, feuilles et vues 3D."]
+      ], e: "Navisworks : agréger, détecter, simuler en 4D, réviser." }
+    ],
+    4: [
+      { q: "Quels logiciels la diapo 21 range-t-elle sous « Libre de droit » ? (cochez la ou les réponses exactes)", o: ["QCAD", "LibreCAD", "MicroStation", "DraftSight", "Sogelink"], r: [0, 1], oe: ["Libre de droit (CAO 2D, DXF et DWG).", "Libre, gratuit, open source.", "Bentley.", "SOLIDWORKS.", "Outils pour les infrastructures."], e: "QCAD et LibreCAD : CAO 2D." },
+      { q: "Associe chaque logiciel à ce que le cours en dit.", a: [["MicroStation", "Bentley : ingénierie et architecture"], ["SOLIDWORKS DraftSight", "CAO 2D et 3D professionnelle"], ["Sogelink", "infrastructures : du terrain au numérique, sans rupture"], ["LibreCAD", "CAO 2D libre et gratuite, Windows, Apple, Linux"], ["Civil 3D", "routes, nivellement et réseaux (Autodesk)"]], x: ["visionneuse IFC gratuite"],
+        e: "La visionneuse IFC gratuite, c'est BIMvision." },
+      { q: "Selon la diapo 17, Sogelink accompagne un projet d'infrastructure de la conception à…", o: ["l'exploitation et la maintenance", "la soumission seulement", "la démolition seulement", "la mise en plan 2D seulement"], r: 0, e: "Quatre étapes : conception et étude ; déclaration et conformité ; réalisation et suivi de chantier ; exploitation et maintenance." }
+    ]
+  },
+  "principes": {
+    0: [
+      { q: "Nomme les 4 principes des logiciels de dessin présentés au cours.", e: "Fichiers, calques, vecteurs, blocs (diapo 22)." },
+      { q: "Quels sont les formats de fichiers usuels cités par le cours ? (cochez la ou les réponses exactes)", o: ["DWG", "DXF", "IFC", "QGIS", "LOD"], r: [0, 1, 2], oe: ["Format usuel (AutoCAD).", "Format usuel (échange de dessins).", "Format usuel (format ouvert du BIM).", "Un logiciel SIG, pas un format.", "Un niveau de détail BIM, pas un format."], e: "Diapo 23 : un fichier contient les informations d'une conception ; formats DWG, DXF, IFC." }
+    ],
+    1: [
+      { q: "Un calque, c'est…", o: ["une couche de données géométriques qui représentent un sujet", "un groupe d'objets nommé qui agit comme un seul objet", "un objet positionné par un système de référence", "un fichier au format IFC"], r: 0, e: "On empile les calques pour représenter le contexte ; ils contiennent des points, des lignes et des polygones.",
+        oe: ["Juste (diapo 24).", "C'est un bloc.", "C'est un vecteur.", "C'est un fichier."] },
+      { q: "Série d'énoncés sur les calques et les vecteurs.", forme: "faux", vf: [
+        ["Par le principe d'empilement, on superpose des calques pour représenter le contexte.", true, "Diapo 24."],
+        ["Un calque ne peut contenir qu'un seul type d'élément : des lignes.", false, "Points, lignes et polygones."],
+        ["Un vecteur représente un ouvrage, un contexte ou autre.", true, "Diapo 24."],
+        ["On positionne un vecteur dans l'espace grâce à un système de référence.", true, "Diapo 24."],
+        ["Un vecteur se positionne à l'œil, sans coordonnées.", false, "Par un système de référence."]
+      ], e: "Calque = couche d'un sujet ; vecteur = objet positionné dans un référentiel." }
+    ],
+    2: [
+      { q: "Associe chaque principe à sa définition.", a: [["Fichier", "élément informatique qui contient les informations d'une conception"], ["Calque", "couche de données géométriques qui représentent un sujet"], ["Vecteur", "objet qui représente un ouvrage, positionné par un système de référence"], ["Bloc", "groupe d'objets nommé qui agit comme un seul objet 2D ou 3D"]], x: ["maquette numérique qui gère tout le cycle de vie"],
+        e: "La maquette numérique sur tout le cycle de vie, c'est le BIM." },
+      { q: "Quels avantages le cours donne-t-il aux blocs ? (cochez la ou les réponses exactes)", o: ["gagner du temps", "préserver la cohérence", "réduire la taille des fichiers", "favoriser la réutilisation et le partage", "faire des simulations de structure"], r: [0, 1, 2, 3], oe: ["Diapo 25.", "Diapo 25.", "Diapo 25.", "Diapo 25.", "C'est la CAO paramétrique."], e: "On crée des contenus répétés (symboles, composants courants, détails standard) au lieu de les redessiner." }
+    ]
+  },
+  "bim": {
+    0: [
+      { q: "Que signifie le sigle BIM ?", o: ["Building Information Modeling", "Building Integrated Management", "Bureau d'ingénierie modélisée", "Basic Image Model"], r: 0, e: "En français : modélisation de données de bâtiments, modèle d'information du bâtiment, maquette numérique du bâtiment." },
+      { q: "Associe chaque terme à son sens.", liste: { q: "Nomme les 3 traductions françaises du BIM données au cours.", items: [["Modélisation de données de bâtiments", "modelisation"], ["Modèle d'information du bâtiment", "modele"], ["Maquette numérique du bâtiment", "maquette"]] },
+        a: [["Ce que le BIM permet de faire avec les données", "produire, enrichir, maintenir, exploiter, gérer"], ["Ce qui vient juste avant le BIM", "les modèles géométriques 3D à l'ordinateur"], ["Les ouvrages visés", "un bâtiment, un pont, etc."]], x: ["seulement les maisons unifamiliales"],
+        e: "Diapo 28 : le BIM est un processus global qui produit, enrichit, maintient, exploite et gère les données d'un bâtiment, d'un pont, etc." },
+      { q: "Remets dans l'ordre : modèles 3D à l'ordinateur, BIM, dessins à la main, dessins 2D à l'ordinateur.", e: "Dessins à la main → dessins 2D à l'ordinateur → modèles géométriques 3D à l'ordinateur → BIM, « la nouvelle façon de concevoir, réaliser et utiliser un bâtiment » (diapo 28)." }
+    ],
+    1: [
+      { q: "La maquette BIM gère l'ouvrage…", o: ["tout au long de son cycle de vie, de la planification à l'exploitation", "seulement pendant la conception", "seulement pendant la construction", "seulement après la livraison, pour l'entretien"], r: 0, e: "Diapo 29 : de la planification et la conception à la construction et l'exploitation (la diapo 46 va jusqu'à la rénovation et la démolition)." },
+      { q: "Dans les énoncés suivants sur la maquette BIM, le(s)quel(s) est (sont) faux ?", forme: "faux", vf: [
+        ["Le modèle BIM est à la fois visuel et quantitatif.", true, "Diapo 30."],
+        ["Le BIM ne peut être produit que dans les logiciels d'Autodesk.", false, "« Le BIM peut être produit dans plusieurs logiciels autres qu'Autodesk. »"],
+        ["Le BIM permet d'optimiser la conception, la réalisation et l'exploitation en réduisant au maximum les erreurs.", true, "Diapo 29."],
+        ["Le BIM complique la collaboration entre les intervenants.", false, "Il offre une grande facilité de collaboration."],
+        ["Le BIM est un processus de conception intelligent basé sur un modèle 3D.", true, "Diapo 30."]
+      ], e: "Visuel ET quantitatif, collaboratif, pas réservé à Autodesk." },
+      { q: "Associe chaque phase de l'anneau BIM (diapo 46) à son nom anglais.", a: [["Programmation", "Programming"], ["Conception détaillée", "Detailed Design"], ["Exploitation et entretien", "Operation and Maintenance"], ["Logistique de construction", "Construction Logistics"], ["Démolition", "Demolition"]], x: ["Clash Detection"],
+        e: "L'anneau : programming, conceptual design, detailed design, analysis, documentation, fabrication, construction 4D/5D, construction logistics, operation and maintenance, renovation, demolition. Clash detection est une fonction de Navisworks." }
+    ],
+    2: [
+      { q: "Associe chaque information à sa famille de données du bâtiment.", liste: { q: "Nomme les 4 familles de données du bâtiment montrées au cours (diapos 33 à 36).", items: [["Types de murs", "mur"], ["Tableaux de données", "tableau"], ["Données de structure et métriques", "structur", "metri"], ["Informations géospatiales", "geo"]] },
+        a: [["Composition brique, isolant, gypse", "types de murs"], ["Nomenclature des portes", "tableaux de données"], ["Section et portée d'une poutre", "données de structure et métriques"], ["Coordonnées du point de base", "informations géospatiales"]], x: ["réalité augmentée"],
+        e: "La réalité augmentée est un outil technologique, pas une donnée du bâtiment." },
+      { q: "Le BIM, selon les diapos 31 et 32, c'est…", o: ["un modèle en trois dimensions du bâtiment ET une maquette qui inclut des données du bâtiment", "un modèle 3D sans données", "un tableau de données sans géométrie", "un rendu photoréaliste du bâtiment"], r: 0, e: "La forme (3D) et l'information (données) ensemble." }
+    ],
+    3: [
+      { q: "Associe chaque outil technologique du BIM à sa description.", liste: { q: "Nomme les 4 outils technologiques du BIM présentés au cours.", items: [["Logiciels de modélisation paramétriques", "param"], ["Scan 3D par nuages de points", "scan", "nuage"], ["Réalité virtuelle et augmentée", "virtuel", "augment"], ["Réalité mixte", "mixte"]] },
+        a: [["Logiciels de modélisation paramétriques", "des objets définis par leurs paramètres (ex. Revit)"], ["Scan 3D par nuages de points", "capturer l'existant en millions de points"], ["Réalité virtuelle et augmentée", "visiter ou superposer le modèle"], ["Réalité mixte", "fusionne le monde physique et le monde numérique en temps réel"]], x: ["table à dessin"],
+        e: "Diapos 38 à 41." },
+      { q: "Pour que tous les modèles d'un projet soient dans un seul référentiel, il suffit…", o: ["que tous les utilisateurs utilisent le même point de base du projet", "que chaque discipline choisisse sa propre origine", "de dessiner tous les modèles dans le même calque", "d'imprimer les plans à la même échelle"], r: 0, e: "Diapo 42 : même point de base → un seul référentiel pour toutes les disciplines → juxtaposition des modèles, nuages de points géoréférencés, relevés des services existants.",
+        oe: ["Juste.", "C'est justement ce qui empêche de superposer les modèles.", "Les calques séparent les sujets ; ils ne fixent pas la position.", "L'échelle d'impression ne positionne rien."] },
+      { q: "Quels sont des avantages des données géoréférencées selon le cours ? (cochez la ou les réponses exactes)", o: ["la juxtaposition des modèles", "les nuages de points géoréférencés", "les relevés par arpentage des services et bâtiments existants", "la réduction de la taille des fichiers", "la diminution de la grosseur des équipes"], r: [0, 1, 2], oe: ["Diapo 42.", "Diapo 42.", "Diapo 42.", "C'est un avantage des blocs.", "C'est un avantage du BIM en général (diapo 61), pas du géoréférencement."], e: "Un seul référentiel pour toutes les disciplines." }
+    ],
+    4: [
+      { q: "Selon le cours, le BIM, c'est…", o: ["90 % processus et 10 % technologique", "90 % technologique et 10 % processus", "50 % processus et 50 % technologique", "100 % logiciel"], r: 0, e: "Diapo 43. Et diapo 47 : « Le BIM n'est pas un logiciel, c'est un processus collaboratif appuyé par la technologie. »",
+        oe: ["Juste.", "Inversé.", "Le cours penche nettement vers le processus.", "Le contraire de ce que dit le cours."] },
+      { q: "Donne la définition du BIM d'Eastman (2011) citée au cours.", e: "« Une technologie et des processus associés ensemble pour produire, communiquer et analyser des modèles de construction. » Le processus englobe la géométrie, les relations spatiales, les informations géographiques, les quantités et les propriétés des éléments de construction (diapo 44)." },
+      { q: "Dans les énoncés suivants, lequel est vrai ?", forme: "vrai", vf: [
+        ["Toutes les définitions désignent le BIM comme un processus régissant l'utilisation de la technologie.", true, "Diapo 45 : et non comme la technologie en soi."],
+        ["Le BIM est d'abord une technologie, le processus vient ensuite.", false, "C'est l'inverse."],
+        ["Passer du DAO au BIM fait perdre de l'information entre intervenants.", false, "Transmission de données sans perte d'information (diapo 47)."],
+        ["Le BIM, c'est le nom d'un logiciel d'Autodesk.", false, "Un processus, produit dans plusieurs logiciels."]
+      ], e: "Processus d'abord, appuyé par la technologie." }
+    ]
+  },
+  "transition-bim": {
+    0: [
+      { q: "Associe chaque changement à la réaction de l'industrie selon le cours.", a: [["De la main à AutoCAD", "très mal reçu par certains ; l'industrie s'est adaptée"], ["Des modèles 2D aux modèles 3D", "ne plaisait pas à certains ; l'industrie s'est adaptée"], ["Des façons traditionnelles au BIM", "déplaît à certains ; l'industrie va s'adapter"]], x: ["adopté par tous du jour au lendemain"],
+        e: "Diapo 50 : la résistance au changement revient à chaque vague." },
+      { q: "Pourquoi tous les projets ne sont-ils pas encore BIM ? Réponds en une ou deux phrases.", e: "Comme toute nouvelle technologie, le BIM bouleverse les façons de faire traditionnelles : il y a de la résistance au changement, et la transition demande des ordinateurs plus puissants, une courbe d'apprentissage et la formation des employés. Elle est graduelle, car tous les intervenants doivent évoluer au même rythme (diapos 49 à 52)." }
+    ],
+    1: [
+      { q: "Quelles modifications la transition vers le BIM entraîne-t-elle selon le cours ? (cochez la ou les réponses exactes)", o: ["achat d'ordinateurs plus puissants", "courbe d'apprentissage", "formation des employés", "abandon de la station totale", "suppression des plans 2D"], r: [0, 1, 2], oe: ["Diapo 51.", "Diapo 51.", "Nouveaux logiciels, nouvelles façons de faire.", "Rien de tel au cours ; les levés alimentent au contraire le modèle.", "Le cours parle de coexistence des méthodes."], e: "Ordinateurs, apprentissage, formation… etc." },
+      { q: "Dans les énoncés suivants sur la transition au Québec, le(s)quel(s) est (sont) faux ?", forme: "faux", vf: [
+        ["En 2015, on réalise des projets BIM au Québec, mais les méthodes traditionnelles coexistent.", true, "Diapo 52."],
+        ["L'implémentation du BIM est un processus incrémental (graduel).", true, "Diapo 52."],
+        ["Une transition instantanée vers le BIM serait la meilleure solution.", false, "« Il ne serait pas pensable de faire une transition instantanée ! »"],
+        ["Seuls les architectes doivent changer leurs façons de faire.", false, "Clients, ingénieurs, architectes et entrepreneurs, au même rythme."],
+        ["L'avenir fera de plus en plus de place au BIM.", true, "Diapo 52."]
+      ], e: "Graduel parce que tous doivent avancer ensemble." },
+      { q: "Nomme les 4 intervenants de l'industrie qui doivent évoluer au même rythme.", e: "Les clients, les ingénieurs, les architectes et les entrepreneurs (diapo 52) : d'où une implémentation incrémentale (graduelle)." }
+    ],
+    2: [
+      { q: "Associe chaque élément au modèle 3D où on le trouve.", liste: { q: "Nomme les 4 modèles 3D d'un projet BIM montrés au cours.", items: [["Architecture", "archi"], ["Structure", "structur"], ["Mécanique", "mecan"], ["Coordination", "coord"]] },
+        a: [["Murs, fenêtres, portes", "modèle en architecture"], ["Colonnes, poutres, dalles", "modèle en structure"], ["Conduits de ventilation", "modèle en mécanique"], ["Toutes les disciplines superposées", "modèle de coordination"]], x: ["modèle SIG Web"],
+        e: "Diapos 53 à 56 ; les exemples d'éléments sont les contenus habituels de chaque modèle." },
+      { q: "À quoi sert surtout le modèle 3D de coordination ?", o: ["superposer les disciplines pour repérer les conflits avant le chantier", "faire les rendus pour le client seulement", "remplacer le modèle de structure", "calculer les coûts"], r: 0, e: "C'est le modèle fédéré (Navisworks) : détection des conflits, d'où la « diminution de conflits en chantier »." }
+    ]
+  },
+  "dimensions-bim": {
+    0: [
+      { q: "Associe chaque dimension du BIM à ce qu'elle ajoute.", liste: { q: "Nomme les dimensions du BIM de 3D à 7D, avec ce que chacune ajoute.", items: [["4D temps", "temps", "calendrier", "phasage"], ["5D coût", "cout", "budget", "estimation"], ["6D durabilité", "durab", "energ", "ecolog"], ["7D gestion", "gestion", "installation", "cycle"]] },
+        a: [["3D", "modélisation et coordination spatiale"], ["4D", "temps : phasage et ordonnancement"], ["5D", "estimation et analyse des coûts"], ["6D", "optimisation de la durabilité (énergétique)"], ["7D", "gestion du bâtiment et analyse du cycle de vie"]], x: ["réalité augmentée"],
+        e: "Chaque dimension s'ajoute à la précédente : 4D = 3D + temps, 5D = 4D + coût, 6D = 5D + durabilité, 7D = 6D + gestion des installations ; XD reste à inventer." },
+      { q: "Selon la diapo 59, 5D =", o: ["4D + coût", "3D + coût", "4D + durabilité", "3D + temps"], r: 0, e: "4D = 3D + temps ; 5D = 4D + coût (calcul des coûts et budget).",
+        oe: ["Juste.", "Il manque le temps : 5D garde la 4D.", "C'est 6D = 5D + durabilité.", "C'est 4D."] },
+      { q: "Des données de durées de vie, de FDES, de maintenance jusqu'à la déconstruction relèvent de…", o: ["la 7D", "la 6D", "la 5D", "la XD"], r: 0, e: "7D = 6D + gestion des installations (diapo 59). La 6D, ce sont les données écologiques et énergétiques ; la XD reste à inventer." },
+      { q: "Dans les énoncés suivants sur les dimensions du BIM, lequel est vrai ?", forme: "vrai", vf: [
+        ["La 4D inscrit le modèle dans un processus daté (calendrier).", true, "4D = 3D + temps."],
+        ["La 6D sert à estimer les coûts.", false, "Ce sont les coûts en 5D ; la 6D = durabilité."],
+        ["La 2D est connue en X, Y et Z.", false, "2D = (X, Y) ; 3D = (X, Y, Z)."],
+        ["La XD correspond à la gestion des installations.", false, "La XD « reste à inventer » ; la gestion des installations, c'est la 7D."]
+      ], e: "3D modèle · 4D temps · 5D coût · 6D durabilité · 7D gestion." }
+    ],
+    1: [
+      { q: "Associe chaque usage à sa dimension BIM (diapo 57).", a: [["Balayage laser des conditions existantes", "3D"], ["Simulation du phasage du projet", "4D"], ["Extraction des quantités pour l'estimation", "5D"], ["Analyse énergétique et suivi LEED", "6D"], ["Modèle tel que construit et manuels d'entretien", "7D"]], x: ["2D"],
+        e: "3D : modèles et existant · 4D : temps · 5D : coûts · 6D : durabilité · 7D : gestion des installations." },
+      { q: "Les livraisons « juste-à-temps » et la planification « Last Planner » sont des usages de la…", o: ["4D", "5D", "6D", "7D"], r: 0, e: "Lean scheduling : la planification dans le temps, donc 4D." }
+    ],
+    2: [
+      { q: "Associe chaque niveau de maturité du BIM à sa description.", a: [["Niveau 0", "CAO sur papier : traits, arcs, texte"], ["Niveau 1", "2D et 3D, collaboration par fichiers"], ["Niveau 2", "BIM par discipline, fichiers et bibliothèques"], ["Niveau 3", "iBIM : données intégrées et interopérables, serveur commun"]], x: ["niveau 4 : XD"],
+        e: "Schéma de Bew et Richards (2008), diapo 60. Il n'y a pas de niveau 4 ; la XD est une dimension « à inventer »." },
+      { q: "Au niveau 3 de maturité (iBIM), les données sont…", o: ["intégrées et interopérables, dans des services Web communs", "sur papier", "échangées par courriel en PDF", "propres à chaque discipline, sans échange"], r: 0, e: "Integrated, interoperable data ; Integrated Web Services, BIM Hub ; IFC, ISO BIM ; gestion du cycle de vie." }
+    ],
+    3: [
+      { q: "Avantage du BIM ou exigence de la transition ? Associe chaque élément.", liste: { q: "Nomme les 6 avantages du BIM cités au cours.", items: [["Coordination des plans", "coord"], ["Représentation réaliste pour le client", "realis", "represent"], ["Diminution des conflits en chantier", "conflit"], ["Augmentation de l'efficacité", "effica"], ["Diminution de la grosseur des équipes", "equipe"], ["Plusieurs autres analyses", "analys"]] },
+        a: [["Coordination facile et régulière des plans", "avantage du BIM"], ["Diminution de la grosseur des équipes", "avantage du BIM"], ["Formation des employés", "exigence de la transition"], ["Achat d'ordinateurs plus puissants", "exigence de la transition"]], x: ["analyse du BIM"],
+        e: "Avantages (diapo 61) contre ce que la transition exige (diapo 51)." },
+      { q: "Quels sont des avantages du BIM selon la diapo 61 ? (cochez la ou les réponses exactes)", o: ["représentation plus réaliste de l'ouvrage pour le client", "diminution de conflits en chantier", "augmentation de l'efficacité", "équipes plus grosses", "suppression du cartouche"], r: [0, 1, 2], oe: ["Diapo 61.", "Diapo 61.", "Diapo 61.", "Faux : diminution de la grosseur des équipes.", "Rien de tel au cours."], e: "Six avantages : coordination, représentation réaliste, moins de conflits, efficacité, équipes plus petites, autres analyses." }
+    ],
+    4: [
+      { q: "Associe chaque question à l'analyse BIM qui y répond.", liste: { q: "Nomme les 5 analyses possibles avec le BIM citées au cours.", items: [["Éclairage et ensoleillement", "eclair", "soleil"], ["Efficacité énergétique", "energ"], ["Analyses structurales", "structur"], ["Estimation de quantités", "quantit", "estim"], ["Détection d'interférences", "interf", "detect"]] },
+        a: [["Ombre portée du bâtiment en hiver", "éclairage et ensoleillement"], ["Besoins de chauffage", "efficacité énergétique"], ["Résistance d'une poutre", "analyse structurale"], ["Volume de béton à commander", "estimation de quantités"], ["Conduit qui traverse une poutre", "détection d'interférences"]], x: ["résistance au changement"],
+        e: "Diapo 62 : éclairage et ensoleillement, efficacité énergétique, structurales, quantités, interférences, etc." },
+      { q: "Laquelle de ces analyses <b>n'est pas</b> citée parmi les analyses possibles avec le BIM ?", o: ["l'analyse du sol en laboratoire", "l'estimation de quantités", "la détection d'interférences", "l'analyse d'efficacité énergétique"], r: 0, e: "Les analyses de la diapo 62 portent sur le modèle : éclairage, énergie, structure, quantités, interférences." }
+    ]
   }
 
 };
@@ -1357,6 +1551,60 @@ const DIAG_DATA = {
          p: [null, "On les suit en dernier, par les renvois.", "On les lit une fois le plan situé.", "Les calques servent au DAO, pas à la lecture d'un plan imprimé."] },
     2: { q: "Inverts 244,00 m (0+000) et 243,40 m (0+120). Pente ?", o: ["0,5 %", "0,6 %", "5 %", "0,05 %"], r: 0, e: "0,60 ÷ 120 × 100 = 0,5 %.",
          p: [null, "0,6 m est le Δz ; il faut le diviser par 120 m.", "Erreur d'un facteur 10.", "Erreur d'un facteur 10 dans l'autre sens."] }
+  },
+
+  /* ===== Cours 5 · Introduction au BIM (2026-11-21) ===== */
+  "logiciels": {
+    0: { q: "Dans la pyramide de la diapo 6, ArcGIS Online se trouve…", o: ["à l'étage SIG Web", "à l'étage SIG", "à l'étage DAO", "hors de la pyramide"], r: 0, e: "SIG Web : Google Maps/Earth, ArcGIS Entreprise, MapGuide, ArcGIS Online, Autodesk Forma.",
+         p: [null, "C'est la place d'ArcGIS Pro, la version de bureau.", "Le DAO, c'est AutoCAD, Revit, Navisworks, MicroStation.", "Il y figure bien, à la base."] },
+    1: { q: "La modélisation tridimensionnelle s'impose dans…", o: ["les années 1980 à 1990", "les années 1970", "les années 2000", "les années 1950"], r: 0, e: "2D : 1970 · 3D : 1980-1990 · intégration BIM : 2000 à aujourd'hui.",
+         p: [null, "Les années 1970, c'est l'entrée dans l'industrie et le passage à la 2D.", "C'est l'ère du BIM.", "Avant le DAO : la table à dessin."] },
+    2: { q: "Ce qui distingue d'abord la CAO du DAO, c'est que la CAO…", o: ["paramètre les éléments et permet des calculs et des simulations", "travaille en 3D alors que le DAO est toujours en 2D", "est plus précise", "imprime les plans plus vite"], r: 0, e: "Diapo 8 : les calculs et les simulations, « c'est la principale différence ».",
+         p: [null, "Tentant, mais le DAO peut se faire en 2D et/ou en 3D.", "Le DAO est déjà plus précis que la planche ; ce n'est pas la différence clé.", "Le cours n'en parle pas."] },
+    3: { q: "Le logiciel qui rassemble les maquettes de plusieurs logiciels et détecte les conflits avant le chantier est…", o: ["Navisworks", "Revit", "BIMvision", "QCAD"], r: 0, e: "Navisworks : agrégation (modèle fédéré), détection des conflits, simulation 4D, révision.",
+         p: [null, "Revit modélise ; c'est souvent une des sources agrégées par Navisworks.", "BIMvision visualise des fichiers IFC, gratuitement.", "QCAD est un logiciel de CAO 2D libre."] },
+    4: { q: "Parmi ces logiciels, lequel est libre de droit selon le cours ?", o: ["LibreCAD", "MicroStation", "Revit", "Navisworks"], r: 0, e: "Libres de droit : QCAD et LibreCAD.",
+         p: [null, "MicroStation est un produit de Bentley.", "Revit est un produit d'Autodesk.", "Navisworks est un produit d'Autodesk."] }
+  },
+  "principes": {
+    0: { q: "Les formats usuels de fichiers cités au cours sont…", o: ["DWG, DXF et IFC", "PDF, JPG et PNG", "LAS, E57 et PTS", "XLS, DOC et PPT"], r: 0, e: "Diapo 23.",
+         p: [null, "Ce sont des formats d'image ou d'impression.", "Ce sont des formats de nuages de points (cours 2).", "Des formats de bureautique."] },
+    1: { q: "Un calque peut contenir…", o: ["des points, des lignes et des polygones", "seulement des lignes", "seulement du texte", "un seul objet"], r: 0, e: "Diapo 24 : une couche de données géométriques d'un sujet.",
+         p: [null, "Les lignes en font partie, mais pas seulement.", "Le texte n'est pas cité ; les éléments géométriques, oui.", "C'est plutôt l'idée du bloc (un seul objet)."] },
+    2: { q: "Un symbole de porte qu'on insère 40 fois dans un plan devrait être…", o: ["un bloc", "un calque", "un fichier IFC", "un système de référence"], r: 0, e: "Bloc = groupe d'objets nommé qui agit comme un objet unique, pour les contenus répétés.",
+         p: [null, "Le calque regroupe un sujet ; il ne s'insère pas 40 fois.", "C'est un format de fichier, pas un objet réutilisable.", "Il sert à positionner, pas à répéter."] }
+  },
+  "bim": {
+    0: { q: "BIM signifie…", o: ["Building Information Modeling", "Building Integrated Machine", "Bâtiment et Ingénierie Modernes", "Basic Infrastructure Map"], r: 0, e: "Modélisation de données de bâtiments, modèle d'information du bâtiment, maquette numérique du bâtiment.",
+         p: [null, "« Integrated » rappelle le niveau iBIM, mais ce n'est pas le sigle.", "Sigle inventé.", "Le BIM ne se limite pas aux cartes (c'est plutôt le rôle des SIG)."] },
+    1: { q: "La maquette BIM sert…", o: ["pendant tout le cycle de vie de l'ouvrage", "seulement à dessiner les plans de construction", "seulement après la construction", "seulement à faire des images pour le client"], r: 0, e: "De la planification et la conception à la construction et l'exploitation.",
+         p: [null, "Elle produit les plans, mais va bien au-delà.", "L'exploitation n'est qu'une phase.", "La représentation réaliste est un avantage parmi d'autres."] },
+    2: { q: "Ce qui fait qu'un modèle 3D devient un modèle BIM, c'est surtout…", o: ["les données du bâtiment qu'il contient", "la qualité des couleurs", "le nombre de vues 3D", "l'impression en grand format"], r: 0, e: "Types de murs, tableaux de données, structure et métriques, informations géospatiales.",
+         p: [null, "Le rendu n'est pas ce qui définit le BIM.", "Plus de vues ne veut pas dire plus d'information.", "Le BIM se passe justement du papier."] },
+    3: { q: "La réalité mixte…", o: ["fusionne le monde physique et le monde numérique en temps réel", "est un logiciel de dessin 2D", "est un format de fichier", "est une méthode de nivellement"], r: 0, e: "Diapo 41, parmi les outils technologiques du BIM.",
+         p: [null, "C'est un outil technologique, pas un logiciel de dessin.", "Les formats sont DWG, DXF, IFC.", "Aucun lien avec les cours 1 et 2."] },
+    4: { q: "Selon le cours, le BIM est d'abord…", o: ["un processus collaboratif appuyé par la technologie", "un logiciel", "une technologie de modélisation 3D", "un format de fichier"], r: 0, e: "90 % processus, 10 % technologique.",
+         p: [null, "« Le BIM n'est pas un logiciel. »", "La technologie n'est que 10 % du BIM.", "L'IFC est un format ; le BIM est un processus."] }
+  },
+  "transition-bim": {
+    0: { q: "L'arrivée d'AutoCAD, celle des modèles 3D et celle du BIM ont toutes rencontré…", o: ["de la résistance au changement, puis l'industrie s'est adaptée (ou va s'adapter)", "un succès immédiat et unanime", "une interdiction par la CCQ", "un abandon définitif"], r: 0, e: "Diapo 50.",
+         p: [null, "C'est justement le contraire que montre la diapo.", "Aucune interdiction au cours.", "L'industrie s'est toujours adaptée."] },
+    1: { q: "L'implémentation du BIM est graduelle parce que…", o: ["tous les intervenants doivent évoluer au même rythme", "les logiciels ne sont pas encore inventés", "la loi l'interdit avant 2030", "le BIM ne sert qu'aux très grands projets"], r: 0, e: "Clients, ingénieurs, architectes, entrepreneurs : processus incrémental.",
+         p: [null, "Les logiciels existent ; c'est l'industrie qui doit suivre.", "Aucune loi de ce genre au cours.", "Le cours ne limite pas le BIM aux grands projets."] },
+    2: { q: "Le modèle 3D qui superpose toutes les disciplines s'appelle…", o: ["le modèle de coordination", "le modèle d'architecture", "le modèle de structure", "le modèle de mécanique"], r: 0, e: "Il sert à repérer les conflits entre disciplines.",
+         p: [null, "Il ne contient que l'architecture.", "Il ne contient que la structure.", "Il ne contient que la mécanique."] }
+  },
+  "dimensions-bim": {
+    0: { q: "La 4D du BIM ajoute au modèle 3D…", o: ["le temps (calendrier, phasage)", "les coûts", "la durabilité", "la gestion des installations"], r: 0, e: "4D = 3D + temps ; 5D coûts ; 6D durabilité ; 7D gestion.",
+         p: [null, "Les coûts, c'est la 5D.", "La durabilité, c'est la 6D.", "La gestion des installations, c'est la 7D."] },
+    1: { q: "Le suivi LEED et l'analyse énergétique détaillée relèvent de la…", o: ["6D", "4D", "5D", "7D"], r: 0, e: "6D : durabilité (sustainability).",
+         p: [null, "La 4D, c'est le temps.", "La 5D, c'est l'estimation des coûts.", "La 7D, c'est la gestion du bâtiment (entretien, as-built)."] },
+    2: { q: "Au niveau 0 de maturité du BIM, on travaille…", o: ["en CAO, avec des dessins sur papier", "avec un modèle intégré sur un serveur commun", "avec des modèles BIM par discipline", "en 4D"], r: 0, e: "Niveau 0 : CAD, papier ; niveau 3 : iBIM intégré.",
+         p: [null, "C'est le niveau 3 (iBIM).", "C'est le niveau 2.", "Les dimensions et les niveaux de maturité sont deux échelles différentes."] },
+    3: { q: "Lequel est un avantage du BIM selon le cours ?", o: ["la diminution des conflits en chantier", "l'achat d'ordinateurs plus puissants", "une courbe d'apprentissage", "des équipes plus grosses"], r: 0, e: "Diapo 61.",
+         p: [null, "C'est une exigence de la transition.", "C'est aussi une exigence de la transition.", "C'est l'inverse : des équipes plus petites."] },
+    4: { q: "Lequel est une analyse possible avec le BIM selon le cours ?", o: ["l'analyse d'éclairage et d'ensoleillement", "l'analyse granulométrique d'un sol", "le nivellement direct", "le piquetage d'un terrain"], r: 0, e: "Éclairage et ensoleillement, efficacité énergétique, structurales, quantités, interférences.",
+         p: [null, "Un essai de laboratoire, pas une analyse du modèle.", "Une méthode de levé (cours 1-2).", "Une opération d'arpentage."] }
   }
 
 };
@@ -1365,7 +1613,7 @@ const DIAG_DATA = {
    Avant : objectifs du prof (copie : trousse, historique). On ne supprime rien : 🎯 = sur la liste, 📘 = aide à comprendre, 💤 = hors liste. */
 const EXAMEN_DATA = {
   titre: "Liste du prof",
-  intro: "Les sujets d'examen donnés par le prof, cours par cours. Chaque ligne t'amène aux notions qui la couvrent ; la pastille montre où tu en es. Rien n'a été retiré de la page : les notions hors liste restent là, marquées 📘 ou 💤.",
+  intro: "Les sujets d'examen donnés par le prof, cours par cours (cours 1 à 4). Pour le cours 5, en attendant sa liste : le contenu annoncé à la diapo 4, jusqu'à la diapo 62. Chaque ligne t'amène aux notions qui la couvrent ; la pastille montre où tu en es. Rien n'a été retiré de la page : les notions hors liste restent là, marquées 📘 ou 💤.",
   liste: [
     { titre: "Cours 1 et 2", items: [
       { t: "Repères géodésiques", cible: [["terre", 3], ["leves", 1]] },
@@ -1388,6 +1636,16 @@ const EXAMEN_DATA = {
       { t: "Le cartouche", cible: [["cartouche", 0], ["cartouche", 1], ["cartouche", 2]] },
       { t: "Les axes et les niveaux", cible: [["caracteristiques", 2], ["lecture", 0], ["lecture", 1]] },
       { t: "Les types de plan et leur ordre chronologique", cible: [["types-plans", 0], ["types-plans", 1], ["types-plans", 2], ["types-plans", 3], ["cartouche", 2]] }
+    ]},
+    /* Cours 5 (ajouté le 2026-11-21) : pas encore de liste du prof ; on prend le contenu du cours (diapo 4) couvert jusqu'à la diapo 62. À remplacer par sa liste dès qu'elle arrive. */
+    { titre: "Cours 5 (contenu du cours, en attendant la liste du prof)", items: [
+      { t: "Principaux logiciels de DAO et CAO-BIM", note: "objectif du cours : « lister les principaux logiciels de DAO et CAO »", cible: [["logiciels", 0], ["logiciels", 1], ["logiciels", 2], ["logiciels", 3], ["logiciels", 4], ["principes", 0], ["principes", 1], ["principes", 2]] },
+      { t: "Introduction au BIM", cible: [["bim", 0], ["bim", 1], ["bim", 2], ["bim", 3], ["bim", 4]] },
+      { t: "Transition vers le BIM", cible: [["transition-bim", 0], ["transition-bim", 1]] },
+      { t: "BIM et ses modèles 3D", cible: ["transition-bim", 2] },
+      { t: "Dimensions du BIM", cible: [["dimensions-bim", 0], ["dimensions-bim", 1], ["dimensions-bim", 2]] },
+      { t: "Avantages du BIM", cible: ["dimensions-bim", 3] },
+      { t: "Analyses possibles avec le BIM", cible: ["dimensions-bim", 4] }
     ]}
   ],
   ponderation: {
@@ -1420,7 +1678,31 @@ const EXAMEN_DATA = {
     "infrastructures": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" }, 3: { niveau: "utile" } },
     "historique": { 0: { niveau: "survol" }, 1: { niveau: "survol" }, 2: { niveau: "utile" } },
     "lexique": { 0: { niveau: "utile", prof: "Connexe : les diapos emploient ces mots sans tous les définir." }, 1: { niveau: "utile" }, 2: { niveau: "utile" } },
-    "lire-plan": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } }
+    "lire-plan": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
+    /* Cours 5 : tout peut être demandé ; 📘 pour les détails de diapos en anglais ou en image */
+    "logiciels": {
+      0: { niveau: "examen", prof: "Objectif du cours 5 : « lister les principaux logiciels de DAO et CAO »." },
+      1: { niveau: "examen" },
+      2: { niveau: "examen", examen: "DAO = simples vecteurs (AutoCAD) ; CAO = éléments paramétrés → <b>calculs et simulations</b> (Revit) : la principale différence." },
+      3: { niveau: "examen", examen: "Les 4 fonctions de <b>Navisworks</b> ; BIMvision = visionneuse <b>IFC gratuite</b>." },
+      4: { niveau: "utile", prof: "Diapos de présentation de logiciels : retenir surtout l'éditeur et les deux libres de droit (QCAD, LibreCAD)." }
+    },
+    "principes": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
+    "bim": {
+      0: { niveau: "examen", examen: "BIM = <b>Building Information Modeling</b> et ses 3 traductions." },
+      1: { niveau: "examen", examen: "Une maquette numérique sur <b>tout le cycle de vie</b> ; modèle visuel et quantitatif." },
+      2: { niveau: "examen" },
+      3: { niveau: "examen" },
+      4: { niveau: "examen", examen: "<b>90 % processus, 10 % technologique</b> ; définition d'Eastman (2011)." }
+    },
+    "transition-bim": { 0: { niveau: "examen" }, 1: { niveau: "examen" }, 2: { niveau: "examen" } },
+    "dimensions-bim": {
+      0: { niveau: "examen", examen: "Nommer les dimensions <b>3D à 7D</b> et ce que chacune ajoute." },
+      1: { niveau: "utile", prof: "Diapo 57 en anglais : retenir quelle famille d'usage va avec quelle dimension." },
+      2: { niveau: "examen" },
+      3: { niveau: "examen", examen: "Nommer les <b>6 avantages</b> du BIM." },
+      4: { niveau: "examen", examen: "Nommer les <b>5 analyses</b> possibles avec le BIM." }
+    }
   }
 };
 
@@ -3788,6 +4070,784 @@ MODULES.push({
       "Les <b>noms des calques</b> identifient au minimum le <b>domaine</b> et le <b>statut</b>. La méthode de l'<b>AICQ</b> (norme CDAO AICQ-2008) est souple, mais impose une rigueur dont l'objectif premier est de <b>faciliter l'échange de dessins</b>. Exemple de la Ville de Laval : <b>R-x-AQU-VAN-PRJ</b> = <b>R</b>éseau, <b>AQU</b>educ, <b>VAN</b>ne, <b>PR</b>o<b>J</b>eté."
     ],
     cle: { label: "À retenir", html: "A · E · M · S · nom de dessin = origine + statut · nom de calque = domaine + statut (AICQ : faciliter l'échange) · R-x-AQU-VAN-PRJ = réseau, aqueduc, vanne, projeté." }
+  }
+  ]
+});
+
+/* ===================== Sujet — Cours 5 : les logiciels de DAO, CAO et BIM (diapos 5 à 21) ===================== */
+MODULES.push({
+  id: "logiciels",
+  partie: "c6",
+  titre: "Les logiciels de DAO, CAO et BIM",
+  resume: "La pyramide DAO, SIG, SIG Web ; de la table à dessin au BIM ; la différence entre DAO et CAO ; Revit, Navisworks, BIMvision et les autres logiciels du cours.",
+  sources: "cours 5, diapos 5 à 21",
+  sections: [
+  {
+    titre: "DAO, SIG et SIG Web : la pyramide des logiciels",
+    anim: { ratio: 0.62, alt: "Une pyramide se construit étage par étage : DAO au sommet, SIG au milieu, SIG Web à la base ; les logiciels de chaque étage apparaissent à côté", draw(ctx, t, w, h) {
+      const u = cyc(t, 12), k = Math.min(2, Math.floor(u * 3.4)), cx = w * 0.26, top = h * 0.08, base = h * 0.92, half = Math.min(w * 0.24, h * 0.62);
+      const yAt = f => lerp(top, base, f), xAt = f => half * f;
+      const et = [[0, 0.36, "DAO", C.stone], [0.36, 0.66, "SIG", C.water], [0.66, 1, "SIG Web", C.steel + "aa"]];
+      const L = [["AutoCAD · Revit", "Navisworks (Autodesk)", "MicroStation"], ["ArcGIS Pro · MapInfo", "Geomedia · QGIS"], ["Google Maps / Earth", "ArcGIS Entreprise", "ArcGIS Online", "MapGuide · Forma"]];
+      et.forEach(([a, b, n, col], i) => {
+        if (i > k) return;
+        D.alpha(ctx, i === k ? 1 : 0.75, () => D.poly(ctx, [[cx - xAt(a), yAt(a)], [cx + xAt(a), yAt(a)], [cx + xAt(b), yAt(b)], [cx - xAt(b), yAt(b)]], col, C.ink, 1.3));
+        D.text(ctx, n, cx, yAt((a + b) / 2 + 0.03), { align: "center", color: C.ink, size: i === 0 ? 14 : 15, weight: 500 });
+        const lx = cx + xAt(b) + 14, ly = yAt((a + b) / 2);
+        L[i].forEach((s, j) => D.text(ctx, s, lx, ly + (j - (L[i].length - 1) / 2) * 15 + 4, { color: i === k ? C.rebar : C.muted, size: 11 }));
+      });
+    }},
+    texte: [
+      "La diapo « Types de logiciels en SIG et BIM » range les logiciels en une <b>pyramide à trois étages</b>. Au sommet, le <b>DAO</b> (dessin et conception) : <b>Autodesk</b> (<b>AutoCAD</b>, <b>Revit</b>, <b>Navisworks</b>) et <b>MicroStation</b>. Au milieu, les <b>SIG</b> (systèmes d'information géographique) : <b>ArcGIS Pro</b>, <b>MapInfo</b>, <b>Geomedia</b>, <b>QGIS</b>.",
+      "À la base, les <b>SIG Web</b>, consultés dans le navigateur : <b>Google Maps / Google Earth</b>, <b>ArcGIS Entreprise</b>, <b>MapGuide</b>, <b>ArcGIS Online</b> et <b>Autodesk Forma</b>. On a déjà croisé les SIG Web au cours 2 (saisir des données sur le terrain, planifier un levé avec Google Earth).",
+      "Les SIG gèrent des données géographiques (cartes, réseaux, territoires) ; le DAO et le BIM dessinent et modélisent l'ouvrage lui-même. Le cours y revient avec l'<b>interopérabilité BIM-SIG</b> (après la diapo 62)."
+    ],
+    cle: { label: "À retenir", html: "<strong>DAO</strong> : AutoCAD, Revit, Navisworks (Autodesk), MicroStation · <strong>SIG</strong> : ArcGIS Pro, MapInfo, Geomedia, QGIS · <strong>SIG Web</strong> : Google Maps/Earth, ArcGIS Entreprise, MapGuide, ArcGIS Online, Autodesk Forma." },
+    widget: box => triWidget(box, {
+      titre: "À quel étage de la pyramide ?", consigne: "Classe chaque logiciel selon la diapo 6.",
+      cats: ["DAO", "SIG", "SIG Web"],
+      items: [
+        { nom: "Revit", rep: "DAO", pourquoi: "Autodesk, au sommet avec AutoCAD et Navisworks." },
+        { nom: "MicroStation", rep: "DAO", pourquoi: "Le logiciel de Bentley, à l'étage DAO." },
+        { nom: "QGIS", rep: "SIG", pourquoi: "SIG de bureau, avec ArcGIS Pro, MapInfo et Geomedia." },
+        { nom: "MapInfo", rep: "SIG", pourquoi: "Étage SIG." },
+        { nom: "ArcGIS Online", rep: "SIG Web", pourquoi: "La version Web d'ArcGIS (ArcGIS Pro, lui, est un SIG de bureau)." },
+        { nom: "Autodesk Forma", rep: "SIG Web", pourquoi: "Piège : un logiciel Autodesk, mais rangé dans les SIG Web." },
+        { nom: "Google Earth", rep: "SIG Web", pourquoi: "Avec Google Maps, à la base de la pyramide." }
+      ]
+    })
+  },
+  {
+    titre: "Un peu d'histoire : de la table à dessin au BIM",
+    anim: { ratio: 0.5, alt: "Trois flèches courbes relient la table à dessin, le DAO, le BIM puis « Avenir ? » ; les années 1970, 1980-1990 et 2000 s'affichent", draw(ctx, t, w, h) {
+      const u = cyc(t, 12), k = Math.min(3, Math.floor(u * 4.4)), y = h * 0.62, xs = [0.12, 0.38, 0.64, 0.89].map(f => f * w);
+      const N = ["Table à dessin", "DAO", "BIM", "Avenir ?"], F = ["Passage du papier au numérique", "Avancée technologique", "Innovation"];
+      const A = ["avant", "années 1970 : la 2D · 1980-1990 : la 3D", "années 2000 à aujourd'hui : intégration BIM", "?"];
+      N.forEach((n, i) => {
+        if (i > k) return;
+        D.rect(ctx, xs[i] - w * 0.1, y - 18, w * 0.2, 36, i === 3 ? C.alert + "33" : i === k ? C.rebar + "33" : C.surface, i === k ? C.rebar : C.ink, 1.4);
+        D.text(ctx, n, xs[i], y + 5, { align: "center", color: C.ink, weight: 500, size: 12 });
+        if (i < 3 && i < k) {
+          ctx.save(); ctx.strokeStyle = C.rebar; ctx.lineWidth = 3; ctx.beginPath();
+          ctx.moveTo(xs[i] + w * 0.02, y - 22); ctx.quadraticCurveTo((xs[i] + xs[i + 1]) / 2, y - h * 0.42, xs[i + 1] - w * 0.02, y - 24); ctx.stroke(); ctx.restore();
+          D.arrow(ctx, xs[i + 1] - w * 0.04, y - 34, xs[i + 1] - w * 0.02, y - 22, C.rebar, 3, 9);
+          if (i === k - 1) D.text(ctx, F[i], w / 2, h * 0.12, { align: "center", color: C.rebar, size: 12, weight: 500 });
+        }
+      });
+      D.text(ctx, A[k], w / 2, h - 10, { align: "center", color: C.rebar, size: 12, weight: 500 });
+    }},
+    texte: [
+      "Le dessin a évolué en s'appuyant sur les <b>avancées technologiques</b> : l'entrée dans l'industrie et le <b>passage à la 2D</b> dans les <b>années 1970</b> ; l'ère de la <b>modélisation tridimensionnelle</b> dans les <b>années 1980 à 1990</b> ; la <b>spécialisation et l'intégration BIM / numérique</b> des <b>années 2000 à aujourd'hui</b>.",
+      "Le schéma de la diapo 7 enchaîne quatre étapes : la <b>table à dessin</b> (avant) → <b>passage du papier au numérique</b> → le <b>DAO</b> → <b>avancée technologique</b> → le <b>BIM</b> → <b>innovation</b> → l'<b>avenir ?</b>",
+      "Le cours 3 donnait déjà un repère voisin : le DAO et la CAO décollent dans les années 75 à 90 (voir le sujet « Histoire, modes de représentation » des Compléments)."
+    ],
+    cle: { label: "À retenir", html: "Table à dessin → <em>papier au numérique</em> → <strong>DAO</strong> → <em>avancée technologique</em> → <strong>BIM</strong> → <em>innovation</em> → avenir ? · 2D : <strong>1970</strong> · 3D : <strong>1980-1990</strong> · BIM : <strong>2000 à aujourd'hui</strong>." },
+    widget: box => diagrammeWidget(box, {
+      titre: "Le schéma de la diapo 7 à compléter", source: "cours", vb: [600, 560], etiquette: [270, 46],
+      consigne: "Glisse chaque étape dans sa case et chaque transition sur sa flèche (ou touche une étiquette, puis la case).",
+      cases: {
+        table: { x: 300, y: 45, w: 230, h: 54, rep: "Table à dessin" },
+        dao: { x: 300, y: 205, w: 230, h: 54, rep: "DAO" },
+        bim: { x: 300, y: 365, w: 230, h: 54, rep: "BIM" },
+        avenir: { x: 300, y: 520, w: 230, h: 54, rep: "Avenir ?" }
+      },
+      fleches: [["table", "dao", "Passage du papier au numérique"], ["dao", "bim", "Avancée technologique"], ["bim", "avenir", "Innovation"]],
+      leurres: ["CAO"],
+      note: "Diapo 7 : les trois flèches sont « passage du papier au numérique », « avancée technologique » et « innovation »."
+    })
+  },
+  {
+    titre: "DAO ou CAO : dessiner ou concevoir",
+    anim: { ratio: 0.55, alt: "À gauche, une poutre dessinée en simples traits (DAO) ; à droite, la même poutre devient un objet paramétré avec ses propriétés, chargée, qui fléchit (CAO)", draw(ctx, t, w, h) {
+      const u = cyc(t, 10), m = w / 2, y = h * 0.42, L = w * 0.36;
+      D.line(ctx, [[m, 10], [m, h - 10]], C.line, 1, [4, 4]);
+      D.text(ctx, "DAO (AutoCAD)", m / 2, 20, { align: "center", color: C.ink, weight: 500, size: 13 });
+      D.text(ctx, "CAO (Revit)", m * 1.5, 20, { align: "center", color: C.ink, weight: 500, size: 13 });
+      const x0 = (m - L) / 2;
+      D.line(ctx, [[x0, y], [x0 + L, y]], C.steel, 1.5); D.line(ctx, [[x0, y + 16], [x0 + L, y + 16]], C.steel, 1.5);
+      D.line(ctx, [[x0, y], [x0, y + 16]], C.steel, 1.5); D.line(ctx, [[x0 + L, y], [x0 + L, y + 16]], C.steel, 1.5);
+      D.text(ctx, "4 lignes : de simples vecteurs", m / 2, y + 44, { align: "center", color: C.muted });
+      const x1 = m + (m - L) / 2, f = Math.sin(Math.PI * seg(u, 0.3, 0.9)) * 12, pts = [], pts2 = [];
+      for (let i = 0; i <= 20; i++) { const s = i / 20, d = f * Math.sin(Math.PI * s); pts.push([x1 + L * s, y + d]); pts2.push([x1 + L * s, y + 16 + d]); }
+      D.poly(ctx, pts.concat(pts2.reverse()), C.rebar + "44", C.rebar, 1.5);
+      D.poly(ctx, [[x1 - 6, y + 28], [x1 + 6, y + 28], [x1, y + 16]], C.ink, null); D.poly(ctx, [[x1 + L - 6, y + 28], [x1 + L + 6, y + 28], [x1 + L, y + 16]], C.ink, null);
+      if (u > 0.25) for (let i = 1; i < 5; i++) D.arrow(ctx, x1 + L * i / 5, y - 34, x1 + L * i / 5, y - 4 + f * Math.sin(Math.PI * i / 5) * 0, C.alert, 1.5, 6);
+      if (u > 0.25) D.arrow(ctx, x1 - 30, y + 8, x1 - 4, y + 8, C.alert, 1.5, 6);
+      D.alpha(ctx, seg(u, 0.05, 0.25), () => {
+        D.rect(ctx, x1, y + 50, L, 58, C.surface, C.steel, 1);
+        D.text(ctx, "Poutre W310 · acier 350W", x1 + 6, y + 66, { color: C.ink, size: 10 });
+        D.text(ctx, "portée 6,0 m · appuis simples", x1 + 6, y + 82, { color: C.ink, size: 10 });
+        D.text(ctx, "flexion + compression → calcul", x1 + 6, y + 98, { color: C.rebar, size: 10 });
+      });
+    }},
+    texte: [
+      "<b>DAO</b> (dessin assisté par ordinateur, ex. <b>AutoCAD</b>) : un dessin basé sur de <b>simples vecteurs</b>. Ce n'est qu'une <b>version numérique</b>, plus précise, plus fiable et plus pratique, de la <b>planche à dessin</b> traditionnelle. Le DAO peut se faire avec des logiciels de dessin 2D et/ou 3D.",
+      "<b>CAO</b> (conception assistée par ordinateur, ex. <b>Revit</b>) : basée sur la <b>modélisation géométrique et paramétrée</b> des éléments ou membrures dessinés dans le plan du bâtiment. Les logiciels de CAO font des <b>calculs complexes</b> et des <b>simulations</b> à partir des paramètres et caractéristiques des composantes. <b>C'est la principale différence</b> et l'évolution entre le DAO et la CAO.",
+      "Exemple de la diapo 9 : certaines membrures du bâtiment modèle subissent des <b>efforts combinés de flexion et de compression</b> sous les charges verticales et horizontales. Au lieu de faire du simple dessin vectoriel, on <b>paramètre</b> les éléments dessinés. (Les propriétés de poutre de l'animation sont un exemple, pas une donnée du cours.)"
+    ],
+    cle: { label: "À retenir", html: "<strong>DAO</strong> = dessin, simples <strong>vecteurs</strong>, planche à dessin numérique (AutoCAD) · <strong>CAO</strong> = conception, modèle <strong>paramétré</strong> → <strong>calculs et simulations</strong> (Revit). Les calculs : la principale différence." },
+    widget: box => triWidget(box, {
+      titre: "DAO ou CAO ?", consigne: "Classe chaque énoncé selon le cours (diapos 8 et 9).",
+      cats: ["DAO", "CAO"],
+      items: [
+        { nom: "Basé sur de simples vecteurs", rep: "DAO", pourquoi: "Diapo 8." },
+        { nom: "Version numérique de la planche à dessin", rep: "DAO", pourquoi: "Plus précise, plus fiable, plus pratique, mais toujours du dessin." },
+        { nom: "Modélisation géométrique et paramétrée", rep: "CAO", pourquoi: "Les éléments portent des paramètres." },
+        { nom: "Calculs complexes et simulations", rep: "CAO", pourquoi: "La principale différence avec le DAO." },
+        { nom: "AutoCAD", rep: "DAO", pourquoi: "L'exemple de DAO du cours." },
+        { nom: "Revit", rep: "CAO", pourquoi: "L'exemple de CAO du cours." },
+        { nom: "Membrures en flexion et compression", rep: "CAO", pourquoi: "Diapo 9 : on paramètre les membrures pour les calculer." }
+      ]
+    })
+  },
+  {
+    titre: "Revit, Navisworks et BIMvision",
+    anim: { ratio: 0.55, alt: "Trois maquettes (structure, électricité, plomberie) glissent l'une sur l'autre pour former un modèle fédéré ; un conflit clignote en rouge là où une conduite traverse une poutre", draw(ctx, t, w, h) {
+      const u = cyc(t, 10), g = ease(seg(u, 0.1, 0.5)), cx = w / 2, cy = h * 0.52, s = Math.min(w * 0.22, h * 0.42);
+      const M = [["Structure", C.stone, -1], ["Électricité", C.rebar, 0], ["Plomberie", C.water, 1]];
+      M.forEach(([n, col, k]) => {
+        const ox = cx + k * w * 0.3 * (1 - g), oy = cy;
+        D.alpha(ctx, 0.9, () => {
+          if (k === -1) { D.rect(ctx, ox - s / 2, oy - s * 0.35, s, 8, col, C.ink, 1); D.rect(ctx, ox - s / 2, oy - s * 0.35, 8, s * 0.7, col, C.ink, 1); D.rect(ctx, ox + s / 2 - 8, oy - s * 0.35, 8, s * 0.7, col, C.ink, 1); }
+          if (k === 0) { D.line(ctx, [[ox - s / 2, oy + s * 0.2], [ox + s / 2, oy + s * 0.2]], col, 2.5); D.line(ctx, [[ox + s * 0.2, oy + s * 0.2], [ox + s * 0.2, oy + s * 0.35]], col, 2.5); }
+          if (k === 1) D.line(ctx, [[ox - s / 2, oy - s * 0.1], [ox - s * 0.1, oy - s * 0.1], [ox - s * 0.1, oy - s * 0.42], [ox + s * 0.3, oy - s * 0.42]], col, 4);
+        });
+        if (g < 0.5) D.text(ctx, n, ox, oy + s * 0.55, { align: "center", color: C.ink, size: 11 });
+      });
+      if (g > 0.98) {
+        D.text(ctx, "Modèle fédéré (Navisworks)", cx, cy + s * 0.55, { align: "center", color: C.ink, weight: 500, size: 12 });
+        const bl = Math.sin(t * 6) > 0;
+        if (u > 0.6) { D.circle(ctx, cx - s * 0.1, cy - s * 0.34, 12, bl ? C.alert + "55" : null, C.alert, 2); D.text(ctx, "conflit détecté !", cx - s * 0.1 + 16, cy - s * 0.48, { color: C.alert, weight: 500, size: 11 }); }
+      }
+    }},
+    texte: [
+      "<b>Revit</b> (Autodesk, CAO) : « si vous pouvez l'imaginer, vous pouvez le concevoir ». Il sert à <b>modéliser en 3D</b> des formes, des structures et des systèmes avec une <b>précision paramétrique</b> ; à gérer le projet avec des <b>révisions instantanées</b> des plans, élévations, calendriers (nomenclatures), coupes, feuilles et vues 3D ; et à <b>unir les équipes multidisciplinaires</b>, au bureau ou au chantier.",
+      "<b>Navisworks</b> (Autodesk) : logiciel de <b>révision de projet et de coordination 3D</b>. Quatre fonctions : 1) <b>agrégation de modèles</b> : rassembler des maquettes de nombreux logiciels (Revit, AutoCAD, MicroStation, ArchiCAD, SolidWorks, IFC…) dans un seul <b>modèle fédéré</b> ; 2) <b>détection des conflits</b> (<i>clash detection</i>) entre corps de métier (structure, électricité, plomberie, CVCA) <b>avant le chantier</b> ; 3) <b>simulation 4D</b> : le modèle 3D lié au <b>calendrier</b> du projet ; 4) <b>révision et collaboration</b> : inspecter en temps réel, commentaires, mesures, annotations (<i>redlines</i>).",
+      "<b>BIMvision</b> : une <b>visionneuse gratuite de modèles IFC</b>. Elle affiche les modèles de Revit, Archicad, Tekla, Bentley, Allplan et bien d'autres <b>sans licence commerciale</b> de ces logiciels. Elle lit les formats <b>IFC 2×3 et 4.0</b> et c'est la <b>première visionneuse dotée d'une interface pour plugiciels</b> (plugins)."
+    ],
+    cle: { label: "À retenir", html: "<strong>Revit</strong> = modéliser (paramétrique) · <strong>Navisworks</strong> = <strong>agréger</strong> (modèle fédéré), <strong>détecter les conflits</strong>, <strong>simuler en 4D</strong>, <strong>réviser</strong> · <strong>BIMvision</strong> = visionneuse <strong>gratuite</strong> de fichiers <strong>IFC</strong> (2×3 et 4.0)." },
+    widget: box => triWidget(box, {
+      titre: "Quel logiciel ?", consigne: "Associe chaque fonction au logiciel que le cours lui donne.",
+      cats: ["Revit", "Navisworks", "BIMvision"],
+      items: [
+        { nom: "Détection des conflits entre corps de métier", rep: "Navisworks", pourquoi: "Clash detection, avant le chantier." },
+        { nom: "Modèle fédéré à partir de plusieurs logiciels", rep: "Navisworks", pourquoi: "Agrégation de modèles." },
+        { nom: "Modèle 3D lié au calendrier (4D)", rep: "Navisworks", pourquoi: "Simulation 4D de l'avancement." },
+        { nom: "Modéliser avec une précision paramétrique", rep: "Revit", pourquoi: "Formes, structures et systèmes en 3D." },
+        { nom: "Révisions instantanées des plans, coupes et élévations", rep: "Revit", pourquoi: "Diapo 12." },
+        { nom: "Voir un modèle IFC sans licence commerciale", rep: "BIMvision", pourquoi: "Visionneuse gratuite (IFC 2×3 et 4.0)." },
+        { nom: "Première visionneuse avec une interface pour plugiciels", rep: "BIMvision", pourquoi: "Diapo 14." }
+      ]
+    })
+  },
+  {
+    titre: "Les autres logiciels du cours",
+    anim: { ratio: 0.5, alt: "Des fiches de logiciels défilent : MicroStation, DraftSight, Sogelink, QCAD, LibreCAD ; les deux dernières portent l'étiquette « libre de droit »", draw(ctx, t, w, h) {
+      const L = [["MicroStation", "Bentley · ingénierie et architecture", 0], ["SOLIDWORKS DraftSight", "CAO 2D et 3D professionnelle", 0], ["Sogelink", "infrastructures : du terrain au numérique", 0], ["QCAD", "CAO 2D · DXF et DWG", 1], ["LibreCAD", "CAO 2D open source · Windows, Apple, Linux", 1], ["Civil 3D · InfraWorks", "Autodesk · routes, réseaux, infrastructures", 0], ["Tekla Structures", "structure : acier, béton, fabrication", 0], ["Synchro 4D", "planification liée au modèle 3D", 0]];
+      const u = cyc(t, 16) * L.length, k = Math.floor(u), f = u - k, x = lerp(w * 1.1, w * 0.5, ease(seg(f, 0, 0.25))) - lerp(0, w * 0.6, ease(seg(f, 0.8, 1)));
+      const cw = Math.min(w * 0.8, 380), ch = h * 0.5;
+      D.rect(ctx, x - cw / 2, h * 0.22, cw, ch, C.surface, C.steel, 1.5);
+      D.text(ctx, L[k][0], x, h * 0.22 + ch * 0.38, { align: "center", color: C.ink, size: 16, weight: 500 });
+      D.text(ctx, L[k][1], x, h * 0.22 + ch * 0.68, { align: "center", color: C.muted, size: 11 });
+      if (L[k][2]) { D.rect(ctx, x + cw / 2 - 104, h * 0.22 - 12, 100, 22, C.rebar, null); D.text(ctx, "libre de droit", x + cw / 2 - 54, h * 0.22 + 3, { align: "center", color: C.surface, size: 11, weight: 500 }); }
+      D.text(ctx, (k + 1) + " / " + L.length, w - 10, h - 8, { align: "right" });
+    }},
+    texte: [
+      "<b>MicroStation</b> (<b>Bentley</b>) : ingénierie et architecture. <b>SOLIDWORKS DraftSight</b> : CAO 2D et 3D professionnelle pour concepteurs, ingénieurs et architectes. <b>Sogelink</b> : outils interconnectés pour les <b>projets d'infrastructure</b>, « du terrain au numérique, sans rupture », à chaque étape : <b>conception et étude</b> (relevés topographiques, LiDAR, modélisation 3D, voirie et réseaux divers), <b>déclaration et conformité</b> (travaux près des réseaux), <b>réalisation et suivi de chantier</b> (plans d'exécution, récolement numérique), <b>exploitation et maintenance</b> (gestion patrimoniale, SIG métier).",
+      "<b>Libres de droit</b> : <b>QCAD</b>, CAO 2D professionnelle et accessible à tous, qui lit les formats <b>DXF et DWG</b> ; <b>LibreCAD</b>, CAO 2D <b>libre, gratuite et open source</b> (Windows, Apple, Linux), soutenue par sa communauté, pour produire des dessins techniques surtout en 2D.",
+      "La diapo 20 montre les <b>logiciels BIM les plus utilisés</b> : Autodesk <b>Revit</b> (modélisation BIM 3D), <b>AutoCAD</b> (dessin 2D), <b>Navisworks</b> (coordination, détection des conflits), <b>Civil 3D</b> (routes, nivellement, réseaux), <b>InfraWorks</b> (conception préliminaire d'infrastructures), <b>Tekla Structures</b> (structure acier et béton, dessins de fabrication), <b>Synchro 4D</b> (planification liée au modèle 3D) et Bentley <b>OpenBuildings Designer</b>. Son message : « le BIM n'est pas qu'une affaire de logiciels, mais de personnes, de processus et de technologie »."
+    ],
+    cle: { label: "À retenir", html: "<strong>MicroStation</strong> = Bentley · <strong>DraftSight</strong> = SOLIDWORKS · <strong>Sogelink</strong> = infrastructures, du terrain à l'exploitation · libres de droit : <strong>QCAD</strong> (DXF, DWG) et <strong>LibreCAD</strong> (open source)." },
+    widget: box => triWidget(box, {
+      titre: "D'où vient-il ?", consigne: "Classe chaque logiciel selon les diapos 15 à 21.",
+      cats: ["Autodesk", "Bentley", "Libre de droit", "Autre éditeur"],
+      items: [
+        { nom: "Navisworks", rep: "Autodesk", pourquoi: "Avec AutoCAD et Revit." },
+        { nom: "Civil 3D", rep: "Autodesk", pourquoi: "Infrastructures : routes, nivellement, réseaux (diapo 20)." },
+        { nom: "MicroStation", rep: "Bentley", pourquoi: "Diapo 15." },
+        { nom: "OpenBuildings Designer", rep: "Bentley", pourquoi: "Bentley, conception multidisciplinaire (diapo 20)." },
+        { nom: "QCAD", rep: "Libre de droit", pourquoi: "Diapo 21 : rangé sous « Libre de droit »." },
+        { nom: "LibreCAD", rep: "Libre de droit", pourquoi: "Libre, gratuit, open source." },
+        { nom: "DraftSight", rep: "Autre éditeur", pourquoi: "SOLIDWORKS." },
+        { nom: "Sogelink", rep: "Autre éditeur", pourquoi: "Outils pour les projets d'infrastructure." }
+      ]
+    })
+  }
+  ]
+});
+
+/* ===================== Sujet — Cours 5 : principes des logiciels (diapos 22 à 25) ===================== */
+MODULES.push({
+  id: "principes",
+  partie: "c6",
+  titre: "Principes des logiciels : fichiers, calques, vecteurs, blocs",
+  resume: "Les quatre principes communs aux logiciels de dessin : le fichier (DWG, DXF, IFC), le calque qu'on empile, le vecteur positionné par un système de référence et le bloc réutilisable.",
+  sources: "cours 5, diapos 22 à 25 · rappels des cours 2 et 4 (formats, calques NADAO)",
+  sections: [
+  {
+    titre: "Le fichier et ses formats : DWG, DXF, IFC",
+    anim: { ratio: 0.45, alt: "Trois fichiers apparaissent, DWG, DXF et IFC ; le fichier IFC s'ouvre dans plusieurs logiciels différents", draw(ctx, t, w, h) {
+      const u = cyc(t, 9), F = [["DWG", "AutoCAD (natif)"], ["DXF", "échange de dessins"], ["IFC", "format ouvert du BIM"]];
+      F.forEach(([n, d], i) => {
+        const x = w * (0.2 + i * 0.3), y = h * 0.3, on = Math.floor(u * 3) === i, fw = Math.min(70, w * 0.16);
+        D.poly(ctx, [[x - fw / 2, y - 30], [x + fw / 2 - 14, y - 30], [x + fw / 2, y - 16], [x + fw / 2, y + 34], [x - fw / 2, y + 34]], on ? C.rebar + "33" : C.surface, on ? C.rebar : C.ink, 1.4);
+        D.text(ctx, n, x, y + 8, { align: "center", color: C.ink, size: 15, weight: 500 });
+        D.text(ctx, d, x, y + 56, { align: "center", color: on ? C.rebar : C.muted, size: 10 });
+      });
+      const k = Math.floor(u * 3);
+      if (k === 2) ["Revit", "BIMvision", "Navisworks", "Archicad"].forEach((n, j) => { const a = seg(u, 0.7, 0.95), x = w * 0.8, y0 = h * 0.38;
+        const tx = w * (0.08 + j * 0.24), ty = h * 0.88;
+        D.alpha(ctx, a, () => { D.line(ctx, [[x, y0 + 34], [tx + 30, ty - 14]], C.steel, 1, [3, 3]); D.text(ctx, n, tx + 30, ty, { align: "center", color: C.steel, size: 11 }); }); });
+    }},
+    texte: [
+      "Un <b>fichier</b> est l'élément informatique qui contient les informations d'une conception. Les formats usuels du cours : <b>DWG</b>, <b>DXF</b> et <b>IFC</b>.",
+      "Hors diapos (définitions courantes) : le <b>DWG</b> est le format natif d'AutoCAD ; le <b>DXF</b> (<i>Drawing Exchange Format</i>) sert à échanger des dessins entre logiciels (QCAD lit le DXF et le DWG) ; l'<b>IFC</b> (<i>Industry Foundation Classes</i>) est le <b>format ouvert du BIM</b>, que lit BIMvision (IFC 2×3 et 4.0) et que Navisworks agrège avec les autres maquettes.",
+      "Au cours 2, un levé se livrait en trois formats : le <b>PDF</b> du plan, le <b>DWG</b> (Autodesk) et le <b>nuage de points</b> (PTS, E57, LAS)."
+    ],
+    cle: { label: "À retenir", html: "<strong>Fichier</strong> = contient les informations d'une conception · formats usuels : <strong>DWG</strong>, <strong>DXF</strong>, <strong>IFC</strong> (IFC = format ouvert du BIM)." },
+    widget: box => triWidget(box, {
+      titre: "Quel format ?", consigne: "Classe chaque fichier selon ce qu'il contient.",
+      cats: ["Dessin (DWG, DXF)", "Modèle BIM ouvert (IFC)", "Nuage de points (cours 2)"],
+      items: [
+        { nom: "plan_rue.dwg", rep: "Dessin (DWG, DXF)", pourquoi: "Format natif d'AutoCAD." },
+        { nom: "plan_rue.dxf", rep: "Dessin (DWG, DXF)", pourquoi: "Format d'échange de dessins (QCAD le lit)." },
+        { nom: "batiment.ifc", rep: "Modèle BIM ouvert (IFC)", pourquoi: "Ouvert dans BIMvision sans licence commerciale." },
+        { nom: "scan_facade.e57", rep: "Nuage de points (cours 2)", pourquoi: "PTS, E57, LAS = nuages de points." },
+        { nom: "leve_lidar.las", rep: "Nuage de points (cours 2)", pourquoi: "Format LiDAR." }
+      ]
+    })
+  },
+  {
+    titre: "Calques et vecteurs",
+    anim: { ratio: 0.6, alt: "Trois calques transparents s'empilent en perspective : des points (bornes), des lignes (conduites) et des polygones (bâtiments), pour former le plan complet", draw(ctx, t, w, h) {
+      const u = cyc(t, 10), g = ease(seg(u, 0.15, 0.6)), cx = w / 2, s = Math.min(w * 0.3, h * 0.55);
+      const sheet = (dy, col, f, label) => {
+        const P = (x, y) => [cx + (x - y) * s * 0.85, h * 0.2 + dy + (x + y) * s * 0.32];
+        D.poly(ctx, [P(0, 0), P(1, 0), P(1, 1), P(0, 1)], col + "22", C.ink, 1);
+        f(P); if (g < 0.6) D.alpha(ctx, 1 - g / 0.6, () => D.text(ctx, label, P(1, 0)[0] + 8, P(1, 0)[1] + 4, { color: C.ink, size: 11 }));
+      };
+      const gap = lerp(h * 0.2, 0, g);
+      sheet(gap * 2, C.stone, P => [[0.25, 0.3], [0.6, 0.25], [0.4, 0.7]].forEach(([a, b]) => { const q = P(a, b); D.rect(ctx, q[0] - 10, q[1] - 6, 20, 12, C.stone, C.ink, 1); }), "polygones : bâtiments");
+      sheet(gap, C.steel, P => D.line(ctx, [P(0.05, 0.5), P(0.95, 0.5)], C.steel, 3), "lignes : conduites");
+      sheet(0, C.rebar, P => [[0.2, 0.55], [0.75, 0.45]].forEach(([a, b]) => { const q = P(a, b); D.circle(ctx, q[0], q[1], 4, C.rebar); }), "points : bornes");
+      D.text(ctx, g > 0.95 ? "Empilés : le contexte complet" : "Un calque = un sujet", cx, h - 8, { align: "center", color: C.rebar, weight: 500, size: 12 });
+    }},
+    texte: [
+      "Un <b>calque</b> est une <b>couche de données géométriques qui représentent un sujet</b>. Par le <b>principe d'empilement</b>, on superpose des calques pour représenter le contexte. Un calque peut contenir des éléments de type <b>point</b>, <b>ligne</b> et <b>polygone</b>.",
+      "Les <b>vecteurs</b> sont les <b>objets qui représentent un ouvrage, un contexte ou autre</b>. On <b>positionne le vecteur dans l'espace par un système de référence</b> (les coordonnées des cours 1 et 2 : MTM, UTM, NAD83).",
+      "Rappel du cours 4 : la norme <b>NADAO</b> encadre les calques, les traits, les blocs et les coordonnées, et les villes nomment leurs calques par code (ex. R-x-AQU-VAN-PRJ pour une vanne d'aqueduc projetée, à Laval). Les exemples de l'animation (bornes, conduites, bâtiments) servent à illustrer."
+    ],
+    cle: { label: "À retenir", html: "<strong>Calque</strong> = couche de données géométriques d'<strong>un sujet</strong>, qu'on <strong>empile</strong> · contient <strong>points, lignes, polygones</strong> · <strong>vecteur</strong> = objet positionné par un <strong>système de référence</strong>." },
+    widget: box => triWidget(box, {
+      titre: "Point, ligne ou polygone ?", consigne: "Sur un plan à l'échelle d'une rue, quel type d'élément de calque représente le mieux chaque objet ? (exemples pour s'exercer)",
+      cats: ["Point", "Ligne", "Polygone"],
+      items: [
+        { nom: "Borne d'incendie", rep: "Point", pourquoi: "Un objet ponctuel à cette échelle." },
+        { nom: "Repère géodésique", rep: "Point", pourquoi: "Une position X, Y (Z)." },
+        { nom: "Conduite d'égout", rep: "Ligne", pourquoi: "Un tracé entre deux regards." },
+        { nom: "Bordure de trottoir", rep: "Ligne", pourquoi: "Un tracé linéaire." },
+        { nom: "Empreinte d'un bâtiment", rep: "Polygone", pourquoi: "Une surface fermée." },
+        { nom: "Lot cadastral", rep: "Polygone", pourquoi: "Une surface délimitée." }
+      ]
+    })
+  },
+  {
+    titre: "Les blocs : dessiner une fois, réutiliser partout",
+    anim: { ratio: 0.5, alt: "Un symbole de porte est groupé en un bloc nommé « PORTE-900 », puis copié à plusieurs endroits du plan", draw(ctx, t, w, h) {
+      const u = cyc(t, 10), n = Math.floor(seg(u, 0.35, 0.9) * 5), s = Math.min(36, w * 0.07);
+      const porte = (x, y, a) => { ctx.save(); ctx.translate(x, y); ctx.rotate(a);
+        D.line(ctx, [[0, 0], [0, -s]], C.ink, 2); ctx.strokeStyle = C.steel; ctx.lineWidth = 1; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.arc(0, 0, s, -Math.PI / 2, 0); ctx.stroke(); ctx.setLineDash([]); ctx.restore(); };
+      const bx = w * 0.15, by = h * 0.55;
+      porte(bx, by, 0);
+      D.alpha(ctx, seg(u, 0.1, 0.3), () => { D.rect(ctx, bx - 8, by - s - 8, s + 16, s + 16, null, C.rebar, 1.5); D.text(ctx, "bloc « PORTE-900 »", bx + s / 2, by + 26, { align: "center", color: C.rebar, weight: 500, size: 11 }); });
+      D.rect(ctx, w * 0.36, h * 0.12, w * 0.58, h * 0.76, null, C.ink, 2);
+      const spots = [[0.42, 0.5, 0], [0.62, 0.3, Math.PI / 2], [0.82, 0.55, Math.PI], [0.55, 0.82, 0], [0.8, 0.8, -Math.PI / 2]];
+      spots.slice(0, n).forEach(([fx, fy, a]) => porte(w * fx, h * fy, a));
+      D.text(ctx, n ? n + " insertion" + (n > 1 ? "s" : "") + " du même bloc" : "", w * 0.65, h * 0.08, { align: "center", color: C.muted, size: 11 });
+    }},
+    texte: [
+      "Un <b>bloc CAO</b> est un <b>groupe d'objets nommé qui agit en tant qu'objet 2D ou 3D unique</b>. Il permet de créer des <b>contenus répétés</b> : des <b>symboles de dessin</b>, des <b>composants courants</b> ou des <b>détails standard</b>.",
+      "Les blocs <b>font gagner du temps</b>, <b>préservent la cohérence</b> et <b>réduisent la taille des fichiers</b>, en favorisant la <b>réutilisation et le partage</b> des contenus, au lieu de les redessiner chaque fois qu'on en a besoin.",
+      "Les quatre principes des logiciels (diapo 22) : <b>fichiers</b>, <b>calques</b>, <b>vecteurs</b>, <b>blocs</b>. Le nom « PORTE-900 » de l'animation est un exemple."
+    ],
+    cle: { label: "À retenir", html: "<strong>Bloc</strong> = groupe d'objets <strong>nommé</strong> qui agit comme <strong>un seul objet</strong> (2D ou 3D) · pour les symboles, composants, détails standard · gagne du <strong>temps</strong>, garde la <strong>cohérence</strong>, réduit la <strong>taille des fichiers</strong>." },
+    widget: box => triWidget(box, {
+      titre: "Avantage des blocs ?", consigne: "Lesquels de ces avantages le cours donne-t-il aux blocs ?",
+      cats: ["Avantage des blocs (diapo 25)", "Pas un avantage des blocs"],
+      items: [
+        { nom: "Gagner du temps", rep: "Avantage des blocs (diapo 25)", pourquoi: "On ne redessine pas." },
+        { nom: "Préserver la cohérence", rep: "Avantage des blocs (diapo 25)", pourquoi: "Le même symbole partout." },
+        { nom: "Réduire la taille des fichiers", rep: "Avantage des blocs (diapo 25)", pourquoi: "Un contenu défini une fois, inséré plusieurs fois." },
+        { nom: "Favoriser la réutilisation et le partage", rep: "Avantage des blocs (diapo 25)", pourquoi: "Diapo 25." },
+        { nom: "Calculer les efforts dans les membrures", rep: "Pas un avantage des blocs", pourquoi: "C'est la CAO paramétrique." },
+        { nom: "Positionner le modèle dans un référentiel géographique", rep: "Pas un avantage des blocs", pourquoi: "C'est le géoréférencement (point de base du projet)." }
+      ]
+    })
+  }
+  ]
+});
+
+/* ===================== Sujet — Cours 5 : qu'est-ce que le BIM ? (diapos 26 à 47) ===================== */
+MODULES.push({
+  id: "bim",
+  partie: "c6",
+  titre: "Qu'est-ce que le BIM ?",
+  resume: "Le sigle et ses traductions, la maquette numérique sur tout le cycle de vie, le modèle 3D qui porte des données, les outils technologiques, et surtout : un processus avant d'être une technologie.",
+  sources: "cours 5, diapos 26 à 47",
+  sections: [
+  {
+    titre: "Le sigle BIM et ce qui l'a précédé",
+    anim: { ratio: 0.5, alt: "Une même maison passe d'un croquis à la main à un dessin 2D à l'ordinateur, puis à un modèle 3D, puis à un modèle 3D dont chaque élément porte des données", draw(ctx, t, w, h) {
+      const u = cyc(t, 12), k = Math.floor(u * 4), cx = w / 2, cy = h * 0.55, s = Math.min(w, h) * 0.1;
+      const N = ["1. Dessin à la main", "2. Dessin 2D à l'ordinateur", "3. Modèle géométrique 3D", "4. BIM : modèle + données"];
+      if (k <= 1) {
+        const wob = k === 0 ? (x, y, i) => [x + Math.sin(i * 3.1) * 2, y + Math.cos(i * 2.3) * 2] : (x, y) => [x, y];
+        const pts = [[-2, 1], [2, 1], [2, -0.6], [0, -1.8], [-2, -0.6], [-2, 1]].map(([a, b], i) => wob(cx + a * s, cy + b * s, i));
+        D.line(ctx, pts, k === 0 ? C.muted : C.steel, k === 0 ? 1.8 : 1.4);
+        D.rect(ctx, cx - 0.4 * s, cy, 0.8 * s, s, null, k === 0 ? C.muted : C.steel, 1.2);
+        if (k === 1) { D.line(ctx, [[cx - 2 * s, cy + 1.4 * s], [cx + 2 * s, cy + 1.4 * s]], C.muted, 1); D.text(ctx, "12 000", cx, cy + 1.4 * s - 4, { align: "center", color: C.muted, size: 10 }); }
+      } else {
+        const P = G.maison(ctx, cx - 2 * s, cy - s * 0.2, s, k === 3 ? {} : { face: C.surface, cote: C.surface, toit: C.surface });
+        if (k === 3) {
+          const tag = (x, y, l1, l2) => { D.rect(ctx, x, y, w * 0.26, 34, C.surface, C.rebar, 1); D.text(ctx, l1, x + 6, y + 14, { color: C.ink, size: 10, weight: 500 }); D.text(ctx, l2, x + 6, y + 28, { color: C.muted, size: 9 }); };
+          tag(w * 0.03, h * 0.1, "Mur ext. type 2", "300 mm · brique, isolant");
+          tag(w * 0.71, h * 0.1, "Toit", "pente 6/12 · bardeau");
+          tag(w * 0.71, h * 0.72, "Porte P-03", "910 × 2030 · coût, fournisseur");
+        }
+      }
+      D.text(ctx, N[k], cx, 18, { align: "center", color: C.rebar, weight: 500, size: 13 });
+    }},
+    texte: [
+      "<b>BIM</b> signifie <b><i>Building Information Modeling</i></b>. En français, on trouve parfois : <b>modélisation de données de bâtiments</b>, <b>modèle d'information du bâtiment</b>, <b>maquette numérique du bâtiment</b>.",
+      "Après les <b>dessins à la main</b>, après les <b>dessins 2D à l'ordinateur</b>, après les <b>modèles géométriques 3D à l'ordinateur</b>… le BIM est <b>la nouvelle façon de concevoir, réaliser et utiliser un bâtiment</b>. C'est un <b>processus global</b> qui permet de <b>produire, d'enrichir, de maintenir, d'exploiter et de gérer les données</b> relatives à un bâtiment, un pont, etc.",
+      "Le BIM ne vise donc pas que les bâtiments : le cours cite aussi le pont, et il présente plus loin des modèles en architecture, structure, mécanique et coordination. Les étiquettes de l'animation (mur, toit, porte) sont des exemples."
+    ],
+    cle: { label: "À retenir", html: "<strong>BIM</strong> = <em>Building Information Modeling</em> = maquette numérique du bâtiment · après la main, la 2D et la 3D · processus global pour <strong>produire, enrichir, maintenir, exploiter et gérer</strong> les données d'un ouvrage." },
+    widget: box => etapesWidget(box, {
+      titre: "Avant le BIM, étape par étape", label: "Étape",
+      etapes: [
+        { court: "À la main", texte: "Les dessins à la main, sur la table à dessin." },
+        { court: "2D à l'ordinateur", texte: "Le DAO : de simples vecteurs, la planche à dessin devenue numérique." },
+        { court: "3D à l'ordinateur", texte: "Les modèles géométriques 3D : la forme, mais pas encore l'information." },
+        { court: "BIM", texte: "La nouvelle façon de concevoir, réaliser et utiliser un bâtiment : un processus qui produit, enrichit, maintient, exploite et gère les données de l'ouvrage." }
+      ]
+    })
+  },
+  {
+    titre: "Une maquette pour tout le cycle de vie",
+    anim: { ratio: 0.62, alt: "Un anneau de onze étapes tourne autour du sigle BIM : programmation, conception, analyse, documentation, fabrication, construction, logistique, exploitation, rénovation, démolition", draw(ctx, t, w, h) {
+      const E = ["Programmation", "Conception sommaire", "Conception détaillée", "Analyse", "Documentation", "Fabrication", "Construction 4D/5D", "Logistique de construction", "Exploitation et entretien", "Rénovation", "Démolition"];
+      const u = cyc(t, 22), k = Math.floor(u * E.length), cx = w / 2, cy = h / 2, R = Math.min(w * 0.36, h * 0.38);
+      ctx.save(); ctx.strokeStyle = C.line; ctx.lineWidth = 10; ctx.beginPath(); ctx.arc(cx, cy, R, -Math.PI * 0.55, Math.PI * 1.35); ctx.stroke(); ctx.restore();
+      E.forEach((n, i) => { const a = -Math.PI * 0.55 + i / (E.length - 1) * Math.PI * 1.9, x = cx + R * Math.cos(a), y = cy + R * Math.sin(a), on = i === k;
+        D.circle(ctx, x, y, on ? 9 : 5, on ? C.rebar : C.surface, C.steel, 1.5);
+        if (on) D.text(ctx, (i + 1) + ". " + n, cx, cy + 34, { align: "center", color: C.rebar, weight: 500, size: 13 }); });
+      D.rect(ctx, cx - 32, cy - 26, 64, 40, C.steel + "33", C.steel, 1.5);
+      D.text(ctx, "BIM", cx, cy, { align: "center", color: C.ink, weight: 500, size: 16 });
+      D.text(ctx, "visualisation tout au long", cx, cy - R - 14 < 10 ? 12 : cy - R - 14, { align: "center", color: C.muted, size: 10 });
+    }},
+    texte: [
+      "Le BIM, c'est une <b>maquette numérique qui gère l'ouvrage tout au long de son cycle de vie</b>, de la <b>planification et la conception</b> à la <b>construction</b> et à l'<b>exploitation</b>. Le modèle BIM <b>facilite la prise de décisions</b> et la <b>collaboration</b>, et améliore les phases de construction de façon plus <b>efficace et économique</b>. Il offre une grande <b>facilité de collaboration entre les intervenants</b> et permet d'<b>optimiser la conception, la réalisation et l'exploitation en réduisant au maximum les erreurs</b>.",
+      "C'est un <b>processus de conception intelligent basé sur un modèle 3D</b> ; un modèle à la fois <b>visuel et quantitatif</b> des composantes et du cycle de vie du projet ; il permet la <b>gestion, la coordination et la simulation</b> de documents. Et le BIM <b>peut être produit dans plusieurs logiciels autres qu'Autodesk</b>.",
+      "Le « principe de fonctionnement du BIM » (diapo 46, en anglais) place le modèle au centre d'un anneau : <i>programming</i> (programmation), <i>conceptual design</i> (conception sommaire), <i>detailed design</i> (conception détaillée), <i>analysis</i>, <i>documentation</i>, <i>fabrication</i>, <i>construction 4D/5D</i>, <i>construction logistics</i>, <i>operation and maintenance</i> (exploitation et entretien), <i>renovation</i>, <i>demolition</i>, avec la <i>visualization</i> tout au long."
+    ],
+    cle: { label: "À retenir", html: "Une <strong>maquette numérique</strong> pour <strong>tout le cycle de vie</strong> : planification, conception → construction → exploitation (jusqu'à la rénovation et la démolition) · modèle <strong>visuel et quantitatif</strong> · moins d'erreurs, plus de collaboration · pas seulement Autodesk." },
+    widget: box => etapesWidget(box, {
+      titre: "Le cycle de vie autour de la maquette (diapo 46)", label: "Phase",
+      etapes: [
+        { court: "Programmation", texte: "<i>Programming</i> : définir les besoins du projet." },
+        { court: "Conception sommaire", texte: "<i>Conceptual design</i> : les premières formes." },
+        { court: "Conception détaillée", texte: "<i>Detailed design</i> : le modèle se précise." },
+        { court: "Analyse", texte: "<i>Analysis</i> : éclairage, énergie, structure… (voir « Les analyses possibles »)." },
+        { court: "Documentation", texte: "<i>Documentation</i> : plans, coupes, élévations tirés du modèle." },
+        { court: "Fabrication", texte: "<i>Fabrication</i> : pièces préfabriquées à partir du modèle." },
+        { court: "Construction 4D/5D", texte: "Le modèle lié au calendrier (4D) et aux coûts (5D)." },
+        { court: "Logistique", texte: "<i>Construction logistics</i> : organiser le chantier." },
+        { court: "Exploitation", texte: "<i>Operation and maintenance</i> : exploitation et entretien du bâtiment." },
+        { court: "Rénovation", texte: "<i>Renovation</i>." },
+        { court: "Démolition", texte: "<i>Demolition</i> : la fin du cycle de vie." }
+      ]
+    })
+  },
+  {
+    titre: "Un modèle 3D qui porte des données",
+    anim: { ratio: 0.55, alt: "Un mur en 3D est sélectionné : une fiche de données s'ouvre (type de mur, tableau, structure, coordonnées géographiques)", draw(ctx, t, w, h) {
+      const u = cyc(t, 12), k = Math.floor(u * 4), P = G.iso(w * 0.28, h * 0.35, Math.min(w, h) * 0.075);
+      const box = (x0, y0, z0, dx, dy, dz, col) => { const f = (pts, c) => D.poly(ctx, pts.map(q => P(...q)), c, C.ink, 1);
+        f([[x0, y0 + dy, z0], [x0 + dx, y0 + dy, z0], [x0 + dx, y0 + dy, z0 + dz], [x0, y0 + dy, z0 + dz]], col + "88");
+        f([[x0 + dx, y0, z0], [x0 + dx, y0 + dy, z0], [x0 + dx, y0 + dy, z0 + dz], [x0 + dx, y0, z0 + dz]], col + "55");
+        f([[x0, y0, z0 + dz], [x0 + dx, y0, z0 + dz], [x0 + dx, y0 + dy, z0 + dz], [x0, y0 + dy, z0 + dz]], col + "aa"); };
+      box(0, 0, 0, 4, 0.4, 2.6, C.rebar); box(0, 0.4, 0, 0.4, 3, 2.6, C.stone);
+      const L = [["Types de murs", "brique, isolant, gypse"], ["Tableaux de données", "12 murs · 84 m²"], ["Structure, métriques", "porteur · 2,6 m"], ["Géospatial", "point de base X, Y, Z"]];
+      const x = w * 0.5, y = h * 0.08, bw = w * 0.48;
+      D.rect(ctx, x, y, bw, h * 0.86, C.surface, C.steel, 1.2);
+      D.text(ctx, "Propriétés", x + 8, y + 18, { color: C.ink, weight: 500, size: 11 });
+      L.forEach(([a, b], i) => { const yy = y + 40 + i * h * 0.19, on = i === k;
+        D.text(ctx, a, x + 8, yy, { color: on ? C.rebar : C.ink, size: 11, weight: on ? 500 : 400 });
+        D.text(ctx, b, x + 8, yy + 15, { color: C.muted, size: 9 }); });
+      D.line(ctx, [P(2, 0, 2.6), [x, y + 40 + k * h * 0.19 - 4]], C.rebar, 1, [3, 3]);
+    }},
+    texte: [
+      "Le BIM, c'est d'abord <b>un modèle en trois dimensions du bâtiment</b>… et <b>une maquette qui inclut des données du bâtiment</b>. Chaque élément du modèle porte de l'information, pas seulement une forme.",
+      "Les <b>données du bâtiment</b> que montrent les diapos 33 à 36 : les <b>types de murs</b>, les <b>tableaux de données</b>, les <b>données de structure et métriques</b> et les <b>informations géospatiales</b>.",
+      "Les valeurs de l'animation (brique, 84 m², 300 mm) sont des exemples : les diapos montrent des captures de Revit, sans chiffres à retenir."
+    ],
+    cle: { label: "À retenir", html: "Le BIM = un <strong>modèle 3D</strong> + une maquette qui <strong>inclut des données</strong> : <strong>types de murs</strong>, <strong>tableaux de données</strong>, <strong>données de structure et métriques</strong>, <strong>informations géospatiales</strong>." },
+    widget: box => triWidget(box, {
+      titre: "Quelle donnée du bâtiment ?", consigne: "Classe chaque information selon les quatre familles de données des diapos 33 à 36 (exemples pour s'exercer).",
+      cats: ["Types de murs", "Tableaux de données", "Structure et métriques", "Information géospatiale"],
+      items: [
+        { nom: "Mur extérieur : brique, isolant, gypse", rep: "Types de murs", pourquoi: "La composition d'un type de mur." },
+        { nom: "Nomenclature des portes et leurs quantités", rep: "Tableaux de données", pourquoi: "Un tableau tiré du modèle." },
+        { nom: "Section d'une poutre et sa portée", rep: "Structure et métriques", pourquoi: "Données de structure, mesurées." },
+        { nom: "Coordonnées géographiques du point de base", rep: "Information géospatiale", pourquoi: "Le modèle positionné dans un référentiel." },
+        { nom: "Surface totale des planchers", rep: "Tableaux de données", pourquoi: "Un total calculé et présenté en tableau." },
+        { nom: "Orientation par rapport au nord géographique", rep: "Information géospatiale", pourquoi: "Une donnée géographique du site." }
+      ]
+    })
+  },
+  {
+    titre: "Les outils technologiques et les données géoréférencées",
+    anim: { ratio: 0.55, alt: "Deux maquettes, architecture et structure, sont décalées ; elles glissent vers le même point de base du projet et se superposent exactement", draw(ctx, t, w, h) {
+      const u = cyc(t, 10), g = ease(seg(u, 0.2, 0.6)), s = Math.min(w, h) * 0.32, bx = w * 0.5, by = h * 0.62;
+      D.line(ctx, [[bx - s * 1.3, by], [bx + s * 1.3, by]], C.line, 1); D.line(ctx, [[bx, by + 20], [bx, h * 0.08]], C.line, 1);
+      const mod = (dx, dy, col, label) => { D.rect(ctx, bx + dx, by + dy - s * 0.8, s, s * 0.8, col + "33", col, 2); D.text(ctx, label, bx + dx + s / 2, by + dy - s * 0.8 - 6, { align: "center", color: col, size: 11, weight: 500 }); };
+      mod(lerp(-s * 1.1, 0, g), lerp(-s * 0.1, 0, g), C.rebar, "architecture");
+      mod(lerp(s * 0.25, 0, g), lerp(s * 0.25, 0, g), C.steel, g > 0.95 ? "" : "structure");
+      D.circle(ctx, bx, by, 6, C.alert, C.ink, 1);
+      D.text(ctx, "point de base du projet", bx + 8, by + 18, { color: C.alert, size: 11 });
+      D.text(ctx, g > 0.95 ? "Un seul référentiel pour toutes les disciplines" : "Chacun son origine : les modèles ne se superposent pas", w / 2, h - 6, { align: "center", color: C.ink, size: 11, weight: 500 });
+    }},
+    texte: [
+      "Le BIM, c'est aussi <b>l'utilisation des plus récents outils technologiques</b> : les <b>logiciels de modélisation paramétriques</b> ; le <b>scan 3D par nuages de points</b> et autres technologies ; la <b>réalité virtuelle et augmentée</b> ; la <b>réalité mixte</b>, une technologie qui <b>fusionne le monde physique et le monde numérique en temps réel</b>.",
+      "Les <b>données géoréférencées</b> : dans le logiciel, on peut <b>positionner le modèle par rapport à un référentiel géographique</b>. Il suffit que <b>tous les utilisateurs utilisent le même point de base du projet</b> : il n'y a alors <b>qu'un seul référentiel pour toutes les disciplines</b>. Avantages : la <b>juxtaposition des modèles</b>, les <b>nuages de points géoréférencés</b> et les <b>relevés par arpentage des services et bâtiments existants</b>.",
+      "C'est ici que se rejoignent les cours 1 et 2 (référentiels, coordonnées, scanners laser, levés) et le BIM : un modèle géoréférencé peut recevoir directement les levés de l'arpenteur."
+    ],
+    cle: { label: "À retenir", html: "Outils : <strong>modélisation paramétrique</strong>, <strong>scan 3D (nuages de points)</strong>, <strong>réalité virtuelle et augmentée</strong>, <strong>réalité mixte</strong> (physique + numérique en temps réel) · géoréférencé : <strong>même point de base</strong> = <strong>un seul référentiel</strong> pour toutes les disciplines." },
+    widget: box => triWidget(box, {
+      titre: "Outil ou avantage ?", consigne: "Classe chaque élément selon les diapos 38 à 42.",
+      cats: ["Outil technologique du BIM", "Avantage des données géoréférencées"],
+      items: [
+        { nom: "Logiciels de modélisation paramétriques", rep: "Outil technologique du BIM", pourquoi: "Diapo 38." },
+        { nom: "Scan 3D par nuages de points", rep: "Outil technologique du BIM", pourquoi: "Diapo 39." },
+        { nom: "Réalité virtuelle et augmentée", rep: "Outil technologique du BIM", pourquoi: "Diapo 40." },
+        { nom: "Réalité mixte", rep: "Outil technologique du BIM", pourquoi: "Fusionne physique et numérique en temps réel (diapo 41)." },
+        { nom: "Juxtaposition des modèles", rep: "Avantage des données géoréférencées", pourquoi: "Même point de base : les modèles se superposent." },
+        { nom: "Relevés par arpentage des services existants", rep: "Avantage des données géoréférencées", pourquoi: "Diapo 42." },
+        { nom: "Nuages de points géoréférencés", rep: "Avantage des données géoréférencées", pourquoi: "Le scan se place directement dans le référentiel du projet." }
+      ]
+    })
+  },
+  {
+    titre: "Un processus, pas un logiciel",
+    anim: { ratio: 0.5, alt: "Une barre se remplit : 90 % processus, 10 % technologie ; puis la phrase « Le BIM n'est pas un logiciel, c'est un processus collaboratif appuyé par la technologie »", draw(ctx, t, w, h) {
+      const u = cyc(t, 10), g = ease(seg(u, 0.05, 0.45)), x = w * 0.08, bw = w * 0.84, y = h * 0.28, bh = h * 0.2;
+      D.rect(ctx, x, y, bw * 0.9 * g, bh, C.steel + "aa", null);
+      D.rect(ctx, x + bw * 0.9, y, bw * 0.1 * seg(u, 0.4, 0.5), bh, C.rebar, null);
+      D.rect(ctx, x, y, bw, bh, null, C.ink, 1.4);
+      if (g > 0.3) D.text(ctx, "90 % processus", x + bw * 0.45, y + bh / 2 + 5, { align: "center", color: C.ink, weight: 500, size: 14 });
+      if (u > 0.5) D.text(ctx, "10 %", x + bw * 0.95, y - 8, { align: "center", color: C.rebar, weight: 500, size: 12 });
+      if (u > 0.5) D.text(ctx, "technologie", x + bw * 0.95, y + bh + 16, { align: "center", color: C.rebar, size: 11 });
+      D.alpha(ctx, seg(u, 0.55, 0.7), () => {
+        D.text(ctx, "« Le BIM n'est pas un logiciel, c'est un processus", w / 2, h * 0.75, { align: "center", color: C.ink, size: 12 });
+        D.text(ctx, "collaboratif appuyé par la technologie. »", w / 2, h * 0.75 + 18, { align: "center", color: C.ink, size: 12 });
+      });
+    }},
+    texte: [
+      "Le BIM, c'est un modèle 3D, une maquette qui inclut des données, l'utilisation des outils récents… et surtout <b>90 % processus et 10 % technologique</b>. Définition retenue par le cours (<b>Eastman, 2011</b>) : « une <b>technologie et des processus associés</b> pour <b>produire, communiquer et analyser des modèles de construction</b> ». Le processus BIM englobe la <b>géométrie</b>, les <b>relations spatiales</b>, les <b>informations géographiques</b>, les <b>quantités</b> et les <b>propriétés des éléments</b> de construction.",
+      "Les définitions sont très nombreuses (numérique, basé sur des objets, collaboration, partage de données, interopérabilité, coordination, détection d'interférences, données paramétriques liées, « machine à voyager dans le temps virtuelle »…), <b>mais toutes désignent le BIM comme un processus régissant l'utilisation de la technologie, et non comme la technologie en soi</b>.",
+      "Du dessin au modèle numérique : une <b>évolution stratégique du dessin 2D traditionnel (DAO) vers un modèle d'information intégré</b> ; une <b>transmission de données sans perte d'information</b> entre intervenants ; une <b>synergie</b> nouvelle entre architectes, ingénieurs et autres intervenants. « <b>Le BIM n'est pas un logiciel, c'est un processus collaboratif appuyé par la technologie.</b> »"
+    ],
+    cle: { label: "À retenir", html: "<strong>90 % processus, 10 % technologie</strong> · Eastman (2011) : technologie + processus pour <strong>produire, communiquer et analyser</strong> des modèles · un <strong>processus</strong> qui régit la technologie, pas la technologie en soi · transmission <strong>sans perte d'information</strong>." },
+    widget: box => triWidget(box, {
+      titre: "Le cours le dit-il ?", consigne: "Classe chaque phrase : conforme au cours, ou idée reçue ?",
+      cats: ["Conforme au cours", "Idée reçue"],
+      items: [
+        { nom: "Le BIM, c'est 90 % processus et 10 % technologie.", rep: "Conforme au cours", pourquoi: "Diapo 43." },
+        { nom: "Le BIM est un logiciel d'Autodesk.", rep: "Idée reçue", pourquoi: "Un processus ; et il se fait dans plusieurs logiciels autres qu'Autodesk." },
+        { nom: "Le BIM permet une transmission de données sans perte d'information.", rep: "Conforme au cours", pourquoi: "Diapo 47." },
+        { nom: "Le BIM, c'est seulement un modèle 3D.", rep: "Idée reçue", pourquoi: "C'est aussi des données, des outils et surtout un processus." },
+        { nom: "Toutes les définitions font du BIM un processus qui régit la technologie.", rep: "Conforme au cours", pourquoi: "Diapo 45." },
+        { nom: "Le BIM sert surtout à faire de plus beaux rendus.", rep: "Idée reçue", pourquoi: "Il sert à produire, communiquer et analyser (Eastman)." }
+      ]
+    })
+  }
+  ]
+});
+
+/* ===================== Sujet — Cours 5 : la transition vers le BIM et ses modèles 3D (diapos 48 à 56) ===================== */
+MODULES.push({
+  id: "transition-bim",
+  partie: "c6",
+  titre: "La transition vers le BIM et ses modèles 3D",
+  resume: "Pourquoi tous les projets ne sont pas encore BIM : la résistance au changement, ce que la transition exige, où en est le Québec ; puis les quatre modèles 3D d'un projet.",
+  sources: "cours 5, diapos 48 à 56",
+  sections: [
+  {
+    titre: "La résistance au changement",
+    anim: { ratio: 0.45, alt: "Trois vagues successives : la main contre AutoCAD, la 2D contre la 3D, les façons traditionnelles contre le BIM ; chaque fois, l'industrie s'adapte", draw(ctx, t, w, h) {
+      const V = [["À la main", "AutoCAD", "l'industrie s'est adaptée"], ["Modèles 2D", "Modèles 3D", "l'industrie s'est adaptée"], ["Façons traditionnelles", "BIM", "l'industrie va s'adapter !"]];
+      const u = cyc(t, 12), k = Math.floor(u * 3), f = u * 3 - k, y = h * 0.45;
+      V.forEach(([a, b], i) => { const x = w * (0.18 + i * 0.32);
+        D.circle(ctx, x, h * 0.86, 6, i < k ? C.steel : i === k ? C.rebar : C.surface, C.ink, 1);
+        if (i < 2) D.line(ctx, [[x + 8, h * 0.86], [x + w * 0.32 - 8, h * 0.86]], C.line, 2);
+        D.text(ctx, a.split(" ")[0] === "Façons" ? "Tradition → BIM" : (a === "À la main" ? "Main → AutoCAD" : "2D → 3D"), x, h * 0.86 + 22, { align: "center", color: i === k ? C.rebar : C.muted, size: 10 }); });
+      const [a, b, fin] = V[k], push = ease(seg(f, 0.15, 0.7));
+      D.rect(ctx, w * 0.08, y - 22, w * 0.36, 44, C.stone + "66", C.ink, 1.2); D.text(ctx, a, w * 0.26, y + 5, { align: "center", color: C.ink, size: 12 });
+      D.rect(ctx, lerp(w * 0.9, w * 0.56, push), y - 22, w * 0.36, 44, C.rebar + "33", C.rebar, 1.4); D.text(ctx, b, lerp(w * 0.9, w * 0.56, push) + w * 0.18, y + 5, { align: "center", color: C.ink, size: 12, weight: 500 });
+      if (f > 0.75) D.text(ctx, fin, w / 2, h * 0.18, { align: "center", color: C.rebar, weight: 500, size: 13 });
+      else D.text(ctx, "« résistance au changement… »", w / 2, h * 0.18, { align: "center", color: C.muted, size: 12 });
+    }},
+    texte: [
+      "« Si c'est si bon, le BIM, pourquoi tous les projets ne sont pas BIM ? » Comme toute nouvelle technologie, l'arrivée du BIM a <b>bouleversé (et bouleverse toujours) les façons de faire traditionnelles</b> des professionnels.",
+      "La <b>résistance au changement</b> s'est vue trois fois : l'arrivée des logiciels comme <b>AutoCAD</b> avait été très mal reçue par certains qui préféraient <b>dessiner à la main</b>… <b>l'industrie s'est adaptée</b> ; l'introduction des <b>modèles 3D</b> ne plaisait pas à ceux habitués aux <b>modèles 2D</b>… <b>l'industrie s'est adaptée</b> ; l'arrivée du <b>BIM</b> déplaît à ceux habitués aux façons de faire traditionnelles… <b>l'industrie va s'adapter !</b>"
+    ],
+    cle: { label: "À retenir", html: "Trois résistances : <strong>main → AutoCAD</strong>, <strong>2D → 3D</strong>, <strong>traditionnel → BIM</strong> · les deux premières fois, l'industrie <strong>s'est adaptée</strong> ; pour le BIM, elle <strong>va s'adapter</strong>." },
+    widget: box => etapesWidget(box, {
+      titre: "Trois vagues de changement (diapo 50)", label: "Vague",
+      etapes: [
+        { court: "Main → AutoCAD", texte: "L'arrivée des logiciels comme AutoCAD a été très mal reçue par certains qui préféraient dessiner à la main… l'industrie s'est adaptée." },
+        { court: "2D → 3D", texte: "L'introduction des modèles 3D ne plaisait pas à certains habitués aux modèles 2D… l'industrie s'est adaptée." },
+        { court: "Traditionnel → BIM", texte: "L'arrivée du BIM déplaît à certains habitués aux façons de faire traditionnelles… l'industrie va s'adapter !" }
+      ]
+    })
+  },
+  {
+    titre: "Ce que la transition exige, et où en est le Québec",
+    anim: { ratio: 0.5, alt: "Quatre intervenants (client, ingénieur, architecte, entrepreneur) montent un escalier ensemble, marche par marche ; personne ne saute directement en haut", draw(ctx, t, w, h) {
+      const u = cyc(t, 12), n = 5, step = Math.floor(u * (n + 1)), sx = w * 0.1, sy = h * 0.88, dx = w * 0.15, dy = h * 0.14;
+      for (let i = 0; i < n; i++) D.rect(ctx, sx + i * dx, sy - (i + 1) * dy, dx, (i + 1) * dy, C.stone + "55", C.ink, 1);
+      const P = ["client", "ingénieur", "architecte", "entrepreneur"], cols = [C.rebar, C.steel, C.water, C.hydrate];
+      const k = Math.min(step, n) - 1;
+      P.forEach((p, j) => { const x = sx + Math.max(0, k) * dx + 12 + j * (dx - 24) / 3, y = k < 0 ? sy - 10 : sy - (k + 1) * dy - 10;
+        D.circle(ctx, x, y, 6, cols[j], C.ink, 1); });
+      D.text(ctx, "client · ingénieur · architecte · entrepreneur", w / 2, 16, { align: "center", color: C.ink, size: 11 });
+      D.text(ctx, "même rythme : une marche à la fois (processus incrémental)", w / 2, 32, { align: "center", color: C.rebar, size: 11, weight: 500 });
+    }},
+    texte: [
+      "La transition vers le BIM entraîne des <b>modifications importantes</b> dans les façons de faire : l'<b>achat d'ordinateurs plus puissants</b>, une <b>courbe d'apprentissage</b>, la <b>formation des employés</b> (nouveaux logiciels, nouvelles façons de faire, etc.).",
+      "Où en sommes-nous ? <b>Au Québec, en 2015</b>, on réalise des projets BIM, mais il y a toujours une <b>coexistence avec les méthodes traditionnelles</b>. L'implémentation du BIM est un <b>processus incrémental (graduel)</b>, puisque <b>tous les intervenants de l'industrie</b> (<b>clients, ingénieurs, architectes, entrepreneurs</b>) doivent <b>évoluer au même rythme</b>. Il ne serait <b>pas pensable de faire une transition instantanée</b>. L'avenir fera de plus en plus de place au BIM."
+    ],
+    cle: { label: "À retenir", html: "Exige : <strong>ordinateurs plus puissants</strong>, <strong>courbe d'apprentissage</strong>, <strong>formation des employés</strong> · Québec <strong>2015</strong> : projets BIM + méthodes traditionnelles · implantation <strong>incrémentale</strong> : clients, ingénieurs, architectes, entrepreneurs au <strong>même rythme</strong>." },
+    widget: box => triWidget(box, {
+      titre: "Exigence ou portrait du Québec ?", consigne: "Classe chaque énoncé selon les diapos 51 et 52.",
+      cats: ["Ce que la transition exige", "Où en est le Québec (2015)"],
+      items: [
+        { nom: "Achat d'ordinateurs plus puissants", rep: "Ce que la transition exige", pourquoi: "Diapo 51." },
+        { nom: "Courbe d'apprentissage", rep: "Ce que la transition exige", pourquoi: "Diapo 51." },
+        { nom: "Formation des employés", rep: "Ce que la transition exige", pourquoi: "Nouveaux logiciels, nouvelles façons de faire." },
+        { nom: "Projets BIM, mais méthodes traditionnelles toujours présentes", rep: "Où en est le Québec (2015)", pourquoi: "Coexistence des méthodes." },
+        { nom: "Implantation incrémentale : tous au même rythme", rep: "Où en est le Québec (2015)", pourquoi: "Clients, ingénieurs, architectes, entrepreneurs." },
+        { nom: "Pas de transition instantanée", rep: "Où en est le Québec (2015)", pourquoi: "« Il ne serait pas pensable… »" }
+      ]
+    })
+  },
+  {
+    titre: "Les modèles 3D : architecture, structure, mécanique, coordination",
+    anim: { ratio: 0.6, alt: "Un bâtiment se construit par couches : la structure (colonnes et poutres), l'architecture (murs et fenêtres), la mécanique (conduits), puis le modèle de coordination qui les superpose et signale un conflit", draw(ctx, t, w, h) {
+      const u = cyc(t, 14), k = Math.floor(u * 4), P = G.iso(w * 0.5, h * 0.2, Math.min(w, h) * 0.085), N = ["Modèle 3D en structure", "Modèle 3D en architecture", "Modèle 3D en mécanique", "Modèle 3D de coordination"];
+      const show = i => k === 3 || k === i, a = i => k === 3 ? 0.85 : 1;
+      const L = (pts, col, lw) => D.line(ctx, pts.map(q => P(...q)), col, lw);
+      if (show(0)) D.alpha(ctx, a(0), () => { [[0, 0], [4, 0], [0, 3], [4, 3]].forEach(([x, y]) => L([[x, y, 0], [x, y, 3]], C.stone, 4)); L([[0, 0, 3], [4, 0, 3], [4, 3, 3], [0, 3, 3], [0, 0, 3]], C.stone, 4); L([[2, 0, 3], [2, 3, 3]], C.stone, 3); });
+      if (show(1)) D.alpha(ctx, a(1) * 0.8, () => { D.poly(ctx, [[0, 3, 0], [4, 3, 0], [4, 3, 3], [0, 3, 3]].map(q => P(...q)), C.water + "44", C.rebar, 1.2);
+        D.poly(ctx, [[4, 0, 0], [4, 3, 0], [4, 3, 3], [4, 0, 3]].map(q => P(...q)), C.water + "33", C.rebar, 1.2);
+        [[0.6, 1.4], [2.4, 3.2]].forEach(([x0, x1]) => D.poly(ctx, [[x0, 3, 1.2], [x1, 3, 1.2], [x1, 3, 2.2], [x0, 3, 2.2]].map(q => P(...q)), C.surface, C.rebar, 1)); });
+      if (show(2)) D.alpha(ctx, a(2), () => { L([[-0.5, 1.5, 2.6], [2, 1.5, 2.6], [2, 1.5, 3.2], [4.5, 1.5, 3.2]], C.steel, 6); });
+      if (k === 3) { const q = P(2, 1.5, 3); D.circle(ctx, q[0], q[1], 10 + 3 * Math.sin(t * 5), null, C.alert, 2); D.text(ctx, "conflit : conduit / poutre", q[0] + 14, q[1] - 10, { color: C.alert, size: 11, weight: 500 }); }
+      D.text(ctx, N[k], w / 2, h - 8, { align: "center", color: C.rebar, weight: 500, size: 13 });
+    }},
+    texte: [
+      "Un projet BIM réunit plusieurs <b>modèles 3D</b>, un par discipline : le <b>modèle 3D en architecture</b>, le <b>modèle 3D en structure</b>, le <b>modèle 3D en mécanique</b>, et le <b>modèle 3D de coordination</b>, qui les superpose.",
+      "Le modèle de coordination, c'est le <b>modèle fédéré</b> de Navisworks : en réunissant les disciplines, il permet la <b>détection des conflits</b> (un conduit qui traverse une poutre) <b>avant le chantier</b>, d'où la « diminution de conflits en chantier » parmi les avantages du BIM.",
+      "Les diapos 53 à 56 sont des images de maquettes ; les éléments de l'animation (colonnes, murs, conduits) illustrent ce qu'on trouve d'habitude dans chaque modèle."
+    ],
+    cle: { label: "À retenir", html: "Quatre modèles 3D : <strong>architecture</strong>, <strong>structure</strong>, <strong>mécanique</strong>, et <strong>coordination</strong> (tous superposés → <strong>détection des conflits</strong>)." },
+    widget: box => triWidget(box, {
+      titre: "Dans quel modèle 3D ?", consigne: "Classe chaque élément dans le modèle où on le trouve d'habitude (exemples pour s'exercer).",
+      cats: ["Architecture", "Structure", "Mécanique", "Coordination"],
+      items: [
+        { nom: "Murs, fenêtres et portes", rep: "Architecture", pourquoi: "L'enveloppe et l'aménagement." },
+        { nom: "Colonnes, poutres et dalles", rep: "Structure", pourquoi: "L'ossature qui porte les charges." },
+        { nom: "Conduits de ventilation", rep: "Mécanique", pourquoi: "CVCA : chauffage, ventilation, conditionnement d'air." },
+        { nom: "Tuyauterie de plomberie", rep: "Mécanique", pourquoi: "Avec la ventilation, dans la mécanique du bâtiment." },
+        { nom: "Toutes les disciplines superposées", rep: "Coordination", pourquoi: "Le modèle fédéré." },
+        { nom: "Repérer un conduit qui traverse une poutre", rep: "Coordination", pourquoi: "La détection des conflits se fait sur le modèle de coordination." }
+      ]
+    })
+  }
+  ]
+});
+
+/* ===================== Sujet — Cours 5 : dimensions, maturité, avantages et analyses du BIM (diapos 57 à 62) ===================== */
+MODULES.push({
+  id: "dimensions-bim",
+  partie: "c6",
+  titre: "Dimensions, maturité, avantages et analyses du BIM",
+  resume: "De la 3D à la 7D (temps, coûts, durabilité, gestion), les niveaux de maturité 0 à 3, les six avantages et les analyses possibles avec le BIM.",
+  sources: "cours 5, diapos 57 à 62",
+  sections: [
+  {
+    titre: "Les dimensions du BIM : de la 3D à la 7D",
+    anim: { ratio: 0.55, alt: "Un escalier de cinq marches se construit : 3D modélisation, 4D temps, 5D coûts, 6D durabilité, 7D gestion ; à chaque marche, on ajoute une donnée au modèle", draw(ctx, t, w, h) {
+      const S = [["3D", "X, Y, Z : modélisation", C.water], ["4D", "+ temps (calendrier)", C.hydrate], ["5D", "+ coût (budget)", C.steel], ["6D", "+ durabilité", C.veg], ["7D", "+ gestion des installations", C.rebar]];
+      const u = cyc(t, 14), k = Math.min(4, Math.floor(u * 5.6)), bw = w * 0.18, x0 = w * 0.05, base = h * 0.94;
+      S.forEach(([n, d, col], i) => { if (i > k) return;
+        const bh = h * (0.28 + i * 0.13), x = x0 + i * bw;
+        D.rect(ctx, x + 2, base - bh, bw - 4, bh, (col || C.steel) + (i === k ? "cc" : "66"), C.ink, 1);
+        D.text(ctx, n, x + bw / 2, base - bh + 26, { align: "center", color: C.ink, weight: 500, size: 20 }); });
+      D.text(ctx, S[k][0] + " = " + (k ? S[k - 1][0] + " " : "") + S[k][1], w / 2, 18, { align: "center", color: C.rebar, weight: 500, size: 13 });
+    }},
+    texte: [
+      "Progression dans les niveaux BIM (diapo 59) : <b>2D</b> = connu en (X, Y) ; <b>3D</b> = connu en (X, Y, Z) ; <b>4D = 3D + temps</b> : le modèle s'inscrit dans un processus daté (<b>calendrier</b>) ; <b>5D = 4D + coût</b> : données pour le <b>calcul des coûts et le budget</b> ; <b>6D = 5D + durabilité</b> : données <b>écologiques, énergétiques</b>… ; <b>7D = 6D + gestion des installations</b> : données de <b>durées de vie</b>, <b>FDES</b> (fiches de déclaration environnementale et sanitaire), <b>maintenance</b>… jusqu'à la <b>déconstruction</b> ; <b>XD</b> = reste à inventer.",
+      "En résumé (diapo 58) : <b>3D</b> modélisation et coordination spatiale · <b>4D</b> temps : phasage et ordonnancement · <b>5D</b> estimation et analyse des coûts · <b>6D</b> optimisation de la durabilité (ex. énergétique) · <b>7D</b> gestion du bâtiment et analyse du cycle de vie. « À nous de fixer conjointement les objectifs : quel niveau, à quelle date ? »"
+    ],
+    cle: { label: "À retenir", html: "<strong>3D</strong> modèle · <strong>4D</strong> + temps · <strong>5D</strong> + coûts · <strong>6D</strong> + durabilité (énergie) · <strong>7D</strong> + gestion des installations (cycle de vie) · <strong>XD</strong> à inventer. Chaque dimension <strong>s'ajoute</strong> à la précédente." },
+    widget: box => diagrammeWidget(box, {
+      titre: "Les dimensions du BIM à compléter (diapo 58)", source: "cours", vb: [600, 430], etiquette: [400, 44],
+      consigne: "Glisse chaque description à côté de sa dimension (ou touche une étiquette, puis la case). Une étiquette est de trop.",
+      dessin: (W, H) => ["3D", "4D", "5D", "6D", "7D"].map((d, i) => { const y = 45 + i * 85;
+        return `<path d="M20,${y - 30} L90,${y - 30} L110,${y} L90,${y + 30} L20,${y + 30} L40,${y} Z" fill="var(--rebar)" opacity=".85"/><text x="68" y="${y + 9}" text-anchor="middle" style="font:600 26px var(--mono);fill:var(--surface)">${d}</text>`; }).join(""),
+      cases: {
+        d3: { x: 350, y: 45, w: 440, h: 54, rep: "Modélisation et coordination spatiale" },
+        d4: { x: 350, y: 130, w: 440, h: 54, rep: "Temps : phasage et ordonnancement" },
+        d5: { x: 350, y: 215, w: 440, h: 54, rep: "Estimation et analyse des coûts" },
+        d6: { x: 350, y: 300, w: 440, h: 54, rep: "Optimisation de la durabilité (énergie)" },
+        d7: { x: 350, y: 385, w: 440, h: 54, rep: "Gestion du bâtiment et cycle de vie" }
+      },
+      fleches: [], leurres: ["Réalité virtuelle et augmentée"],
+      note: "Diapo 59 : 4D = 3D + temps, 5D = 4D + coût, 6D = 5D + durabilité, 7D = 6D + gestion des installations ; XD = reste à inventer."
+    })
+  },
+  {
+    titre: "Ce que permet chaque dimension",
+    anim: { ratio: 0.5, alt: "Pour chaque dimension, des exemples d'usages défilent : balayage laser en 3D, simulation de phasage en 4D, extraction des quantités en 5D, analyse énergétique en 6D, manuels d'entretien en 7D", draw(ctx, t, w, h) {
+      const L = [["3D", ["Modèles de l'existant (laser, géoradar)", "Modèles de sécurité et de logistique", "Animations, rendus, visites virtuelles", "Préfabrication et implantation au laser"]],
+        ["4D", ["Simulations du phasage du projet", "Planification « lean », juste-à-temps", "Simulation détaillée de l'installation", "Validation visuelle des paiements"]],
+        ["5D", ["Planification des coûts en temps réel", "Extraction des quantités pour l'estimation", "Vérification des corps de métier", "Ingénierie de la valeur (« et si ? »)"]],
+        ["6D", ["Analyse énergétique conceptuelle", "Analyse énergétique détaillée", "Suivi des éléments durables", "Suivi LEED"]],
+        ["7D", ["Stratégies BIM sur le cycle de vie", "Modèle « tel que construit » (as-built)", "Manuels d'entretien intégrés", "Données COBie, plans d'entretien"]]];
+      const u = cyc(t, 20) * 5, k = Math.floor(u), f = u - k;
+      D.rect(ctx, 10, 10, w * 0.2, h - 20, C.rebar + "cc", null);
+      D.text(ctx, L[k][0], 10 + w * 0.1, h / 2 + 10, { align: "center", color: C.surface, size: 30, weight: 600 });
+      L[k][1].forEach((s, i) => D.alpha(ctx, seg(f, 0.05 + i * 0.15, 0.15 + i * 0.15), () => D.text(ctx, "• " + s, w * 0.25, h * (0.22 + i * 0.2), { color: C.ink, size: 11 })));
+    }},
+    texte: [
+      "La diapo 57 (en anglais) détaille les usages. <b>3D</b> : modèles des <b>conditions existantes</b> (<b>balayage laser</b>, conversions de <b>géoradar</b> GPR), modèles de <b>sécurité et de logistique</b>, <b>animations, rendus et visites virtuelles</b>, <b>préfabrication</b> pilotée par le BIM, <b>implantation au chantier</b> précise au laser. <b>4D</b> (<i>scheduling</i>) : <b>simulations du phasage</b> du projet, planification <b>« lean »</b> (Last Planner, livraisons <b>juste-à-temps</b>), simulation détaillée de l'installation, <b>validation visuelle pour approuver les paiements</b>.",
+      "<b>5D</b> (<i>estimating</i>) : modélisation conceptuelle et <b>planification des coûts en temps réel</b>, <b>extraction des quantités</b> pour l'estimation détaillée, vérifications à partir des modèles de fabrication (acier de structure, armature, mécanique et plomberie, électricité), <b>ingénierie de la valeur</b> (scénarios « et si ? », visualisations, quantités), solutions de préfabrication. <b>6D</b> (<i>sustainability</i>) : <b>analyses énergétiques</b> conceptuelle et détaillée, suivi des éléments durables, <b>suivi LEED</b>. <b>7D</b> (<i>facility management</i>) : stratégies BIM sur le <b>cycle de vie</b>, modèle <b>tel que construit</b> (<i>as-built</i>), <b>manuels d'exploitation et d'entretien</b> intégrés, données <b>COBie</b>, plans d'entretien et soutien technique.",
+      "Les noms de logiciels de la diapo (DProfiler, EcoTech) ne sont que des exemples ; retiens surtout quelle famille d'usage va avec quelle dimension. Le cours 2 parlait déjà du balayage laser et du géoradar (radiodétection) : en BIM, ils alimentent la 3D des conditions existantes."
+    ],
+    cle: { label: "À retenir", html: "3D : <strong>balayage laser</strong>, rendus, préfabrication · 4D : <strong>phasage</strong>, juste-à-temps · 5D : <strong>quantités</strong>, coûts · 6D : <strong>énergie</strong>, LEED · 7D : <strong>tel que construit</strong>, entretien, COBie." },
+    widget: box => triWidget(box, {
+      titre: "Quelle dimension ?", consigne: "Classe chaque usage selon la diapo 57.",
+      cats: ["3D", "4D", "5D", "6D", "7D"],
+      items: [
+        { nom: "Balayage laser des conditions existantes", rep: "3D", pourquoi: "Existing conditions models : laser scanning." },
+        { nom: "Animations, rendus et visites virtuelles", rep: "3D", pourquoi: "Animations, renderings, walkthroughs." },
+        { nom: "Simulation du phasage du projet", rep: "4D", pourquoi: "Project phasing simulations : le temps." },
+        { nom: "Livraisons juste-à-temps", rep: "4D", pourquoi: "Lean scheduling : Just In Time." },
+        { nom: "Extraction des quantités pour l'estimation", rep: "5D", pourquoi: "Quantity extraction : les coûts." },
+        { nom: "Suivi LEED", rep: "6D", pourquoi: "La durabilité." },
+        { nom: "Analyse énergétique détaillée", rep: "6D", pourquoi: "Detailed energy analysis." },
+        { nom: "Manuels d'exploitation et d'entretien intégrés", rep: "7D", pourquoi: "Facility management." },
+        { nom: "Modèle tel que construit (as-built)", rep: "7D", pourquoi: "BIM As-Builts, pour gérer le bâtiment." }
+      ]
+    })
+  },
+  {
+    titre: "Les niveaux de maturité du BIM (0 à 3)",
+    anim: { ratio: 0.5, alt: "Un triangle de maturité monte de gauche à droite : niveau 0 CAO sur papier, niveau 1 2D et 3D, niveau 2 BIM par discipline, niveau 3 iBIM intégré", draw(ctx, t, w, h) {
+      const u = cyc(t, 14), k = Math.floor(u * 4), x0 = w * 0.04, x1 = w * 0.96, yb = h * 0.82, yt = h * 0.1;
+      const xs = [0, 0.3, 0.48, 0.66, 1].map(f => lerp(x0, x1, f)), yAt = x => lerp(yb, yt, (x - x0) / (x1 - x0));
+      const N = [["Niveau 0", "CAO · papier", "traits, arcs, texte"], ["Niveau 1", "2D · 3D", "collaboration par fichiers"], ["Niveau 2", "BIM(s) par discipline", "fichiers + bibliothèques"], ["Niveau 3", "iBIM intégré", "données interopérables, BIM Hub"]];
+      for (let i = 0; i < 4; i++) {
+        const a = xs[i], b = xs[i + 1];
+        D.poly(ctx, [[a, yb], [b, yb], [b, yAt(b)], [a, yAt(a)]], i === k ? C.rebar + "55" : i < k ? C.steel + "33" : C.surface, C.ink, 1);
+        D.text(ctx, N[i][0], (a + b) / 2, yb + 16, { align: "center", color: i === k ? C.rebar : C.muted, size: 10, weight: i === k ? 500 : 400 });
+      }
+      D.line(ctx, [[xs[3], yb + 4], [xs[3], yt]], C.alert, 2);
+      D.text(ctx, N[k][1], w * 0.3, h * 0.2, { align: "center", color: C.ink, weight: 500, size: 14 });
+      D.text(ctx, N[k][2], w * 0.3, h * 0.2 + 18, { align: "center", color: C.muted, size: 11 });
+      D.text(ctx, "maturité →", x1, yb + 32 > h - 2 ? h - 4 : yb + 32, { align: "right", color: C.muted, size: 10 });
+    }},
+    texte: [
+      "La diapo 60 reprend le schéma de maturité de <b>Bew et Richards (2008)</b> : la maturité monte du niveau 0 au niveau 3. <b>Niveau 0</b> : la <b>CAO</b> (<i>CAD</i>) sur <b>papier</b>, des dessins faits de traits, d'arcs et de texte. <b>Niveau 1</b> : la <b>2D et la 3D</b>, avec une <b>collaboration par fichiers</b> encadrée par des guides et normes (CPIC, Avanti, BS 1192:2007).",
+      "<b>Niveau 2</b> : des <b>BIM par discipline</b> (« BIMs ») faits de <b>modèles, d'objets et de collaboration</b>, échangés par fichiers avec une <b>gestion des bibliothèques</b>. <b>Niveau 3</b> : l'<b>iBIM</b> (BIM intégré), des <b>données intégrées et interopérables</b> (IFC, IFD, IDM, ISO BIM) dans un <b>serveur Web commun</b> (<i>BIM Hub</i>), jusqu'à la <b>gestion du cycle de vie</b>. Une ligne rouge sépare le niveau 3 des autres.",
+      "Le schéma est en anglais et la diapo ne le commente pas : les traductions et le résumé par niveau sont les nôtres. Les sigles du niveau 2 (AIM, SIM, FIM, BSIM, BrIM) désignent des modèles par discipline."
+    ],
+    cle: { label: "À retenir", html: "<strong>0</strong> CAO, papier · <strong>1</strong> 2D/3D, collaboration par fichiers · <strong>2</strong> BIM par discipline, fichiers + bibliothèques · <strong>3</strong> <strong>iBIM</strong> : données <strong>intégrées et interopérables</strong> (IFC), serveur commun, cycle de vie." },
+    widget: box => etapesWidget(box, {
+      titre: "Les quatre niveaux de maturité (diapo 60)", label: "Niveau",
+      etapes: [
+        { court: "Niveau 0", texte: "CAO (CAD) sur papier : traits, arcs, texte. Outil : le papier." },
+        { court: "Niveau 1", texte: "2D et 3D ; collaboration par fichiers (guides CPIC, Avanti, BS 1192:2007)." },
+        { court: "Niveau 2", texte: "BIM par discipline : modèles, objets, collaboration ; fichiers + gestion des bibliothèques." },
+        { court: "Niveau 3", texte: "iBIM : données intégrées et interopérables (IFC, ISO BIM), services Web intégrés (BIM Hub), gestion du cycle de vie." }
+      ]
+    })
+  },
+  {
+    titre: "Les avantages du BIM",
+    anim: { ratio: 0.5, alt: "Six bandes s'allument l'une après l'autre : coordination des plans, représentation réaliste, moins de conflits, efficacité, équipes plus petites, autres analyses", draw(ctx, t, w, h) {
+      const A = ["Coordination facile des plans", "Représentation réaliste pour le client", "Moins de conflits en chantier", "Plus d'efficacité", "Équipes plus petites", "D'autres analyses possibles"];
+      const u = cyc(t, 12), k = Math.floor(u * 7);
+      A.forEach((a, i) => { const x = w * 0.06, y = h * (0.04 + i * 0.16), on = i < k;
+        D.rect(ctx, x, y, w * 0.88, h * 0.13, on ? C.steel + "44" : C.surface, on ? C.steel : C.line, 1.2);
+        D.text(ctx, (i + 1) + ". " + a, x + 10, y + h * 0.09, { color: on ? C.ink : C.muted, size: 12, weight: on ? 500 : 400 }); });
+    }},
+    texte: [
+      "Parmi les <b>avantages du BIM</b> (diapo 61) : 1) la <b>coordination facile et régulière des plans</b> (maquettes) d'architecture, de structure, de mécanique-électrique, etc. ; 2) une <b>représentation plus réaliste de l'ouvrage</b> à réaliser <b>pour le client</b> ; 3) la <b>diminution des conflits en chantier</b>.",
+      "4) l'<b>augmentation de l'efficacité</b> ; 5) la <b>diminution de la grosseur des équipes</b> ; 6) la <b>possibilité de plusieurs autres analyses</b> (la diapo suivante)."
+    ],
+    cle: { label: "À retenir", html: "Six avantages : <strong>coordination</strong> des plans · représentation <strong>réaliste</strong> pour le client · <strong>moins de conflits</strong> en chantier · plus d'<strong>efficacité</strong> · équipes <strong>plus petites</strong> · d'autres <strong>analyses</strong>." },
+    widget: box => triWidget(box, {
+      titre: "Avantage du cours ?", consigne: "Lesquels sont des avantages du BIM selon la diapo 61 ?",
+      cats: ["Avantage cité (diapo 61)", "Pas cité, ou faux"],
+      items: [
+        { nom: "Coordination facile et régulière des plans", rep: "Avantage cité (diapo 61)", pourquoi: "Architecture, structure, mécanique-électrique." },
+        { nom: "Représentation plus réaliste pour le client", rep: "Avantage cité (diapo 61)", pourquoi: "Diapo 61." },
+        { nom: "Diminution des conflits en chantier", rep: "Avantage cité (diapo 61)", pourquoi: "Grâce à la détection des conflits avant le chantier." },
+        { nom: "Diminution de la grosseur des équipes", rep: "Avantage cité (diapo 61)", pourquoi: "Diapo 61." },
+        { nom: "Ordinateurs moins puissants", rep: "Pas cité, ou faux", pourquoi: "C'est l'inverse : la transition exige des ordinateurs plus puissants." },
+        { nom: "Plus besoin de former les employés", rep: "Pas cité, ou faux", pourquoi: "La formation des employés fait partie de la transition." }
+      ]
+    })
+  },
+  {
+    titre: "Les analyses possibles avec le BIM",
+    anim: { ratio: 0.5, alt: "Le soleil tourne autour d'un bâtiment et projette son ombre (ensoleillement), puis le bâtiment se colore selon ses pertes d'énergie, ses efforts, ses quantités, et un conflit est signalé", draw(ctx, t, w, h) {
+      const N = ["Éclairage et ensoleillement", "Efficacité énergétique", "Analyse structurale", "Estimation de quantités", "Détection d'interférences"];
+      const u = cyc(t, 15), k = Math.floor(u * 5), f = u * 5 - k, gx = w * 0.35, gy = h * 0.8, bw = w * 0.22, bh = h * 0.45;
+      D.line(ctx, [[0, gy], [w, gy]], C.muted, 1);
+      const fill = [C.surface, null, null, C.surface, C.surface][k];
+      if (k === 0) { const a = Math.PI * (0.1 + 0.8 * f), sx = gx + bw / 2 - Math.cos(a) * w * 0.4, sy = gy - Math.sin(a) * h * 0.65;
+        D.circle(ctx, sx, sy, 10, C.hydrate, C.rebar, 1); const L = -Math.cos(a) / Math.max(0.15, Math.sin(a)) * bh;
+        D.poly(ctx, [[gx, gy], [gx + bw, gy], [gx + bw - L, gy + 0.001], [gx - L, gy]], null, null);
+        D.alpha(ctx, 0.35, () => D.poly(ctx, [[gx, gy], [gx + bw, gy], [gx + bw - L * 0.6, gy + 14], [gx - L * 0.6, gy + 14]], C.ink, null)); }
+      if (k === 1) for (let i = 0; i < 5; i++) D.rect(ctx, gx, gy - bh + i * bh / 5, bw, bh / 5, [C.alert, C.rebar, C.hydrate, C.water, C.steel][i] + "88", null);
+      if (k === 2) { for (let i = 0; i < 6; i++) D.rect(ctx, gx, gy - bh + i * bh / 6, bw, bh / 6, (i < 2 ? C.alert : i < 4 ? C.hydrate : C.water) + "66", null); D.arrow(ctx, gx - 40, gy - bh * 0.7, gx - 4, gy - bh * 0.7, C.alert, 2); }
+      D.rect(ctx, gx, gy - bh, bw, bh, fill, C.ink, 1.5);
+      if (k === 3) { for (let i = 1; i < 4; i++) D.line(ctx, [[gx, gy - bh * i / 4], [gx + bw, gy - bh * i / 4]], C.ink, 1); D.rect(ctx, w * 0.66, h * 0.2, w * 0.3, h * 0.42, C.surface, C.steel, 1);
+        ["dalles : 4 × 180 m²", "colonnes : 16", "béton : 312 m³"].forEach((s, i) => D.text(ctx, s, w * 0.68, h * 0.3 + i * 18, { color: C.ink, size: 10 })); }
+      if (k === 4) { D.line(ctx, [[gx - 20, gy - bh * 0.5], [gx + bw + 20, gy - bh * 0.5]], C.steel, 5); D.rect(ctx, gx + bw * 0.45, gy - bh * 0.75, 10, bh * 0.75, C.stone, C.ink, 1);
+        D.circle(ctx, gx + bw * 0.45 + 5, gy - bh * 0.5, 12 + 2 * Math.sin(t * 6), null, C.alert, 2); }
+      D.text(ctx, (k + 1) + ". " + N[k], w / 2, 18, { align: "center", color: C.rebar, weight: 500, size: 13 });
+    }},
+    texte: [
+      "Parmi les <b>analyses possibles avec le BIM</b> (diapo 62) : les <b>analyses d'éclairage et d'ensoleillement</b> ; les <b>analyses d'efficacité énergétique</b> ; les <b>analyses structurales</b> ; l'<b>estimation de quantités</b> ; la <b>détection d'interférences</b> ; etc.",
+      "Elles découlent de ce qui précède : le modèle est <b>quantitatif</b> (quantités, 5D), ses éléments sont <b>paramétrés</b> (analyse structurale, comme la CAO), il est <b>géoréférencé</b> (ensoleillement selon la position), il porte des données énergétiques (6D) et il superpose les disciplines (détection d'interférences, le « clash detection » de Navisworks). Les chiffres de l'animation sont des exemples."
+    ],
+    cle: { label: "À retenir", html: "Cinq analyses : <strong>éclairage et ensoleillement</strong> · <strong>efficacité énergétique</strong> · <strong>structurale</strong> · <strong>estimation de quantités</strong> · <strong>détection d'interférences</strong>." },
+    widget: box => triWidget(box, {
+      titre: "Quelle analyse ?", consigne: "Pour chaque question qu'on pose au modèle, l'analyse BIM qui y répond.",
+      cats: ["Éclairage et ensoleillement", "Efficacité énergétique", "Structurale", "Estimation de quantités", "Détection d'interférences"],
+      items: [
+        { nom: "L'ombre de la tour sur le parc à 15 h en décembre ?", rep: "Éclairage et ensoleillement", pourquoi: "Position du soleil + modèle géoréférencé." },
+        { nom: "Combien de chauffage l'hiver ?", rep: "Efficacité énergétique", pourquoi: "Pertes d'énergie de l'enveloppe." },
+        { nom: "La poutre résiste-t-elle à la charge ?", rep: "Structurale", pourquoi: "Efforts dans les membrures paramétrées." },
+        { nom: "Combien de m³ de béton commander ?", rep: "Estimation de quantités", pourquoi: "Le modèle est quantitatif." },
+        { nom: "Le conduit traverse-t-il une poutre ?", rep: "Détection d'interférences", pourquoi: "Conflit entre disciplines." }
+      ]
+    })
   }
   ]
 });
